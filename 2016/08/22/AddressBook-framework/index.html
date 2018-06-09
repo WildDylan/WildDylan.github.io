@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>AddressBook.framework | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="AddressBook.framework/AddressBookUI.framework9.0之后, AddressBook.framework被Contacts.framework代替。但是目前大部分的应用软件起支撑的版本是iOS6.0或7.0, 所以AddressBook还大有用处。之前在简书的文章AddressBook, AddressBookUI中有提及, 但是由于是转载, 所以代码不是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AddressBook.framework">
+<meta property="og:url" content="https://wilddylan.github.io/2016/08/22/AddressBook-framework/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="AddressBook.framework/AddressBookUI.framework9.0之后, AddressBook.framework被Contacts.framework代替。但是目前大部分的应用软件起支撑的版本是iOS6.0或7.0, 所以AddressBook还大有用处。之前在简书的文章AddressBook, AddressBookUI中有提及, 但是由于是转载, 所以代码不是">
+<meta property="og:image" content="http://www.51wendang.com/pic/00a226f3c9fa6ed45d1d781c/1-817-png_6_0_0_300_110_360_270_892.5_1263-1200-0-0-1200.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AddressBook.framework">
+<meta name="twitter:description" content="AddressBook.framework/AddressBookUI.framework9.0之后, AddressBook.framework被Contacts.framework代替。但是目前大部分的应用软件起支撑的版本是iOS6.0或7.0, 所以AddressBook还大有用处。之前在简书的文章AddressBook, AddressBookUI中有提及, 但是由于是转载, 所以代码不是">
+<meta name="twitter:image" content="http://www.51wendang.com/pic/00a226f3c9fa6ed45d1d781c/1-817-png_6_0_0_300_110_360_270_892.5_1263-1200-0-0-1200.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-AddressBook-framework" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            AddressBook.framework
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/22/AddressBook-framework/">
+            <time datetime="2016-08-22T09:44:14.000Z" itemprop="datePublished">2016-08-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Frameworks/">Frameworks</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="AddressBook-framework-AddressBookUI-framework"><a href="#AddressBook-framework-AddressBookUI-framework" class="headerlink" title="AddressBook.framework/AddressBookUI.framework"></a>AddressBook.framework/AddressBookUI.framework</h4><p>9.0之后, <code>AddressBook.framework</code>被<code>Contacts.framework</code>代替。但是目前大部分的应用软件起支撑的版本是iOS6.0或7.0, 所以<code>AddressBook</code>还大有用处。之前在简书的文章<a href="http://www.jianshu.com/p/bf895054ed69/comments/3766914#comment-3766914" target="_blank" rel="external">AddressBook, AddressBookUI</a>中有提及, 但是由于是转载, 所以代码不是很清晰, 而且有一些读者希望得到清晰的代码以及详细的功能解释, 所以在这里把<code>AddressBook.framework</code>以及<code>AddressBookUI.framework</code>重新做一下详细的使用方法介绍。</p>
+<p>这篇文章先介绍<code>AddressBook.framework</code>。 <code>AddressBookUI</code>以及<code>Contacts.framework</code>也会补上。</p>
+<a id="more"></a>
+<h4 id="开始使用AdressBook"><a href="#开始使用AdressBook" class="headerlink" title="开始使用AdressBook"></a>开始使用AdressBook</h4><p>首先, 导入我们需要的Framework</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &lt;AddressBook/AddressBook.h&gt;</div></pre></td></tr></table></figure>
+<p>经常使用到：</p>
+<ul>
+<li>ABAddressBookRef: 通讯录引用</li>
+<li>ABRecordRef: 记录引用</li>
+<li>ABPropertyID: 记录的属性ID</li>
+</ul>
+<h4 id="获取AddressBook使用权限"><a href="#获取AddressBook使用权限" class="headerlink" title="获取AddressBook使用权限"></a>获取AddressBook使用权限</h4><p>像使用相机、推送一样, 访问AddressBook同样需要获取权限。</p>
+<p>在获取权限之前，我们需要创建一个AddressBook的引用，用来做后续操作。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">static ABAddressBookRef r;</div><div class="line"></div><div class="line">static inline ABAddressBookRef getAddressBookRef() &#123;</div><div class="line">    static dispatch_once_t onceToken;</div><div class="line">    dispatch_once(&amp;onceToken, ^&#123;</div><div class="line">        CFErrorRef errorRef;</div><div class="line">        r = ABAddressBookCreateWithOptions(NULL, &amp;errorRef);</div><div class="line">        if ( errorRef ) &#123;</div><div class="line">            ILog(@&quot;%@&quot;, (__bridge NSString *)CFErrorCopyFailureReason(errorRef));</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    return r;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>ABAddressBookRef，作为后续使用的通讯录引用，这里写作单例。或者可以写作单例的属性，但只需初始化一次。</p>
+<p><code>ABAddressBookCreateWithOptions</code>通过参数创建, options暂时为预留字段，但是AddressBook在9.0被弃用，估计不会被使用了。</p>
+<p>在获取到引用之后，我们应先查询AddressBook的访问状态：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Boolean needRequestAccess() &#123;</div><div class="line">    ABAuthorizationStatus s = ABAddressBookGetAuthorizationStatus();</div><div class="line">    if ( s == kABAuthorizationStatusDenied ||</div><div class="line">        s == kABAuthorizationStatusRestricted ) &#123;</div><div class="line">            alert(@&quot;提示&quot;, @&quot;&quot;);</div><div class="line">        return false;</div><div class="line">    &#125;</div><div class="line">    if ( s != kABAuthorizationStatusAuthorized ) &#123;</div><div class="line">        return true;</div><div class="line">    &#125;</div><div class="line">    return false;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>推荐使用switch-case来判断状态。如果结果为<code>kABAuthorizationStatusAuthorized</code>表示可以正常访问。要注意的是，如果用户拒绝了首次的请求，那么需要用户在<code>设置-隐私-通讯录</code>中手动打开App使用通讯录的权限。</p>
+<p>如果结果为<code>kABAuthorizationStatusNotDetermined</code>意味着我们需要请求访问权限:</p>
+<p><code>Restricted</code>意味着系统决定了访问权限，用户不能修改。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">void requestAddressBookAccess (ABAddressBookRequestAccessCompletionHandler handler) &#123;</div><div class="line">    ABAddressBookRequestAccessWithCompletion(getAddressBookRef(), handler);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>综合起来的调用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">void initAddressBook (void (^shouldAccessAddressBook)(Boolean boo)) &#123;</div><div class="line">    if ( needRequestAccess() ) &#123;</div><div class="line">        requestAddressBookAccess(^(bool granted, CFErrorRef error) &#123;</div><div class="line">            if ( granted ) &#123;</div><div class="line">                shouldAccess = true;</div><div class="line">            &#125;</div><div class="line">            shouldAccessAddressBook(granted);</div><div class="line">        &#125;);</div><div class="line">    &#125; else &#123;</div><div class="line">        shouldAccess = true;</div><div class="line">        shouldAccessAddressBook(true);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>非常简单的，我们获得了通讯录的访问权限。</p>
+<h4 id="用户的查询"><a href="#用户的查询" class="headerlink" title="用户的查询"></a>用户的查询</h4><p>用户的查询非常简单；</p>
+<ul>
+<li>ABAddressBookGetPersonCount：获取总人数</li>
+<li>ABAddressBookGetPersonWithRecordID：通过RecordID获取单个人，recordID可以通过<code>ABRecordGetRecordID</code>获得</li>
+<li>ABAddressBookCopyArrayOfAllPeople：获取全部联系人数组</li>
+<li>ABAddressBookCopyArrayOfAllPeopleInSource：获取记录引用中所有的练习嗯</li>
+<li>ABAddressBookCopyArrayOfAllPeopleInSourceWithSortOrdering：带着排序参数</li>
+<li>ABAddressBookCopyPeopleWithName：拷贝符合该名称的联系人</li>
+</ul>
+<p>获取联系人的数量:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CFIndex i = ABAddressBookGetPersonCount(getAddressBookRef());</div><div class="line">printf(&quot;AddressBook: has %ld Person&quot;, i);</div></pre></td></tr></table></figure>
+<p>获取联系人:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">CFArrayRef ref = ABAddressBookCopyArrayOfAllPeople(getAddressBookRef());</div><div class="line">    </div><div class="line">ABRecordRef pr = CFArrayGetValueAtIndex(ref, 0);</div><div class="line">ILog(@&quot;%@&quot;, ABRecordCopyValue(pr, kABPersonFirstNameProperty));</div></pre></td></tr></table></figure>
+<p>获取联系人组使用<code>ABAddressBookCopyArrayOfAllGroups</code>即可。然后通过<code>ABAddressBookCopyArrayOfAllPeopleInSource</code>即可获得组内联系人。</p>
+<h4 id="用户信息的修改与删除"><a href="#用户信息的修改与删除" class="headerlink" title="用户信息的修改与删除"></a>用户信息的修改与删除</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">CFArrayRef ref = ABAddressBookCopyArrayOfAllPeople(getAddressBookRef());</div><div class="line">    </div><div class="line">ABRecordRef pr = CFArrayGetValueAtIndex(ref, 0);</div><div class="line">ILog(@&quot;%@&quot;, ABRecordCopyValue(pr, kABPersonFirstNameProperty));</div><div class="line">    </div><div class="line">if ( ABRecordSetValue(pr, kABPersonFirstNameProperty, (__bridge CFStringRef)@&quot;Hello&quot;, nil) ) &#123;</div><div class="line">    if ( ABAddressBookSave(getAddressBookRef(), nil) ) &#123;</div><div class="line">        ILog(@&quot;Succeed!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">    </div><div class="line">if ( ABAddressBookRemoveRecord(getAddressBookRef(), pr, nil) ) &#123;</div><div class="line">    if ( ABAddressBookSave(getAddressBookRef(), nil) ) &#123;</div><div class="line">        ILog(@&quot;Remove Succeed!&quot;);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>ABRecordCopyValue</code>用来通过<code>ABPropertyID</code>获取相应属性的内容, 具体的ID在<code>ABPerson.h</code>中有详细列表。</p>
+<p><code>ABRecordSetValue</code>用来通过<code>ABPropertyID</code>设置相应的属性内容，同时返回bool值以供判段。参数中的error已经不在使用。</p>
+<p>在修改后，切记保存修改，使用<code>ABAddressBookSave</code>做保存，在这之前，可以使用<code>ABAddressBookHasUnsavedChanges</code>判断是否存在未保存的修改。</p>
+<p>使用<code>ABAddressBookRemoveRecord</code>来移除记录。</p>
+<h4 id="监听其他应用对AddressBook的修改"><a href="#监听其他应用对AddressBook的修改" class="headerlink" title="监听其他应用对AddressBook的修改"></a>监听其他应用对AddressBook的修改</h4><p>在操作AddressBook的同时，有可能在后台的时候被其他程序所修改，addressBook提供了监听方法:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">void callBack(ABAddressBookRef addressBook, CFDictionaryRef info, void *context)  &#123;</div><div class="line">    ILog(@&quot;AddressBook has changed in another application.&quot;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">void handleChange() &#123;</div><div class="line">    ABAddressBookRegisterExternalChangeCallback(getAddressBookRef(), callBack, nil);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在收到监听后我们需要做相应的处理，比如： 是否其他改动与我们的改动有重叠等。</p>
+<h4 id="注意点"><a href="#注意点" class="headerlink" title="注意点"></a>注意点</h4><ul>
+<li>在设置值的时候，可以使用<code>ABMultiValueRef</code>设置多个值，比如说多个电话。</li>
+<li>在不使用的时候，要使用<code>ABAddressBookUnregisterExternalChangeCallback</code>取消对AddressBook的监听。</li>
+</ul>
+<p>Q&amp;A：</p>
+<p>Q：如何在删除完联系人的多个电话后，直接删除联系人？</p>
+<p>A：通过propertyID获取到电话的信息后，做简单的判断就可以实现。如果仅存这一条电话记录，那么在删除的同时也删除掉联系人即可。</p>
+<h4 id="附"><a href="#附" class="headerlink" title="附"></a>附</h4><p>本文全部的代码</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"Ins_AddressBook.h"</span></span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">@implementation</span> <span class="title">InsAddressBook</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> Boolean shouldAccess;</div><div class="line"><span class="keyword">static</span> ABAddressBookRef r;</div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">inline</span> ABAddressBookRef getAddressBookRef() &#123;</div><div class="line">    <span class="keyword">static</span> <span class="built_in">dispatch_once_t</span> onceToken;</div><div class="line">    <span class="built_in">dispatch_once</span>(&amp;onceToken, ^&#123;</div><div class="line">        <span class="built_in">CFErrorRef</span> errorRef;</div><div class="line">        r = ABAddressBookCreateWithOptions(<span class="literal">NULL</span>, &amp;errorRef);</div><div class="line">        <span class="keyword">if</span> ( errorRef ) &#123;</div><div class="line">            ILog(<span class="string">@"%@"</span>, (__bridge <span class="built_in">NSString</span> *)<span class="built_in">CFErrorCopyFailureReason</span>(errorRef));</div><div class="line">        &#125;</div><div class="line">    &#125;);</div><div class="line">    <span class="keyword">return</span> r;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> requestAddressBookAccess (ABAddressBookRequestAccessCompletionHandler handler) &#123;</div><div class="line">    ABAddressBookRequestAccessWithCompletion(getAddressBookRef(), handler);</div><div class="line">&#125;</div><div class="line"></div><div class="line">Boolean needRequestAccess() &#123;</div><div class="line">    ABAuthorizationStatus s = ABAddressBookGetAuthorizationStatus();</div><div class="line">    <span class="keyword">if</span> ( s == kABAuthorizationStatusDenied ||</div><div class="line">        s == kABAuthorizationStatusRestricted ) &#123;</div><div class="line">            alert(<span class="string">@"提示"</span>, <span class="string">@"你之前已经拒绝了程序的访问权限, 请在设置-隐私-通讯录中手动打开, 并重新启动应用。"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> ( s != kABAuthorizationStatusAuthorized ) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> initAddressBook (<span class="keyword">void</span> (^shouldAccessAddressBook)(Boolean boo)) &#123;</div><div class="line">    <span class="keyword">if</span> ( needRequestAccess() ) &#123;</div><div class="line">        requestAddressBookAccess(^(<span class="keyword">bool</span> granted, <span class="built_in">CFErrorRef</span> error) &#123;</div><div class="line">            <span class="keyword">if</span> ( granted ) &#123;</div><div class="line">                shouldAccess = <span class="literal">true</span>;</div><div class="line">            &#125;</div><div class="line">            shouldAccessAddressBook(granted);</div><div class="line">        &#125;);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        shouldAccess = <span class="literal">true</span>;</div><div class="line">        shouldAccessAddressBook(<span class="literal">true</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> callBack(ABAddressBookRef addressBook, <span class="built_in">CFDictionaryRef</span> info, <span class="keyword">void</span> *context)  &#123;</div><div class="line">    ILog(<span class="string">@"AddressBook has changed in another application."</span>);</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">void</span> handleChange() &#123;</div><div class="line">    ABAddressBookRegisterExternalChangeCallback(getAddressBookRef(), callBack, <span class="literal">nil</span>);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> getPerson () &#123;</div><div class="line">    <span class="built_in">CFIndex</span> i = ABAddressBookGetPersonCount(getAddressBookRef());</div><div class="line">    printf(<span class="string">"AddressBook: has %ld Person"</span>, i);</div><div class="line">    <span class="built_in">CFArrayRef</span> ref = ABAddressBookCopyArrayOfAllPeople(getAddressBookRef());</div><div class="line">    </div><div class="line">    ABRecordRef pr = <span class="built_in">CFArrayGetValueAtIndex</span>(ref, <span class="number">0</span>);</div><div class="line">    ILog(<span class="string">@"%@"</span>, ABRecordCopyValue(pr, kABPersonFirstNameProperty));</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ( ABRecordSetValue(pr, kABPersonFirstNameProperty, (__bridge <span class="built_in">CFStringRef</span>)<span class="string">@"Hello"</span>, <span class="literal">nil</span>) ) &#123;</div><div class="line">        <span class="keyword">if</span> ( ABAddressBookSave(getAddressBookRef(), <span class="literal">nil</span>) ) &#123;</div><div class="line">            ILog(<span class="string">@"Succeed!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ( ABAddressBookRemoveRecord(getAddressBookRef(), pr, <span class="literal">nil</span>) ) &#123;</div><div class="line">        <span class="keyword">if</span> ( ABAddressBookSave(getAddressBookRef(), <span class="literal">nil</span>) ) &#123;</div><div class="line">            ILog(<span class="string">@"Remove Succeed!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (<span class="keyword">instancetype</span>)init &#123;</div><div class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> init];</div><div class="line">    <span class="keyword">if</span> ( <span class="keyword">self</span> ) &#123;</div><div class="line">        initAddressBook(^(Boolean boo)&#123;</div><div class="line">            <span class="keyword">if</span> ( boo ) &#123;</div><div class="line">                ILog(<span class="string">@"Get access to addressBook"</span>)</div><div class="line">                handleChange();</div><div class="line">                getPerson();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                ILog(<span class="string">@"Without access to addressBook"</span>)</div><div class="line">            &#125;</div><div class="line">        &#125;);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line">DEF_SINGLETON_AUTOLOAD(InsAddressBook)</div><div class="line"></div><div class="line"><span class="keyword">@end</span></div></pre></td></tr></table></figure>
+<h4 id="AddressBookUI-framework"><a href="#AddressBookUI-framework" class="headerlink" title="AddressBookUI.framework"></a>AddressBookUI.framework</h4><p>相比而言，使用UI则简单的多，直接进入创建一个新的用户：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ABNewPersonViewController * pv = [[ABNewPersonViewController alloc] init];</div><div class="line">pv.newPersonViewDelegate = <span class="keyword">self</span>;</div><div class="line">[getRootNc() presentViewController:INS_NAV(pv) animated:<span class="literal">YES</span> completion:<span class="literal">nil</span>];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void) newPersonViewController: (ABNewPersonViewController *) newPersonView</div><div class="line">        didCompleteWithNewPerson: (ABRecordRef) person &#123;</div><div class="line">    [newPersonView.navigationController dismissViewControllerAnimated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建界面与其代理方法，当然在<code>ABNewPersonViewController</code>中，有写参数我们可以设置，意义很简单，可以通过我们上边AddressBook.framework中获得的一些引用穿进去，或者在创建用户之前直接设置一个用户的基础信息。这里不做赘述。</p>
+<h4 id="选择一个用户"><a href="#选择一个用户" class="headerlink" title="选择一个用户"></a>选择一个用户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ABPeoplePickerNavigationController * pv = [[ABPeoplePickerNavigationController alloc] init];</div><div class="line">pv.peoplePickerDelegate = self;</div><div class="line">[getRootNc() presentViewController:pv animated:YES completion:nil];</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">- (void)peoplePickerNavigationController:(ABPeoplePickerNavigationController*)peoplePicker didSelectPerson:(ABRecordRef)person &#123;</div><div class="line">    </div><div class="line">&#125;</div><div class="line"></div><div class="line">// Called after the user has pressed cancel.</div><div class="line">- (void)peoplePickerNavigationControllerDidCancel:(ABPeoplePickerNavigationController *)peoplePicker &#123;</div><div class="line">    [peoplePicker dismissViewControllerAnimated:YES completion:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注：这里我没有低版本的测试环境，但是可以看到，选中人的方法在8.0后才被使用，所以低版本的童鞋应该主动尝试原本被弃用的2个方法。</p>
+</blockquote>
+<h4 id="展示用户"><a href="#展示用户" class="headerlink" title="展示用户"></a>展示用户</h4><p><code>ABPersonViewController</code></p>
+<blockquote>
+<p>If displayedPerson has been added to an ABAddressBook, then the addressBook property will be updated to use the displayedPerson’s ABAddressBook.</p>
+</blockquote>
+<p>可以设置的属性包括：允许编辑、允许操作（短信、邮件等），允许展示连接的联系人，设置属性高亮等。也比较方便。</p>
+<h4 id="信息的完善"><a href="#信息的完善" class="headerlink" title="信息的完善"></a>信息的完善</h4><p><code>ABUnknownPersonViewController</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">ABUnknownPersonViewController *un = [[ABUnknownPersonViewController alloc] init];</div><div class="line">un.displayedPerson = person; // 展示的联系人</div><div class="line">un.allowsAddingToAddressBook = YES; // 允许添加到通讯录中</div><div class="line">[getRootNc() presentViewController:INS_NAV(un) animated:YES completion:nil];</div></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>AddressBook.framework、AdressBookUI.framework还是可以满足一些基本需求，但是由于是c库，并且功能不是很完善，所以在iOS9.0之后苹果使用Contacts.framework来代替AddressBook.framework。ContactsFramework是一整套OC的库，理解起来也很简单。</p>
+<p><img src="http://um.devdylan.cn/contactsFramework.png" alt=""></p>
+<p>这是ContactsFramework中包含的一些头文件，在使用AddressBook的时候，基本所有的方法都在后边写了使用ContactsFramework中什么方法来代替。</p>
+<p><code>CNContact</code>以及<code>CNGroup</code>分别代表了联系人与联系人组，比之前的Record引用清晰了许多。</p>
+<p><code>CNContactFetchRequest</code>以及<code>CNSaveRequest</code>方便的提供了查询以及保存等操作。</p>
+<p><code>CNSaveRequest</code>则提供了方便直观的方法去保存用户。</p>
+<p>然后整个框架都清晰了很多，基本的使用方法如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">CNContactStore * c;</div><div class="line">CNAuthorizationStatus s;</div><div class="line">CNContactFetchRequest * f;</div><div class="line">NSError * e;</div><div class="line">    </div><div class="line">s = [CNContactStore authorizationStatusForEntityType:CNEntityTypeContacts];</div><div class="line">c = [[CNContactStore alloc] init];</div><div class="line">    </div><div class="line">if ( s != CNAuthorizationStatusAuthorized ) &#123;</div><div class="line">        ILog(@&quot;Un Authorized !&quot;);</div><div class="line">        </div><div class="line">        [c requestAccessForEntityType:CNEntityTypeContacts completionHandler:^(BOOL granted, NSError * error) &#123;</div><div class="line">            </div><div class="line">        &#125;];</div><div class="line">&#125;</div><div class="line">    </div><div class="line">    // 根据`CNContact`中的属性单独获得，比如 @[CNContactGivenNameKey, CNContactMiddleNameKey, ...]</div><div class="line">f = [[CNContactFetchRequest alloc] initWithKeysToFetch:@[CNContactMiddleNameKey, CNContactEmailAddressesKey, CNContactPhoneNumbersKey]];</div><div class="line">    </div><div class="line">BOOL b = [c enumerateContactsWithFetchRequest:f error:&amp;e usingBlock:^(CNContact * contact, BOOL * stop) &#123;</div><div class="line">        </div><div class="line">        /*</div><div class="line">         &lt;CNContact: 0x7f8f4fb86dc0: identifier=41592D45-CE20-44C8-95C5-C1FE464474A5:ABPerson, givenName=(not fetched), familyName=(not fetched), organizationName=(not fetched), phoneNumbers=(</div><div class="line">         &quot;&lt;CNLabeledValue: 0x7f8f4fb88dc0: identifier=243FA6B4-33AE-43A6-8567-AFE11518BBCC, label=_$!&lt;Home&gt;!$_, value=&lt;CNPhoneNumber: 0x7f8f4fb88ca0: countryCode=us, digits=+8613088488288&gt;&gt;&quot;</div><div class="line">         ), emailAddresses=(</div><div class="line">         &quot;&lt;CNLabeledValue: 0x7f8f4fb87c30: identifier=3B1CADF7-967B-41A0-A575-EB0B7BA1BB5B, label=_$!&lt;Home&gt;!$_, value=dylan@china.com&gt;&quot;</div><div class="line">         ), postalAddresses=(not fetched)&gt;</div><div class="line">         */</div><div class="line">&#125;];</div><div class="line">    </div><div class="line">if ( b ) &#123;</div><div class="line">        ILog(@&quot;Search success.&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>当然不能所有的代码全部我贴出来，关于保存等功能，大家自行探索。</p>
+<p>2016-8-23 上午10：00 copyRight@dylan@china.com 欢迎转载。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/22/AddressBook-framework/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/22/AddressBook-framework/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/08/30/Launch-Arguments-Environment-Variables/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Launch Arguments &amp; Environment Variables.
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/08/22/What’s-New-in-iOS-10/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">What’s New in iOS 10</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/08/22/AddressBook-framework/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

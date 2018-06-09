@@ -1,0 +1,1593 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="dylan&apos;s github.io blog.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="dylan">
+<meta property="og:url" content="https://wilddylan.github.io/page/3/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="dylan&apos;s github.io blog.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dylan">
+<meta name="twitter:description" content="dylan&apos;s github.io blog.">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main">
+    <article id="post-Swift语法熟悉（三）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/11/Swift语法熟悉（三）/">Swift语法熟悉（三）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/11/Swift语法熟悉（三）/">
+            <time datetime="2016-10-11T04:16:46.000Z" itemprop="datePublished">2016-10-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><blockquote>
+<p>为什么将数据模块与网络模块一起编写？紧密相关的2者，也是应用程序最常见的组合：请求数据-存储数据-展示数据。</p>
+</blockquote>
+<h6 id="数据模块（JSON、Model、DB）"><a href="#数据模块（JSON、Model、DB）" class="headerlink" title="数据模块（JSON、Model、DB）"></a>数据模块（JSON、Model、DB）</h6><p>数据持久层其实有很多杂乱的选择，文件做为持久层的基础类型，又被分为sql、xml等等类型，我们可选的范围也很广阔，也可以自己动手来完善整个持久层模块，但这似乎对于很懒的程序员来说太浪费玩耍的时间了。所以我们索性在一些完善的开源库中挑选一类供我们做上层的封装。我们姑且确定选择FMDB作为我们的数据库支撑，但是联想到一般情况下，把JSON转换为Model直接存向数据库是常用需求，所以在数据模块这一层貌似扩展的很大了。我们首先引入<a href="https://github.com/SwiftyJSON/SwiftyJSON">SwiftyJSON</a>作为JSON解析，不仅供框架使用也供外层使用，但是SwiftJSON解析后的数据仅是JSON对象，看来我们要亲自把JSON对象转换为Model了，写好之后，就是数据的存储。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/10/11/Swift语法熟悉（三）/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/11/Swift语法熟悉（三）/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/11/Swift语法熟悉（三）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Swift语法熟悉（二）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/11/Swift语法熟悉（二）/">Swift语法熟悉（二）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/11/Swift语法熟悉（二）/">
+            <time datetime="2016-10-11T03:49:34.000Z" itemprop="datePublished">2016-10-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h4 id="功能编写"><a href="#功能编写" class="headerlink" title="功能编写"></a>功能编写</h4><h6 id="环境管理-ModeSwitch"><a href="#环境管理-ModeSwitch" class="headerlink" title="环境管理 ModeSwitch"></a>环境管理 ModeSwitch</h6><p>新建<code>ModeSwitch.swift</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="comment">/// 开发模式</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Mode</span>: <span class="title">String</span> </span>&#123;</div><div class="line">  <span class="comment">/// 开发模式，打印日志，不上报日志</span></div><div class="line">  <span class="keyword">case</span> develope = <span class="string">"[DEVELOPE MODE]"</span></div><div class="line">  <span class="comment">/// 调试模式，关闭日志打印，上报日志</span></div><div class="line">  <span class="keyword">case</span> prepared = <span class="string">"[PREPARED MODE]"</span></div><div class="line">  <span class="comment">/// 生产模式，关闭日志打印，上报日志</span></div><div class="line">  <span class="keyword">case</span> production = <span class="string">"[PRODUCTION MODE]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 模式控制</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">INSModeSwitch</span> </span>&#123;</div><div class="line">  <span class="comment">/// 默认为调试模式</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">INSModeSwitch</span>(.develope)</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> currentMode: <span class="type">Mode</span> &#123;</div><div class="line">    <span class="keyword">didSet</span> &#123;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">/// 私有初始化方法</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">init</span>(<span class="number">_</span> mode: <span class="type">Mode</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.currentMode = mode</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 模式选择器</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">let</span> <span class="type">ModeSwitcher</span> = <span class="type">INSModeSwitch</span>.<span class="keyword">default</span></div></pre></td></tr></table></figure>
+<p>目前这是一个极其简单的模式控制，毫无别的作用，以后扩展功能</p></p>
+            <p class="article-more-link">
+                <a href="/2016/10/11/Swift语法熟悉（二）/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/11/Swift语法熟悉（二）/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/11/Swift语法熟悉（二）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Swift语法熟悉（一）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/10/09/Swift语法熟悉（一）/">Swift语法熟悉（一）</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/09/Swift语法熟悉（一）/">
+            <time datetime="2016-10-09T10:56:43.000Z" itemprop="datePublished">2016-10-09</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h4 id="知识储备"><a href="#知识储备" class="headerlink" title="知识储备"></a>知识储备</h4><p>就像从零搭建OC项目<code>Service</code>支撑一样，要在一定量知识储备的情况下才可以让框架质量得到保证。 <code>Service</code>：项目支撑服务。每个公司的项目都会依赖一定量的组件，每一个组件作为项目的独立模块提供本身的功能供使用。一般来讲，大公司的项目均为组件化项目，一方面为了方便安排开发，另一方面方面集成管理与扩展。小公司的项目则是依赖某一个私有库作为项目的支撑。建议每一个项目都按照组件化项目的思想来从零构造，便于以后核心服务代码抽出进行组件化拆分。</p>
+<h6 id="Swift知识储备与框架需求"><a href="#Swift知识储备与框架需求" class="headerlink" title="Swift知识储备与框架需求"></a>Swift知识储备与框架需求</h6><p>知识储备即熟悉Swift编码思想，基础知识，进阶知识与细节知识，这里不做赘述。编码能力不能做衡量，即便知识储备不够，也可以慢慢的学习。给出的建议是：多阅读源码，不是大型开源项目的源码，而是小而精的功能性项目源码。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/10/09/Swift语法熟悉（一）/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/09/Swift语法熟悉（一）/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/09/Swift语法熟悉（一）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-IAP" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/09/23/IAP/">IAP</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/09/23/IAP/">
+            <time datetime="2016-09-23T02:08:53.000Z" itemprop="datePublished">2016-09-23</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/支付与IAP/">支付与IAP</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>前言：应用内支付（IAP）一直是苹果<strong>尽力强迫</strong>大家使用的在线支付方式, 用以获利。</p>
+<p>进入主题，如何将IAP继承至自己的应用中。我们使用到了开源库<code>APKit</code>，github地址：</p>
+<p><a href="https://github.com/WildDylan/APKit">APKit</a>的Github仓库主页，包含了本地校验。</p>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p><code>In-App Purchase</code>， 简称IAP，允许在iOS app与macOS app中出售商品，如果你想将IAP加入自己的应用中，需要在集成之前做一些配置，下边将会一步一步的教大家配置相关的信息。</p>
+<blockquote>
+<p>IAP在iOS 3.0 和 macOS 10.7之后有效。</p>
+</blockquote>
+<h6 id="Agreements-Tax-and-Banking-Information"><a href="#Agreements-Tax-and-Banking-Information" class="headerlink" title="Agreements, Tax, and Banking Information"></a>Agreements, Tax, and Banking Information</h6><p>必须完成以下步骤：</p></p>
+            <p class="article-more-link">
+                <a href="/2016/09/23/IAP/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/09/23/IAP/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/09/23/IAP/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-CFNetwork" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/08/31/CFNetwork/">CFNetwork</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/31/CFNetwork/">
+            <time datetime="2016-08-31T08:01:14.000Z" itemprop="datePublished">2016-08-31</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/CoreFoundation/">CoreFoundation</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h4 id="CFNetwork"><a href="#CFNetwork" class="headerlink" title="CFNetwork"></a>CFNetwork</h4><p>存在于<code>CoreFoundation</code>中的一个地级别但高性能的网络框架。<a href="http://blog.csdn.net/blueman2012/article/details/6693605">BSD套接字</a>的扩展，<code>CFNetwork</code>物理上和理论上都基于BSD套接字。有大量的Cocoa框架依赖于<code>CFNetwork</code>。</p>
+<p><code>CFNetwork</code>更侧重与网络协议，Foundation则更倾向于API数据请求等，虽然框架也提供了一些操作，但是远不如<code>CFNetwork</code>丰富。在学习<code>CFNetwork</code>之前，需要先了解2个基础API框架： <code>CFSocket</code>、<code>CFStream</code>。</p>
+<h6 id="CFSocket-API"><a href="#CFSocket-API" class="headerlink" title="CFSocket API"></a>CFSocket API</h6><p>套接字是网络通信的底层，一个套接字类似于电话的插孔，他允许链接到另外一个电话插孔并传输一些信息过去。最常见的套接字是BSD套接字。<code>CFSocket</code>是BSD套接字的一个抽象概念，在很小开销的情况下，几乎提供了全部BSD套接字的功能，并将套接字集成到一个Loop中。并且，<code>CFSocket</code>可以处理任何类型的套接字。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/08/31/CFNetwork/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/31/CFNetwork/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/31/CFNetwork/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Launch-Arguments-Environment-Variables" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/08/30/Launch-Arguments-Environment-Variables/">Launch Arguments &amp; Environment Variables.</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/30/Launch-Arguments-Environment-Variables/">
+            <time datetime="2016-08-30T08:16:10.000Z" itemprop="datePublished">2016-08-30</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/iOS新特性/">iOS新特性</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>Walk into any American fast food establishment, and you’ll be greeted with a colorful, back-lit display of specials, set menus, and other a la carte items. But as those in-the-know are quick to point out, larger chains often have a <em>secret</em> menu, passed down by oral tradition between line cook workers and patrons over the generations.</p>
+<p>At McDonald’s, one can order a “Poor Man’s Big Mac”, which transforms a double cheeseburger alchemy-like into the chain’s signature sandwich on the cheap.</p>
+<p>At Chipotle, there is an unwritten rule that they’ll make anything within the scope of available ingredients. Since Mexican food is a testament to culinary combinatorics, an off-book order for a Quesadilla or Nachos is well within their wheelhouse.</p>
+<p>In life, it’s all about knowing what to ask for.</p></p>
+            <p class="article-more-link">
+                <a href="/2016/08/30/Launch-Arguments-Environment-Variables/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/30/Launch-Arguments-Environment-Variables/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/30/Launch-Arguments-Environment-Variables/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-AddressBook-framework" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/08/22/AddressBook-framework/">AddressBook.framework</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/22/AddressBook-framework/">
+            <time datetime="2016-08-22T09:44:14.000Z" itemprop="datePublished">2016-08-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Frameworks/">Frameworks</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h4 id="AddressBook-framework-AddressBookUI-framework"><a href="#AddressBook-framework-AddressBookUI-framework" class="headerlink" title="AddressBook.framework/AddressBookUI.framework"></a>AddressBook.framework/AddressBookUI.framework</h4><p>9.0之后, <code>AddressBook.framework</code>被<code>Contacts.framework</code>代替。但是目前大部分的应用软件起支撑的版本是iOS6.0或7.0, 所以<code>AddressBook</code>还大有用处。之前在简书的文章<a href="http://www.jianshu.com/p/bf895054ed69/comments/3766914#comment-3766914">AddressBook, AddressBookUI</a>中有提及, 但是由于是转载, 所以代码不是很清晰, 而且有一些读者希望得到清晰的代码以及详细的功能解释, 所以在这里把<code>AddressBook.framework</code>以及<code>AddressBookUI.framework</code>重新做一下详细的使用方法介绍。</p>
+<p>这篇文章先介绍<code>AddressBook.framework</code>。 <code>AddressBookUI</code>以及<code>Contacts.framework</code>也会补上。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/08/22/AddressBook-framework/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/22/AddressBook-framework/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/22/AddressBook-framework/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-What’s-New-in-iOS-10" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/08/22/What’s-New-in-iOS-10/">What’s New in iOS 10</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/22/What’s-New-in-iOS-10/">
+            <time datetime="2016-08-22T01:30:09.000Z" itemprop="datePublished">2016-08-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/iOS新特性/">iOS新特性</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><h1 id="What’s-New-in-iOS-10-0"><a href="#What’s-New-in-iOS-10-0" class="headerlink" title="What’s New in iOS 10.0"></a>What’s New in iOS 10.0</h1><ul>
+<li>Table of Contents</li>
+</ul>
+<ul>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008244-SW1">Introduction</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-SW1">iOS 10.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9_3.html#//apple_ref/doc/uid/TP40016661-SW1">iOS 9.3</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9_2.html#//apple_ref/doc/uid/TP40016637-SW1">iOS 9.2</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9_1.html#//apple_ref/doc/uid/TP40016572-SW1">iOS 9.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-SW1">iOS 9.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_4.html#//apple_ref/doc/uid/TP40015986-SW1">iOS 8.4</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_3.html#//apple_ref/doc/uid/TP40015154-SW1">iOS 8.3</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_2.html#//apple_ref/doc/uid/TP40015039-SW1">iOS 8.2</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_1.html#//apple_ref/doc/uid/TP40015009-SW1">iOS 8.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8.html#//apple_ref/doc/uid/TP40014205-SW1">iOS 8.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS7_1.html#//apple_ref/doc/uid/TP40013916-SW1">iOS 7.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS7.html#//apple_ref/doc/uid/TP40013162-SW1">iOS 7.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS6_1.html#//apple_ref/doc/uid/TP40012873-SW1">iOS 6.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS6.html#//apple_ref/doc/uid/TP40011812-SW1">iOS 6.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS5_1.html#//apple_ref/doc/uid/TP40012663-SW1">iOS 5.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS5.html#//apple_ref/doc/uid/TP30915195-SW1">iOS 5.0</a></li>
+</ul>
+<h1 id="iOS-10-0"><a href="#iOS-10-0" class="headerlink" title="iOS 10.0"></a>iOS 10.0</h1><p>This article summarizes the key developer-related features introduced in iOS 10, which runs on currently shipping iOS devices. The article also lists the documents that describe new features in more detail.</p>
+<p>For late-breaking news and information about known issues, see Release Notes at <a href="https://developer.apple.com/ios/download/">https://developer.apple.com/ios/download/</a>. For the complete list of new APIs added in iOS 10, see <em>iOS 10.0 API Diffs</em>. For more information on new devices, see <em>iOS Device Compatibility Reference</em>.</p>
+<p>To learn about what’s new in Swift, see <a href="https://developer.apple.com/library/prerelease/content/documentation/DeveloperTools/Conceptual/WhatsNewXcode/introduction.html#//apple_ref/doc/uid/TP40004635-SW3">Swift Language</a> and <em>The Swift Programming Language (Swift 3)</em>.</p></p>
+            <p class="article-more-link">
+                <a href="/2016/08/22/What’s-New-in-iOS-10/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/22/What’s-New-in-iOS-10/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/22/What’s-New-in-iOS-10/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-方便的处理在StoryBoard、Xib中的圆角设置" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/">方便的处理在StoryBoard、Xib中的圆角设置</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/">
+            <time datetime="2016-08-15T09:57:28.000Z" itemprop="datePublished">2016-08-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/UIKit/">UIKit</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>直奔主题, 怎么能方便的在StoryBoard与Xib中设置圆角呢？</p>
+<p>runtime属性？awakeFromNib？</p>
+<p>直接使用<em>Catrgory</em>来实现！</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">//UIView+O2CornerRadius.h</div><div class="line">@interface UIView (O2CornerRadius)</div><div class="line"> </div><div class="line">@property (nonatomic, assign) IBInspectable CGFloat cornerRadius;</div><div class="line"> </div><div class="line">@end</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">//UIView+O2CornerRadius.m</div><div class="line">@implementation UIView (O2CornerRadius)</div><div class="line"> </div><div class="line">- (void)setCornerRadius:(CGFloat)cornerRadius</div><div class="line">&#123;</div><div class="line">    self.layer.cornerRadius = cornerRadius;</div><div class="line">&#125;</div><div class="line"> </div><div class="line">- (CGFloat)cornerRadius</div><div class="line">&#123;</div><div class="line">    return self.layer.cornerRadius;</div><div class="line">&#125;</div><div class="line">@end</div></pre></td></tr></table></figure></p>
+            <p class="article-more-link">
+                <a href="/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <article id="post-Crash" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 itemprop="name">
+            <a class="article-title" href="/2016/08/05/Crash/">Crash 收集</a>
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/05/Crash/">
+            <time datetime="2016-08-05T01:30:49.000Z" itemprop="datePublished">2016-08-05</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/崩溃日志/">崩溃日志</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            <p><p>通常情况下, App中会做崩溃的日志收集, 以便进行问题的追踪。<a href="http://www.blogfshare.com/crash_reporter.html">奋斗</a>提供了多个平台日志捕获的代码片断。</p>
+<h2 id="崩溃捕获"><a href="#崩溃捕获" class="headerlink" title="崩溃捕获"></a>崩溃捕获</h2><p>在iOS中碰到异常之后, 捕获异常, 在Log的位置做日志记录, 崩溃次数统计, 下次启动可以做日志上传或者应用启动保护。<br>下边的<code>runLoop</code>相关的代码的所用是把当前App的<code>RunLoop</code>跑起来, 让程序可以继续运作, 但是某些功能可能无法使用, 可以避免大部分闪退。这段代码是很久以前学自<code>孙源</code>。</p>
+<p>下边的代码可以满足最简单的日志收集。成熟的开源项目有 <code>KSCrash</code>、<code>plcrashreporter</code>、<code>CrashKit</code>等。如果想自己的做的更全面就要涉及到更多的知识了, 这篇文章可以帮到你<a href="http://mp.weixin.qq.com/s?__biz=MjM5NTIyNTUyMQ==&amp;mid=208483273&amp;idx=1&amp;sn=37ee88e06e7426f59f3074c536370317&amp;scene=21">漫谈iOS Crash收集</a>, 如果细读的话, 请注意<code>多个 Crash 日志收集服务共存的坑</code>。</p></p>
+            <p class="article-more-link">
+                <a href="/2016/08/05/Crash/#more">查看更多</a>
+            </p>
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/05/Crash/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/05/Crash/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+</article>
+
+
+
+    <nav id="page-nav">
+        <a class="extend prev" rel="prev" href="/page/2/">&laquo; PREV</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    </nav>
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

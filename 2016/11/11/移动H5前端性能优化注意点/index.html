@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>移动H5前端性能优化注意点 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="希望得到的最好的效果：
+
+PC优化手段在Mobile侧同样适用
+
+
+最多三秒钟渲染完成单屏或者使用Loading
+基于3G/4G移动网络下，每屏幕资源不超过1024KB
+
+加载优化
+合并CSS、JavaScript
+合并小图片、使用雪碧图
+缓存一切可以缓存的资源，部分资源css、js使用src=&amp;quot;abc.css?cacheVersion=1&amp;quot;来控制版本
+使用长Cache
+压缩H">
+<meta property="og:type" content="article">
+<meta property="og:title" content="移动H5前端性能优化注意点">
+<meta property="og:url" content="https://wilddylan.github.io/2016/11/11/移动H5前端性能优化注意点/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="希望得到的最好的效果：
+
+PC优化手段在Mobile侧同样适用
+
+
+最多三秒钟渲染完成单屏或者使用Loading
+基于3G/4G移动网络下，每屏幕资源不超过1024KB
+
+加载优化
+合并CSS、JavaScript
+合并小图片、使用雪碧图
+缓存一切可以缓存的资源，部分资源css、js使用src=&amp;quot;abc.css?cacheVersion=1&amp;quot;来控制版本
+使用长Cache
+压缩H">
+<meta property="og:image" content="http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:18.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="移动H5前端性能优化注意点">
+<meta name="twitter:description" content="希望得到的最好的效果：
+
+PC优化手段在Mobile侧同样适用
+
+
+最多三秒钟渲染完成单屏或者使用Loading
+基于3G/4G移动网络下，每屏幕资源不超过1024KB
+
+加载优化
+合并CSS、JavaScript
+合并小图片、使用雪碧图
+缓存一切可以缓存的资源，部分资源css、js使用src=&amp;quot;abc.css?cacheVersion=1&amp;quot;来控制版本
+使用长Cache
+压缩H">
+<meta name="twitter:image" content="http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-移动H5前端性能优化注意点" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            移动H5前端性能优化注意点
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/11/移动H5前端性能优化注意点/">
+            <time datetime="2016-11-11T09:40:13.000Z" itemprop="datePublished">2016-11-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/HTML5/">HTML5</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>希望得到的最好的效果：</p>
+<blockquote>
+<p>PC优化手段在Mobile侧同样适用</p>
+</blockquote>
+<ol>
+<li>最多三秒钟渲染完成单屏或者使用Loading</li>
+<li>基于3G/4G移动网络下，每屏幕资源不超过1024KB</li>
+</ol>
+<h6 id="加载优化"><a href="#加载优化" class="headerlink" title="加载优化"></a>加载优化</h6><ul>
+<li>合并CSS、JavaScript</li>
+<li>合并小图片、使用雪碧图</li>
+<li>缓存一切可以缓存的资源，部分资源css、js使用<code>src=&quot;abc.css?cacheVersion=1&quot;</code>来控制版本</li>
+<li>使用长Cache</li>
+<li>压缩HTML、CSS、JS</li>
+<li>启用<code>GZip</code></li>
+<li>使用首屏加载</li>
+</ul>
+<a id="more"></a>
+<ul>
+<li>使用按需加载</li>
+<li>使用滚屏加载</li>
+<li>增加进度指示器</li>
+<li>减少<code>Cookie</code></li>
+<li>避免重定向</li>
+<li>异步加载第三方资源</li>
+</ul>
+<h6 id="CSS优化"><a href="#CSS优化" class="headerlink" title="CSS优化"></a>CSS优化</h6><ul>
+<li>CSS写在头部，JS写到尾部或者异步</li>
+<li>避免图片和<code>iFrame</code>等的SRC为空</li>
+<li>尽量避免重设图片大小</li>
+<li>图片尽量避免使用<code>DataURL</code></li>
+<li>尽量避免在HTML标签中写Style</li>
+<li>避免CSS表达式</li>
+<li>移除空的CSS规则</li>
+<li>正确使用Display的属性</li>
+<li>不滥用<code>Float</code></li>
+<li>不滥用Web字体</li>
+<li>不声明过多的<code>Font-size</code></li>
+<li>值为0时候不需要任何单位</li>
+<li>标准化各种浏览器的前缀</li>
+<li>避免让选择符看起来像正则表达式</li>
+</ul>
+<h6 id="图片优化"><a href="#图片优化" class="headerlink" title="图片优化"></a>图片优化</h6><ul>
+<li>使用 <code>CSS3、SVG、IconFont</code>代替图片</li>
+<li>使用Srcset</li>
+<li>WebP优于JPG</li>
+<li>PNG8优于GIF</li>
+<li>首次加载不大于1024KB单页</li>
+<li>图片不宽于640</li>
+</ul>
+<h6 id="脚本优化"><a href="#脚本优化" class="headerlink" title="脚本优化"></a>脚本优化</h6><ul>
+<li>减少重绘</li>
+<li>缓存Dom选择与计算</li>
+<li>缓存列表的长度</li>
+<li>尽量使用事件代理，避免批量绑定事件</li>
+<li>尽量使用ID选择器</li>
+<li>使用touch代理click</li>
+</ul>
+<h6 id="渲染优化"><a href="#渲染优化" class="headerlink" title="渲染优化"></a>渲染优化</h6><ul>
+<li>HTML使用ViewPort</li>
+<li>减少Dom节点</li>
+<li>尽量使用CSS3动画</li>
+<li>合理使用<code>requestAnimationFrame</code>动画代替setTimeout</li>
+<li>适当使用Canvas动画</li>
+<li><code>touchmove，scroll</code>事件会导致多次渲染</li>
+<li>使用 <code>CSS3-transitions、CSS3-3D、Opacity、Canvas、WebGL、Video</code>来触发GPU渲染</li>
+</ul>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/11/11/移动H5前端性能优化注意点/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/11/11/移动H5前端性能优化注意点/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/11/16/如何利用Swift解析MarkDown/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    如何利用Swift解析MarkDown
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/24/如何迈出第四步（数据展示）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何迈出第四步（数据展示）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/11/11/移动H5前端性能优化注意点/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

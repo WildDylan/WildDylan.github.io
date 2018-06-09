@@ -1,0 +1,119 @@
+<h1 class="title">ReactJS</h1>
+<h2 class="subtitle">
+  在Web开发中，我们总需要将变化的数据实时反应到UI上，这时就需要对DOM进行操作。而复杂或频繁的DOM操作通常是性能瓶颈产生的原因（如何进行高性能的复杂DOM操作通常是衡量一个前端开发人员技能的重要指标）。React为此引入了虚拟DOM（Virtual
+  DOM）的机制：在浏览器端用Javascript实现了一套DOM API。基于React进行开发时所有的DOM构造都是通过虚拟DOM进行，每当数据变化时，React都会重新构建整个DOM树，然后React将当前整个DOM树和上一次的DOM树进行对比，得到DOM结构的区别，然后仅仅将需要变化的部分进行实际的浏览器DOM更新。
+  <code>React-Native</code>用于开发移动设备App，<code>React-Desktop</code>用于开发桌面程序，他们都基于<code>ReactJS</code>
+</h2>
+<hr>
+
+<div class="content">
+  <article class="markdown-body entry-content" itemprop="text">
+    <h1><a href="https://facebook.github.io/react/">React</a></h1>
+    <p>React is a JavaScript library for building user interfaces.</p>
+
+    <ul>
+      <li><strong>Declarative:</strong> React makes it painless to create interactive UIs. Design simple views for each state
+        in your application, and React will efficiently update and render just the right components when your data changes.
+        Declarative views make your code more predictable, simpler to understand, and easier to debug.</li>
+      <li><strong>Component-Based:</strong> Build encapsulated components that manage their own state, then compose them to make
+        complex UIs. Since component logic is written in JavaScript instead of templates, you can easily pass rich data through
+        your app and keep state out of the DOM.</li>
+      <li><strong>Learn Once, Write Anywhere:</strong> We don't make assumptions about the rest of your technology stack, so
+        you can develop new features in React without rewriting existing code. React can also render on the server using
+        Node and power mobile apps using <a href="https://facebook.github.io/react-native/">React Native</a>.</li>
+    </ul>
+
+    <p><a href="https://facebook.github.io/react/docs/getting-started.html">Learn how to use React in your own project</a>.</p>
+
+    <h2>Examples</h2>
+
+    <p>We have several examples <a href="https://facebook.github.io/react/">on the website</a>. Here is the first one to get
+      you started:</p>
+
+    <article class="message is-primary">
+      <div class="message-header">
+        JSX
+      </div>
+      <div class="message-body">
+        class HelloMessage extends React.Component { render() { return &ltdiv&gtHello {this.props.name}&lt/div&gt ; } } <br>ReactDOM.render(
+        &ltHelloMessage name="John" /&gt, document.getElementById('container') );
+      </div>
+    </article>
+
+    <p>This example will render "Hello John" into a container on the page.</p>
+
+    <p>You'll notice that we used an HTML-like syntax; <a href="https://facebook.github.io/react/docs/jsx-in-depth.html">we call it JSX</a>.
+      JSX is not required to use React, but it makes code more readable, and writing it feels like writing HTML. A simple
+      transform is included with React that allows converting JSX into native JavaScript for browsers to digest.</p>
+
+    <h2>Installation</h2>
+
+    <p>The fastest way to get started is to serve JavaScript from a CDN. We're using <a href="https://unpkg.com/">unpkg</a>      below but React is also available on <a href="https://cdnjs.com/libraries/react">cdnjs</a> and <a href="https://www.jsdelivr.com/projects/react">jsdelivr</a>:</p>
+
+    <article class="message is-primary">
+      <div class="message-header">
+        HTML
+      </div>
+      <div class="message-body">
+        &lt!-- The core React library --&gt <br>&ltscript src="https://unpkg.com/react@15.4.0/dist/react.js"&gt&lt/script&gt
+        <br>&lt!-- The ReactDOM Library --&gt <br>&ltscript src="https://unpkg.com/react-dom@15.4.0/dist/react-dom.js"&gt&lt/script&gt
+      </div>
+    </article>
+
+    <p>We've also built a <a href="https://facebook.github.io/react/downloads/react-15.4.0.zip">starter kit</a> which might
+      be useful if this is your first time using React. It includes a webpage with an example of using React with live code.</p>
+
+    <p>If you'd like to use <a href="http://bower.io">bower</a>, it's as easy as:</p>
+
+    <article class="message is-primary">
+      <div class="message-header">
+        Shell
+      </div>
+      <div class="message-body">
+        bower install --save react
+      </div>
+    </article>
+
+    <p>And it's just as easy with <a href="http://npmjs.com">npm</a>:</p>
+
+    <article class="message is-primary">
+      <div class="message-header">
+        Shell
+      </div>
+      <div class="message-body">
+        npm i --save react
+      </div>
+    </article>
+
+    <h2>Contributing</h2>
+    <p>The main purpose of this repository is to continue to evolve React core, making it faster and easier to use. Development
+      of React happens in the open on GitHub, and we are grateful to the community for contributing bugfixes and improvements.
+      Read below to learn how you can take part in improving React.</p>
+
+    <h3><a href="https://code.facebook.com/codeofconduct">Code of Conduct</a></h3>
+    <p>Facebook has adopted a Code of Conduct that we expect project participants to adhere to. Please read <a href="https://code.facebook.com/codeofconduct">the full text</a>      so that you can understand what actions will and will not be tolerated.</p>
+
+    <h3>Contributing Guide</h3>
+    <p>Read our <a href="https://facebook.github.io/react/contributing/how-to-contribute.html">contributing guide</a> to learn
+      about our development process, how to propose bugfixes and improvements, and how to build and test your changes to
+      React.
+    </p>
+
+    <h3>Good First Bug</h3>
+    <p>To help you get your feet wet and get you familiar with our contribution process, we have a list of <a href="https://github.com/facebook/react/labels/good%20first%20bug">good first bugs</a>      that contain bugs which are fairly easy to fix. This is a great place to get started.</p>
+
+    <h3>License</h3>
+    <p>React is <a href="/facebook/react/blob/master/LICENSE">BSD licensed</a>. We also provide an additional <a href="/facebook/react/blob/master/PATENTS">patent grant</a>.</p>
+    <p>React documentation is <a href="/facebook/react/blob/master/LICENSE-docs">Creative Commons licensed</a>.</p>
+    <p>Examples provided in this repository and in the documentation are <a href="/facebook/react/blob/master/LICENSE-examples">separately licensed</a>.</p>
+
+    <h2>Troubleshooting</h2>
+    <p>See the <a href="https://github.com/facebook/react/wiki/Troubleshooting">Troubleshooting Guide</a></p>
+  </article>
+</div>
+
+<div class="column is-fullwidth has-text-right">
+  <a class="next-article" hlink="p-vue.html">
+    <i class="fa fa-arrow-right">Vue</i>
+  </a>
+</div>

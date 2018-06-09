@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>如何迈出第一步 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="在算法前5课结束后，我渐渐的明白了一个道理：不管前方多难，放手去做吧，最难的是迈出第一步，迈出去了，以后就掌控在你手中了。快排、最短路径、二叉树算是算法的基础内容，但是之前一直不敢下手把他们写出来，因为工作3年多了，都是在创业公司，重重的业务负担让人满脑子充斥的都是业务逻辑、UI界面，5年前学的东西都忘的干净，所以我不假思索的在日程中加入了写算法文章，并且马上买了一本算法的书。然后逼着自己写了开篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何迈出第一步">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/20/如何迈出第一步/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="在算法前5课结束后，我渐渐的明白了一个道理：不管前方多难，放手去做吧，最难的是迈出第一步，迈出去了，以后就掌控在你手中了。快排、最短路径、二叉树算是算法的基础内容，但是之前一直不敢下手把他们写出来，因为工作3年多了，都是在创业公司，重重的业务负担让人满脑子充斥的都是业务逻辑、UI界面，5年前学的东西都忘的干净，所以我不假思索的在日程中加入了写算法文章，并且马上买了一本算法的书。然后逼着自己写了开篇">
+<meta property="og:image" content="http://ocef2grmj.bkt.clouddn.com/RNLaunchImage.png">
+<meta property="og:image" content="http://ocef2grmj.bkt.clouddn.com/RNSceenShot.gif">
+<meta property="og:updated_time" content="2017-02-04T08:40:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何迈出第一步">
+<meta name="twitter:description" content="在算法前5课结束后，我渐渐的明白了一个道理：不管前方多难，放手去做吧，最难的是迈出第一步，迈出去了，以后就掌控在你手中了。快排、最短路径、二叉树算是算法的基础内容，但是之前一直不敢下手把他们写出来，因为工作3年多了，都是在创业公司，重重的业务负担让人满脑子充斥的都是业务逻辑、UI界面，5年前学的东西都忘的干净，所以我不假思索的在日程中加入了写算法文章，并且马上买了一本算法的书。然后逼着自己写了开篇">
+<meta name="twitter:image" content="http://ocef2grmj.bkt.clouddn.com/RNLaunchImage.png">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-如何迈出第一步" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            如何迈出第一步
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/20/如何迈出第一步/">
+            <time datetime="2016-10-20T02:59:32.000Z" itemprop="datePublished">2016-10-20</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/ReactNative/">ReactNative</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>在算法前5课结束后，我渐渐的明白了一个道理：不管前方多难，放手去做吧，最难的是迈出第一步，迈出去了，以后就掌控在你手中了。快排、最短路径、二叉树算是算法的基础内容，但是之前一直不敢下手把他们写出来，因为工作3年多了，都是在创业公司，重重的业务负担让人满脑子充斥的都是业务逻辑、UI界面，5年前学的东西都忘的干净，所以我不假思索的在日程中加入了写算法文章，并且马上买了一本算法的书。然后逼着自己写了开篇之后，发现每天上午上班，先放开手中的工作，安静的读书、实践代码、写出来自己的思想并分享给大家是一件很不错的事情，而且渐渐的觉得重新拾起了算法。其实我买的书的内容，就是讲解到了二叉树就完结了，我大概用了4天的时间读完了这本书。</p>
+<p>然后就是今天所写的<a href="https://github.com/facebook/react-native" target="_blank" rel="external">react-native</a>，其实在RN刚出的时候，我就开始入手了（忠实的FaceBook技术粉），但是一直在给自己找理由不去实践，每次版本更新，也只是去官网看看例子，觉得理解就行了。这段时间有朋友问到我相关的东西，我发现，在实际动手的时候，我就写个登录界面都写的不是很得心应手。所以决定迈出写项目的第一步。那，又有人要问了，写什么项目呢？先别急，既然是迈出第一步，那就要慢慢来。我姑且当读者都熟悉HTML、CSS、JS。</p>
+<a id="more"></a>
+<p>当我们下载一个新的App的时候，我们最先看到的是什么？没错，启动页，引导图。启动页是配置到配置文件中的，所以我们来完成我们第一个引导页的制作</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/RNLaunchImage.png" alt=""></p>
+<p>如果按照App的开发角度，这个界面可以用ScrollView、pageControl、Button来完成，当然在RN中也我们也假定是这样的。大家各自新建一个RN的项目，并且我们以iOS为准。</p>
+<p>项目名大家随便搞一个，我们先不急着对文件进行分组归类，也不需要想着任何有关架构设想的事情。直接在<code>index.ios.js</code>中开始我们第一个界面的制作，当然，按照App的思想，这个视图控制器的基本层级是： View：ScrollView：pageControl, Button，所以我们先渲染一个全屏的View，背景色为<code>skyblue</code>：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from 'react';</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  View</div><div class="line">&#125; from 'react-native'</div><div class="line"></div><div class="line">class Project extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span>        </div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    backgroundColor: 'skyblue',</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent('Project', () =&gt; Project);</div></pre></td></tr></table></figure>
+<p>接着，我们写一个ScrollView上去：并且在上边加入3个屏幕大小的不同颜色的View，并对scrollView做一些简单的配置。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from 'react';</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  View,</div><div class="line">  ScrollView,</div><div class="line">  Text,</div><div class="line">  Dimensions</div><div class="line">&#125; from 'react-native'</div><div class="line"></div><div class="line">class Project extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    var windowWidth = Dimensions.get('window').width;</div><div class="line">    var windowHeight = Dimensions.get('window').height;</div><div class="line">    return (</div><div class="line">      <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">ScrollView</span> </span></div><div class="line">          <span class="attr">horizontal</span>=<span class="string">&#123;true&#125;</span> </div><div class="line">          <span class="attr">showsHorizontalScrollIndicator</span>=<span class="string">&#123;false&#125;</span></div><div class="line">          <span class="attr">alwaysBounceHorizontal</span>=<span class="string">&#123;true&#125;</span></div><div class="line">          <span class="attr">pagingEnabled</span>=<span class="string">&#123;true&#125;</span></div><div class="line">          <span class="attr">style</span>=<span class="string">&#123;styles.scrollView&#125;</span>&gt;</div><div class="line">          </div><div class="line">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> '<span class="attr">orange</span>', <span class="attr">height:</span> <span class="attr">windowHeight</span>, <span class="attr">width:</span> <span class="attr">windowWidth</span> &#125;&#125; /&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> '<span class="attr">red</span>', <span class="attr">height:</span> <span class="attr">windowHeight</span>, <span class="attr">width:</span> <span class="attr">windowWidth</span> &#125;&#125; /&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span> <span class="attr">backgroundColor:</span> '<span class="attr">yellow</span>', <span class="attr">height:</span> <span class="attr">windowHeight</span>, <span class="attr">width:</span> <span class="attr">windowWidth</span> &#125;&#125; /&gt;</span></div><div class="line">          </div><div class="line">        <span class="tag">&lt;/<span class="name">ScrollView</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1</div><div class="line">  &#125;,</div><div class="line">  scrollView: &#123;</div><div class="line">    flex: 1,</div><div class="line">    backgroundColor: 'skyblue'</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent('Project', () =&gt; Project);</div></pre></td></tr></table></figure>
+<p>接下来我们亲自写一个小组件，用于放至中间的一张图片以及一段文字，新建一个js文件，姑且命名为<code>scrollContent.js</code>，先别急着写，先把这个组件引入到index.js种，然后替换到刚刚我们的View。 然后再开始编写，这里要注意，我们先约定，组件的样式定义到组件里。</p>
+<p>组件内容，我们大致的拆分为：图片，标题，详情，附加详情。 原本应该是这样的，但是我们看到下边还有一个页面指示器，所以我们还需要一个占位的视图。至于下边的跳过按钮，我暂时觉得这个不太好，我们应该在最后一页才展示一个进入App的按钮（要求用户必须看完。。），所以我们先写一个这样的按钮放到底部。我一度没有正规的学过前端，所以css写的特别烂！希望可以在博客之路找到个好的老司机带路上车！先来看组件的代码：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component, &#125; from 'react'</div><div class="line">import &#123;</div><div class="line">  View,</div><div class="line">  StyleSheet,</div><div class="line">  Image,</div><div class="line">  Text,</div><div class="line">  Dimensions,</div><div class="line">  TouchableOpacity,</div><div class="line">&#125; from 'react-native'</div><div class="line"></div><div class="line">class ScrollContent extends Component &#123;</div><div class="line"></div><div class="line">  static propTypes = &#123;&#125;</div><div class="line">  static defaultProps = &#123;&#125;</div><div class="line"></div><div class="line">  constructor(props) &#123;</div><div class="line">    super(props)</div><div class="line">    this.state = &#123;&#125;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      // http://ocef2grmj.bkt.clouddn.com/Clothes-illustration.png</div><div class="line">      // http://ocef2grmj.bkt.clouddn.com/Group1.png</div><div class="line">      <span class="tag">&lt;<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.container</span> &#125;&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Image</span> <span class="attr">source</span>=<span class="string">&#123;&#123;</span> <span class="attr">uri:</span>'<span class="attr">http:</span>//<span class="attr">ocef2grmj.bkt.clouddn.com</span>/<span class="attr">Group.png</span>' &#125;&#125; <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.image</span> &#125;/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.title</span> &#125;&gt;</span>Shopping directly<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.detail</span> &#125;&gt;</span>Know your factories. Know your costs.<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.subDetail</span> &#125;&gt;</span>Always ask why.<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.placeHold</span> &#125;&gt;</span><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.buttonGroup</span> &#125;&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">TouchableOpacity</span> <span class="attr">onPress</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;&#125;&#125; activeOpacity=&#123;50 / 100&#125;&gt;</div><div class="line">            <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.enterButton</span> &#125;&gt;</span>Enter<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;/<span class="name">TouchableOpacity</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const contentWidth = Dimensions.get('window').width;</div><div class="line">const contentHeight = Dimensions.get('window').height - 60;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1,</div><div class="line">    alignItems: 'center',</div><div class="line">    justifyContent: 'center',</div><div class="line">    backgroundColor: 'white',</div><div class="line">    width: contentWidth,</div><div class="line">    height: contentHeight</div><div class="line">  &#125;,</div><div class="line">  image: &#123;</div><div class="line">    width: 253,</div><div class="line">    height: 200</div><div class="line">  &#125;,</div><div class="line">  title: &#123;</div><div class="line">    fontSize: 24,</div><div class="line">    color: '#358ED7',</div><div class="line">    fontWeight: "400",</div><div class="line">    marginTop: 50</div><div class="line">  &#125;,</div><div class="line">  detail: &#123;</div><div class="line">    fontSize: 14,</div><div class="line">    color: '#1D1D26',</div><div class="line">    fontWeight: "400",</div><div class="line">    marginTop: 20</div><div class="line">  &#125;,</div><div class="line">  subDetail: &#123;</div><div class="line">    fontSize: 14,</div><div class="line">    color: '#1D1D26',</div><div class="line">    fontWeight: "400",</div><div class="line">    marginTop: 2</div><div class="line">  &#125;,</div><div class="line">  placeHold: &#123;</div><div class="line">    marginTop: 40,</div><div class="line">    height: 15,</div><div class="line">    width: 80</div><div class="line">  &#125;,</div><div class="line">  buttonGroup: &#123;</div><div class="line">    height: 60,</div><div class="line">    width: contentWidth,</div><div class="line">    flex: 1,</div><div class="line">    alignItems: 'center',</div><div class="line">    justifyContent: 'center',</div><div class="line">    backgroundColor: 'white'</div><div class="line">  &#125;,</div><div class="line">  enterButton: &#123;</div><div class="line">    padding: 15,</div><div class="line">    paddingTop: 5,</div><div class="line">    paddingBottom: 5,</div><div class="line">    borderWidth: 1,</div><div class="line">    color: '#34A3FF',</div><div class="line">    fontSize: 17,</div><div class="line">    borderColor: '#34A3FF',</div><div class="line">    borderRadius: 3</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">export default ScrollContent</div></pre></td></tr></table></figure>
+<p>然后看使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component &#125; from 'react';</div><div class="line">import &#123;</div><div class="line">  AppRegistry,</div><div class="line">  StyleSheet,</div><div class="line">  View,</div><div class="line">  ScrollView,</div><div class="line">&#125; from 'react-native'</div><div class="line"></div><div class="line">import ScrollContent from './ScrollContent'</div><div class="line"></div><div class="line">class Project extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span> </div><div class="line">        <span class="tag">&lt;<span class="name">ScrollView</span> </span></div><div class="line">          <span class="attr">horizontal</span>=<span class="string">&#123;true&#125;</span> </div><div class="line">          <span class="attr">showsHorizontalScrollIndicator</span>=<span class="string">&#123;false&#125;</span></div><div class="line">          <span class="attr">alwaysBounceHorizontal</span>=<span class="string">&#123;true&#125;</span></div><div class="line">          <span class="attr">pagingEnabled</span>=<span class="string">&#123;true&#125;</span></div><div class="line">          <span class="attr">style</span>=<span class="string">&#123;styles.scrollView&#125;</span>&gt;</div><div class="line">          </div><div class="line">          <span class="tag">&lt;<span class="name">ScrollContent</span> /&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">ScrollContent</span> /&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">ScrollContent</span> /&gt;</span></div><div class="line">          </div><div class="line">        <span class="tag">&lt;/<span class="name">ScrollView</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    flex: 1</div><div class="line">  &#125;,</div><div class="line">  scrollView: &#123;</div><div class="line">    flex: 1,</div><div class="line">    backgroundColor: 'skyblue'</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent('Project', () =&gt; Project);</div></pre></td></tr></table></figure>
+<p>这个时候，我们发现组件里的内容还是外界传入比较好，所以使用<code>props</code>，我们来修改自己的组件：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">return (</div><div class="line">      <span class="tag">&lt;<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.container</span> &#125;&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Image</span> <span class="attr">source</span>=<span class="string">&#123;&#123;</span> <span class="attr">uri:</span> <span class="attr">this.props.uri</span> &#125;&#125; <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.image</span> &#125;/&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.title</span> &#125;&gt;</span>&#123;this.props.title&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.detail</span> &#125;&gt;</span>&#123;this.props.detail&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.subDetail</span> &#125;&gt;</span>&#123;this.props.subDetail&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.placeHold</span> &#125;&gt;</span><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.buttonGroup</span> &#125;&gt;</span></div><div class="line">          <span class="tag">&lt;<span class="name">TouchableOpacity</span> <span class="attr">onPress</span>=<span class="string">&#123;()</span> =&gt;</span> &#123;&#125;&#125; activeOpacity=&#123;50 / 100&#125;&gt;</div><div class="line">            &#123; </div><div class="line">              this.props.showEnter == true? </div><div class="line">              (<span class="tag">&lt;<span class="name">Text</span> <span class="attr">style</span>=<span class="string">&#123;</span> <span class="attr">styles.enterButton</span> &#125;&gt;</span>Enter<span class="tag">&lt;/<span class="name">Text</span>&gt;</span>): (null)</div><div class="line">            &#125;</div><div class="line">          <span class="tag">&lt;/<span class="name">TouchableOpacity</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    )</div></pre></td></tr></table></figure>
+<p>然后在使用：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">ScrollContent</span> </span></div><div class="line">            <span class="attr">uri</span>=<span class="string">"http://ocef2grmj.bkt.clouddn.com/Group.png"</span> </div><div class="line">            <span class="attr">title</span>=<span class="string">"Shopping directly"</span> </div><div class="line">            <span class="attr">detail</span>=<span class="string">"Know your factories. Know your costs."</span> </div><div class="line">            <span class="attr">subDetail</span>=<span class="string">"Always ask why."</span> </div><div class="line">            <span class="attr">showEnter</span>=<span class="string">&#123;false&#125;</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">ScrollContent</span> </span></div><div class="line">            <span class="attr">uri</span>=<span class="string">"http://ocef2grmj.bkt.clouddn.com/Clothes-illustration.png"</span> </div><div class="line">            <span class="attr">title</span>=<span class="string">"Buy shoes"</span> </div><div class="line">            <span class="attr">detail</span>=<span class="string">"Know your factories. Know your costs."</span> </div><div class="line">            <span class="attr">subDetail</span>=<span class="string">"Always ask why."</span> </div><div class="line">            <span class="attr">showEnter</span>=<span class="string">&#123;false&#125;</span> /&gt;</div><div class="line"><span class="tag">&lt;<span class="name">ScrollContent</span> </span></div><div class="line">            <span class="attr">uri</span>=<span class="string">"http://ocef2grmj.bkt.clouddn.com/Group1.png"</span> </div><div class="line">            <span class="attr">title</span>=<span class="string">"Shopping directly"</span> </div><div class="line">            <span class="attr">detail</span>=<span class="string">"Know your factories. Know your costs."</span> </div><div class="line">            <span class="attr">subDetail</span>=<span class="string">"Always ask why."</span> </div><div class="line">            <span class="attr">showEnter</span>=<span class="string">&#123;true&#125;</span> /&gt;</div></pre></td></tr></table></figure>
+<p>这样完成了之后，我们来看一下初期的效果：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/RNSceenShot.gif" alt=""></p>
+<p>你们完成了么？然后大家发现，我们只是完成了一部分，少了一个指示器，然后我们来自定义这个控件，新建js文件<code>pageControl.js</code>。最简单的思维，3个小View（这里我们先写死3个）。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line">import React, &#123; Component, &#125; from 'react'</div><div class="line">import &#123; View, StyleSheet &#125; from 'react-native'</div><div class="line"></div><div class="line">class PageControl extends Component &#123;</div><div class="line"></div><div class="line">  static propTypes = &#123;&#125;</div><div class="line">  static defaultProps = &#123;&#125;</div><div class="line"></div><div class="line">  constructor(props) &#123;</div><div class="line">    super(props)</div><div class="line">    this.state = &#123;&#125;</div><div class="line">  &#125;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;styles.container&#125;</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;this.props.index</span> == <span class="string">0</span> ? <span class="attr">styles.itemHighLight</span> <span class="attr">:</span> <span class="attr">styles.item</span>&#125;&gt;</span><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;this.props.index</span> == <span class="string">1</span> ? <span class="attr">styles.itemHighLight</span> <span class="attr">:</span> <span class="attr">styles.item</span>&#125;&gt;</span><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">View</span> <span class="attr">style</span>=<span class="string">&#123;this.props.index</span> == <span class="string">2</span> ? <span class="attr">styles.itemHighLight</span> <span class="attr">:</span> <span class="attr">styles.item</span>&#125;&gt;</span><span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">      <span class="tag">&lt;/<span class="name">View</span>&gt;</span></div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  container: &#123;</div><div class="line">    backgroundColor: 'white',</div><div class="line">    flexDirection: 'row',</div><div class="line">    alignItems: 'center',</div><div class="line">    justifyContent: "space-between",</div><div class="line">    width: 50,</div><div class="line">    marginTop: 40</div><div class="line">  &#125;,</div><div class="line">  item: &#123;</div><div class="line">    width: 10,</div><div class="line">    height: 10,</div><div class="line">    borderRadius: 5,</div><div class="line">    backgroundColor: 'white',</div><div class="line">    borderColor: '#34a3ff',</div><div class="line">    borderWidth: 1</div><div class="line">  &#125;,</div><div class="line">  itemHighLight: &#123;</div><div class="line">    width: 10,</div><div class="line">    height: 10,</div><div class="line">    borderRadius: 5,</div><div class="line">    backgroundColor: 'skyblue'</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">export default PageControl</div></pre></td></tr></table></figure>
+<p>这里写的比较作死， 这里应该是外界传入items的个数，然后每次设置一下index就好了，这里偷懒了，我们继续来优化这个pageControl，稍作修改：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">render() &#123;</div><div class="line">    var number = this.props.number;</div><div class="line">    var index = this.props.index;</div><div class="line">    var items = new Array();</div><div class="line">    for (var i=0; i&lt;number; i++) &#123;</div><div class="line">      var item = (</div><div class="line">        &lt;View style=&#123;i == index ? styles.itemHighLight : styles.item&#125; key=&#123;i&#125; &gt;&lt;/View&gt;</div><div class="line">      );</div><div class="line">      items.push(item);</div><div class="line">    &#125;</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;styles.container&#125;&gt;</div><div class="line">        &#123;items&#125;</div><div class="line">      &lt;/View&gt;</div><div class="line">    )</div><div class="line"> &#125;</div></pre></td></tr></table></figure>
+<p>这样在使用的时候就可以：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">PageControl</span> <span class="attr">style</span>=<span class="string">&#123;styles.pageControl&#125;</span> <span class="attr">number</span>=<span class="string">&#123;3&#125;</span> <span class="attr">index</span>=<span class="string">&#123;this.props.index&#125;/</span>&gt;</span></div></pre></td></tr></table></figure>
+<p>到现在，我们总算磕磕绊绊的完成了一个滑动视图，而且还有很多的缺陷。明天我们继续来优化这个小的组件，争取做到每个方面都很极致。</p>
+<p><a href="https://github.com/WildDylan/INSProject" target="_blank" rel="external">代码的地址</a>，以后每次更新之后都会修改这里的代码。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/20/如何迈出第一步/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/20/如何迈出第一步/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/21/如何迈出第二步（组件优化）/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    如何迈出第二步（组件优化）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/19/算法第五课/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">算法第五课</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/20/如何迈出第一步/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

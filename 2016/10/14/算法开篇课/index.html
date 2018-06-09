@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>算法开篇课 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="算法开篇介绍：Algorithm，是指解题方案的准确而完整的描述，代表着用系统的方法描述解决问题的策略机制。
+最快最简单的排序首先看题：
+班上有5位同学，分别考了5分，3分，5分，8分，2分，将分数从大到小排序是8，5，5，3，2。有什么好的办法可以编写一段程序，让计算机随机读入5个分数然后将这5个分数从大到小输出。老道的程序员可能各种冒泡，打擂台，这都比较深入了，先往下看：
+我们借助一个一维数组">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法开篇课">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/14/算法开篇课/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="算法开篇介绍：Algorithm，是指解题方案的准确而完整的描述，代表着用系统的方法描述解决问题的策略机制。
+最快最简单的排序首先看题：
+班上有5位同学，分别考了5分，3分，5分，8分，2分，将分数从大到小排序是8，5，5，3，2。有什么好的办法可以编写一段程序，让计算机随机读入5个分数然后将这5个分数从大到小输出。老道的程序员可能各种冒泡，打擂台，这都比较深入了，先往下看：
+我们借助一个一维数组">
+<meta property="og:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+<meta property="og:updated_time" content="2017-02-04T08:40:24.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法开篇课">
+<meta name="twitter:description" content="算法开篇介绍：Algorithm，是指解题方案的准确而完整的描述，代表着用系统的方法描述解决问题的策略机制。
+最快最简单的排序首先看题：
+班上有5位同学，分别考了5分，3分，5分，8分，2分，将分数从大到小排序是8，5，5，3，2。有什么好的办法可以编写一段程序，让计算机随机读入5个分数然后将这5个分数从大到小输出。老道的程序员可能各种冒泡，打擂台，这都比较深入了，先往下看：
+我们借助一个一维数组">
+<meta name="twitter:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-算法开篇课" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法开篇课
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/14/算法开篇课/">
+            <time datetime="2016-10-14T05:13:53.000Z" itemprop="datePublished">2016-10-14</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>算法开篇介绍：<code>Algorithm</code>，是指解题方案的准确而完整的描述，代表着用系统的方法描述解决问题的策略机制。</p>
+<h4 id="最快最简单的排序"><a href="#最快最简单的排序" class="headerlink" title="最快最简单的排序"></a>最快最简单的排序</h4><p>首先看题：</p>
+<p>班上有5位同学，分别考了5分，3分，5分，8分，2分，将分数从大到小排序是8，5，5，3，2。有什么好的办法可以编写一段程序，让计算机随机读入5个分数然后将这5个分数从大到小输出。老道的程序员可能各种冒泡，打擂台，这都比较深入了，先往下看：</p>
+<p>我们借助一个一维数组就可以解决这个问题，创建一个a[11]的数组，这样下标分别为a[0]-&gt;a[10]，分别表示0分，1分…10分，每当有一个分数出现，就在对应的下标位置+1，最后打印即可满足我们现在的要求。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> a[<span class="number">11</span>];</div><div class="line">  <span class="keyword">int</span> scannedNumber;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">11</span>; i ++) &#123;</div><div class="line">    a[i] = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; <span class="number">5</span>; j ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;scannedNumber);</div><div class="line">    a[scannedNumber] ++;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">10</span>; k &gt;= <span class="number">0</span>; k --) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; a[k]; l ++) &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d"</span>, k);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种排序算法，我们称为<strong>桶排序</strong>，每个分数都好比一个桶，每出现一次，就在桶中加一点东西。接下来，我们尝试着对数据范围在0~100之间的任意数量数字进行从大到小的排序：</p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> book[<span class="number">101</span>], scannedNumber;</div><div class="line">  <span class="keyword">int</span> inputCount;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">101</span>; i ++) &#123;</div><div class="line">    book[i] = <span class="number">0</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Enter numbers you want:"</span>);</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;inputCount);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; inputCount; j ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;scannedNumber);</div><div class="line">    book[scannedNumber] ++;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">100</span>; k &gt;= <span class="number">0</span>; k --) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">0</span>; l &lt; book[k]; l ++) &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d "</span>, k);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同样没有什么问题的，我们接下来考虑时间复杂度的问题：代码中第6行，循环了M次（M为桶的个数），第14行循环了N次（输入的数字个数），19行循环了M+N次，所以我们得到时间复杂度为O(2*(M+N))，在说时间复杂度的时候，可以忽略较小的常数，所以最终的时间复杂度为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(M+<span class="keyword">N</span>)</div></pre></td></tr></table></figure>
+<p>这是一个非常快的排序算法，其实这还不是真正的桶排序，桶排序实际要更复杂，这个只能算简化版。基本上还不能算是一个真正意义的算法，上边的处理如果碰到输出得该分数的同学的信息就显得有点问题了，因为我们只是输出了分数。所以引出第二节：冒泡排序</p>
+<h4 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h4><p>简化版的桶排序，不仅仅有使用范围的限制，更是浪费空间，如果我们需要排序的范围是0~2100000000，那就要申请2100000001个变量，我们要用这么多的桶来存储每一个数字出现的次数。即时，你只给3个数字（1， 19999， 1999999）排序，也需要2000001个桶，太浪费了。还不止，如果是浮点型呢？那我们接触一个新的算法，<strong>冒泡排序</strong>！它可以很好的解决这2个问题。冒泡排序的基本思想是，相邻的2个元素，如果顺序错误就把他们位置互换。如果我们要将</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">12, 35, 99, 18, 76</div></pre></td></tr></table></figure>
+<p>这几个数从大到小进行排序，越小的越靠后。</p>
+<p>首先：比较第1位和第2位的大小，我们发现12要比35小，所以交换位置，交换后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">35, 12, 99, 18, 76</div></pre></td></tr></table></figure>
+<p>然后：按照上述的方法，继续往下比较，第2位与第3位….</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">35, 99, 12, 18, 76</div></pre></td></tr></table></figure>
+<p>继续：第3位和第4位：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">35, 99, 18, 12, 76</div></pre></td></tr></table></figure>
+<p>继续：第4位和第5位：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">35, 99, 18, 76, 12</div></pre></td></tr></table></figure>
+<p>经过4次比较之后，最小的数字已经到了最后一位，一位一位的比，大的就往前换，就像一个气泡，所以称为<code>冒泡</code>。到这里，我们只是将其中的一个数字归位了，继续重复上面的过程：继续比较第1位与第2位，第2位与第3位，第3位与第4位，你会发现，第5位不需要比较了，因为他已经是最小的了。第二次比较后：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">99, 35, 76, 18, 12</div></pre></td></tr></table></figure>
+<p>接下来的几次都是这样，有几个数字，比较的次数是n-1趟。冒泡的原则是，每次比较只将1个数组归位。接下来我们代码实现：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> a[<span class="number">20</span>], scannedNumber, input;</div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;input);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= input; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;scannedNumber);</div><div class="line">    a[i] = scannedNumber;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 共有INPUT个数字，所以只需要排INPUT-1次即可</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= input - <span class="number">1</span>; i ++) &#123;</div><div class="line">    </div><div class="line">    <span class="comment">// INPUT-I 意味着，每一次外层循环后，都有一个数字归位</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= input - i ; j ++) &#123;</div><div class="line">      </div><div class="line">      <span class="comment">// 交换</span></div><div class="line">      <span class="keyword">if</span> ( a[j] &lt; a[j + <span class="number">1</span>] ) &#123;</div><div class="line">        <span class="keyword">int</span> temp = a[j];</div><div class="line">        a[j] = a[j + <span class="number">1</span>];</div><div class="line">        a[j + <span class="number">1</span>] = temp;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= input; i ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, a[i]);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>将上边的代码稍稍修改，就可以解决前面桶排序无法做到的输出学生信息以及浮点数的问题：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> Student &#123;</div><div class="line">  <span class="keyword">char</span> name[<span class="number">20</span>];</div><div class="line">  <span class="keyword">float</span> score;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">struct</span> Student s[<span class="number">100</span>];</div><div class="line">  <span class="keyword">int</span> scannedNumber;</div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;scannedNumber);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= scannedNumber; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%s %f"</span>, s[i].name, &amp;s[i].score);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 控制排序次数</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= scannedNumber - <span class="number">1</span>; j ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= scannedNumber - j; k ++) &#123;</div><div class="line">      <span class="keyword">if</span> (s[k].score &lt; s[k+<span class="number">1</span>].score) &#123;</div><div class="line">        <span class="keyword">struct</span> Student temp = s[k];</div><div class="line">        s[k] = s[k + <span class="number">1</span>];</div><div class="line">        s[k + <span class="number">1</span>] = temp;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> l = <span class="number">1</span>; l &lt;= scannedNumber; l ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%s, %.2f\n"</span>, s[l].name, s[l].score);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>完美搞定了。输入：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dylan <span class="number">81.5</span></div><div class="line">alice <span class="number">64.6</span></div><div class="line">peter <span class="number">91.4</span></div><div class="line">bobo <span class="number">31.9</span></div><div class="line">amy <span class="number">67</span></div></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">peter, <span class="number">91.40</span></div><div class="line">dylan, <span class="number">81.50</span></div><div class="line">amy, <span class="number">67.00</span></div><div class="line">alice, <span class="number">64.60</span></div><div class="line">bobo, <span class="number">31.90</span></div></pre></td></tr></table></figure>
+<p>冒泡排序的核心部分是嵌套循环，不难看出，冒泡循环的复杂度是：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(<span class="keyword">N</span>^<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>这是一个很高的时间复杂度，冒泡排序除了它迷人的名字，以时间复杂度来看，没什么好推荐的，想要更好的排序么？</p>
+<h4 id="快速排序"><a href="#快速排序" class="headerlink" title="快速排序"></a>快速排序</h4><p>冒泡排序算是我们学习的第一个算法，但是时间浪费的极多。假定计算机运行10亿次/秒，桶排序需要10亿+1个位置，但只需要0.1s，冒泡排序则需要1千万秒。接下来我们了解快速排序。首先记住快速排序的核心方法：设，基准数为左边第一个数，保证基准数左边全部比它小，右边全部比它大；所以2个起点，最左边、最右边。共同向中间触发，右边先走（注意，左边为基准数，一定要先从右往左，先想想为什么，后面给出解释），先从右边向左边找一个比基准数小的数字，然后从左边向右边找一个比基准数大的数字，交换他们。当左右碰面的时候，交换当前数字与基准数的位置。当基准数确认位置之后，基准数左边、右边分为2个子列（有一点点2分味道，以后讲），在进行设置基准数，寻找。这里用到了递归，所以我们来模拟一下过程，假定有这样一个数列：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">7</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">10</span>, <span class="number">8</span></div></pre></td></tr></table></figure>
+<p>我们以最左边的6为初始基准数，从左向右找一个大于6的数，从右向左找一个小于6的数字，并交换，我们发现，从右向左第一个小于6的数字是5，从左向右第一个大于6的数字是7，交换他们的位置</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">8</span></div></pre></td></tr></table></figure>
+<p>接下来，继续向前寻找，左向右发现了9，右向左发现了4，所以交换他们：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">8</span></div></pre></td></tr></table></figure>
+<p>继续往前，糟了，2个人撞一起了，这个时候，把基准数与这个数字交换位置：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span>, <span class="number">6</span>, <span class="number">9</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">8</span></div></pre></td></tr></table></figure>
+<p>这样，基准数字6已经归位，而且左边都是小于6的数字，右边都是大于6的数字。接下来，我们分别处理左边、右边两个数列：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span></div><div class="line"><span class="number">9</span>, <span class="number">7</span>, <span class="number">10</span>, <span class="number">8</span></div></pre></td></tr></table></figure>
+<p>先处理第一个序列，3为基准数：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">   i→      ←j</div><div class="line"><span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">5</span>, <span class="number">4</span></div><div class="line">      得</div><div class="line"><span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>, <span class="number">4</span></div><div class="line">      得</div><div class="line">子串<span class="number">1</span>： <span class="number">2</span>, <span class="number">1</span>   -&gt; <span class="number">1</span>, <span class="number">2</span></div><div class="line"></div><div class="line">子串<span class="number">2</span>： <span class="number">5</span>, <span class="number">4</span>   -&gt; <span class="number">4</span>, <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>因为是右边先开始，所以在2的位置，会碰撞，交换位置即得到了结果。子串<code>9, 7, 10, 8</code>大家自己去分析一下。最终排序结束了。然后我们按照上边的思想来写代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> a[<span class="number">11</span>];</div><div class="line"><span class="keyword">int</span> count = <span class="number">10</span>;</div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;a[i]);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  sort(<span class="number">1</span>, count);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= count; j ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, a[j]);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">sort</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> right)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> ( left &gt; right ) &#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 设置基准数</span></div><div class="line">  <span class="keyword">int</span> refNum = a[left];</div><div class="line">  </div><div class="line">  <span class="comment">// 设置左右起点</span></div><div class="line">  <span class="keyword">int</span> lPoint = left;</div><div class="line">  <span class="keyword">int</span> rPoint = right;</div><div class="line">  </div><div class="line">  <span class="comment">// 当没有碰撞的时候，不停的交换</span></div><div class="line">  <span class="keyword">while</span> (lPoint != rPoint) &#123;</div><div class="line">    <span class="comment">// 从右边开始找，比基准数小的数字, 然后停止，注意我的判断，如果比基准数大，rPoint向前移动一位，也就是说，如果比基准数字小，rPoint记录的就是这个数字的位置</span></div><div class="line">    <span class="keyword">while</span> (a[rPoint] &gt;= refNum &amp;&amp; lPoint &lt; rPoint) &#123;</div><div class="line">      rPoint --;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 左边找，比基准数大的数字，然后停止</span></div><div class="line">    <span class="keyword">while</span> (a[lPoint] &lt;= refNum &amp;&amp; lPoint &lt; rPoint ) &#123;</div><div class="line">      lPoint ++;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 交换位置</span></div><div class="line">    <span class="keyword">if</span> ( lPoint &lt; rPoint ) &#123;</div><div class="line">      <span class="keyword">int</span> temp = a[lPoint];</div><div class="line">      a[lPoint] = a[rPoint];</div><div class="line">      a[rPoint] = temp;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 归位基准数字，这个时候，左右标记点处于同一个位置上，也就是基准点应该在的位置</span></div><div class="line">  a[left] = a[lPoint];</div><div class="line">  a[lPoint] = refNum;</div><div class="line">  <span class="comment">// 交换之后，开始处理子串，基准数不需要动位置</span></div><div class="line">  sort(left, lPoint - <span class="number">1</span>);</div><div class="line">  sort(lPoint + <span class="number">1</span>, right);</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> ;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们来回顾上边的问题<code>左边为基准数，为什么一定要先从右边开始</code>?</p>
+<p>基准数字在左边，假设，左边先开始，找的是比基准数字大的数字：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">3</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">7</span></div></pre></td></tr></table></figure>
+<p>如上，找到数字6的时候，左边停下了，右边开始寻找，发现直接碰撞了，变成了：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">6</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">7</span></div></pre></td></tr></table></figure>
+<p>但是如果从右边开始就会变成</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">2</span>, <span class="number">1</span>, <span class="number">3</span>, <span class="number">6</span>, <span class="number">7</span></div></pre></td></tr></table></figure>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p>排序的算法还有很多，计数、基数、插入、归并、堆排序等，我们在后边会慢慢的涉及到。当然，快排的时间复杂度怎么算呢？我们想想，最差的情况，就是像冒泡一样，相邻的2个数字不停的交换，为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(<span class="keyword">N</span>^<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>快排的最好时间复杂度为（<a href="http://blog.csdn.net/hn_gsf/article/details/52249621" target="_blank" rel="external">为什么</a>）：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(NLogN)</div></pre></td></tr></table></figure>
+<p>由于关键字的比较和交换是跳跃进行的，因此，快速排序是一种不稳定的排序方法。</p>
+<h4 id="练习"><a href="#练习" class="headerlink" title="练习"></a>练习</h4><p>要求对不定数量的数字进行排序，1秒之内完成。</p>
+<p>拿到这道题，我们关注的应当是1s之内，数字是不定量的，我们需要按照上边提供的时间复杂度来讲。假如说现在范围超级大，使用桶排序基本不可能的，因为没法申请那么大的数组，如果数字超级多，使用冒泡排序的时间复杂度又是<code>O(N^2)</code>，但是使用快速排序却很好。代码省略了。</p>
+<p>本文结束。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/14/算法开篇课/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/14/算法开篇课/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/14/使用yarn制作npm包/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    使用yarn制作npm包
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/14/上传Library到JCenter/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">上传Library到JCenter</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/14/算法开篇课/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

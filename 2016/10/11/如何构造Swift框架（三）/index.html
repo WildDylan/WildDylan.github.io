@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>如何构造Swift框架（三） | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="为什么将数据模块与网络模块一起编写？紧密相关的2者，也是应用程序最常见的组合：请求数据-存储数据-展示数据。
+
+数据模块（JSON、Model、DB）数据持久层其实有很多杂乱的选择，文件做为持久层的基础类型，又被分为sql、xml等等类型，我们可选的范围也很广阔，也可以自己动手来完善整个持久层模块，但这似乎对于很懒的程序员来说太浪费玩耍的时间了。所以我们索性在一些完善的开源库中挑选一类供我们做上">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何构造Swift框架（三）">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/11/如何构造Swift框架（三）/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="为什么将数据模块与网络模块一起编写？紧密相关的2者，也是应用程序最常见的组合：请求数据-存储数据-展示数据。
+
+数据模块（JSON、Model、DB）数据持久层其实有很多杂乱的选择，文件做为持久层的基础类型，又被分为sql、xml等等类型，我们可选的范围也很广阔，也可以自己动手来完善整个持久层模块，但这似乎对于很懒的程序员来说太浪费玩耍的时间了。所以我们索性在一些完善的开源库中挑选一类供我们做上">
+<meta property="og:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+<meta property="og:updated_time" content="2016-10-13T03:37:33.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何构造Swift框架（三）">
+<meta name="twitter:description" content="为什么将数据模块与网络模块一起编写？紧密相关的2者，也是应用程序最常见的组合：请求数据-存储数据-展示数据。
+
+数据模块（JSON、Model、DB）数据持久层其实有很多杂乱的选择，文件做为持久层的基础类型，又被分为sql、xml等等类型，我们可选的范围也很广阔，也可以自己动手来完善整个持久层模块，但这似乎对于很懒的程序员来说太浪费玩耍的时间了。所以我们索性在一些完善的开源库中挑选一类供我们做上">
+<meta name="twitter:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?227e5d8d0caa5ecfb18870a04cf079c9";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">dylan</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App &amp; Web &amp; Server Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <a id="follow" target="_blank" href="https://github.com/WildDylan/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                6
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-如何构造Swift框架（三）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            如何构造Swift框架（三）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/11/如何构造Swift框架（三）/">
+            <time datetime="2016-10-11T04:16:46.000Z" itemprop="datePublished">2016-10-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>为什么将数据模块与网络模块一起编写？紧密相关的2者，也是应用程序最常见的组合：请求数据-存储数据-展示数据。</p>
+</blockquote>
+<h6 id="数据模块（JSON、Model、DB）"><a href="#数据模块（JSON、Model、DB）" class="headerlink" title="数据模块（JSON、Model、DB）"></a>数据模块（JSON、Model、DB）</h6><p>数据持久层其实有很多杂乱的选择，文件做为持久层的基础类型，又被分为sql、xml等等类型，我们可选的范围也很广阔，也可以自己动手来完善整个持久层模块，但这似乎对于很懒的程序员来说太浪费玩耍的时间了。所以我们索性在一些完善的开源库中挑选一类供我们做上层的封装。我们姑且确定选择FMDB作为我们的数据库支撑，但是联想到一般情况下，把JSON转换为Model直接存向数据库是常用需求，所以在数据模块这一层貌似扩展的很大了。我们首先引入<a href="https://github.com/SwiftyJSON/SwiftyJSON" target="_blank" rel="external">SwiftyJSON</a>作为JSON解析，不仅供框架使用也供外层使用，但是SwiftJSON解析后的数据仅是JSON对象，看来我们要亲自把JSON对象转换为Model了，写好之后，就是数据的存储。</p>
+<a id="more"></a>
+<p>通常情况下，iOS App中常用的存储：UserDefault、WriteToFile、SQL、钥匙串等。为了框架的通用性，只选择完善SQL，即Model-&gt;DB，至于别的存储让App在框架外层随意。如果你的团队不是足够成熟的话， 并不建议在项目中使用CoreData。</p>
+<p>想想这个模块比较大，所以单开一个文件夹：<code>Model</code>吧。</p>
+<p>首先引入SwiftJSON作为JSON解析的模块。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'SwiftyJSON'</span></div></pre></td></tr></table></figure>
+<p>明确目标1：</p>
+<ul>
+<li>JSON对象转换为模型</li>
+<li>模型转换为JSON对象</li>
+</ul>
+<p>要实现我们这2个功能，必须遵守协议，在协议的方法中返回Mapping供我们赋值，类似：[属性名：JSON对象的Key]。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">ModelMap</span> </span>&#123;</div><div class="line">  <span class="comment">/// 提供属性的对应Map</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - returns: 字典，为：属性名称：(JSON对象中名称，类型)</span></div><div class="line">  <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">keyMapping</span><span class="params">()</span></span> -&gt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>, (<span class="type">String</span>, <span class="type">String</span>)&gt;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>首先我们要了解一些关于Swift runtime的东西，在纯Swift类中的属性在未添加<code>dynamic</code>修饰之前是不可以被运行时获取到属性的，之前我写过一篇有关Swift运行时的<a href="http://www.jianshu.com/p/9c36a5b7820a" target="_blank" rel="external">文章</a>，可以细阅。</p>
+<p>在这里有一个缺陷，就是我们这个库不允许你的模型是继承来的，因为static关键字代替了<code>class final</code>，在子类中不可以被覆盖，使用Extension又不能很好的解决方便程度上的问题而且需要写基类。所以在考虑了很多很多之后，还是决定写扩展！并且不对纯Swift类进行处理，只处理NSObject类。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="comment">/// 提供属性的对应Map</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - returns: 字典，为：属性名称：JSON对象中名称</span></div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">keyMapping</span>() -&gt;<span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">String</span>&gt;? </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 提供的类对应Map</span></div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">classMapping</span>() -&gt;<span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">AnyClass</span>&gt;? </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 忽略的属性的名称</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - returns: 数组，忽略的属性名称数组</span></div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">ignoredKey</span>() -&gt;[<span class="title">String</span>]? </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样所有需要被转换的类都需要继承Model类。但是使用的时候就比较尴尬了，必须要提供一个初始值，下面是我们的测试类：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"><span class="keyword">import</span> INSSwift</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> name: <span class="type">String</span> = <span class="string">""</span></div><div class="line">  <span class="keyword">var</span> gender : <span class="type">Bool</span> = <span class="literal">false</span></div><div class="line">  <span class="keyword">var</span> array: <span class="type">Array</span> = [<span class="string">""</span>]</div><div class="line">  <span class="keyword">var</span> dictionary: <span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">Any</span>&gt; = [<span class="string">""</span>: <span class="string">""</span>]</div><div class="line">  </div><div class="line">  <span class="keyword">var</span> student: <span class="type">Student</span> = <span class="type">Student</span>()</div><div class="line">  <span class="keyword">var</span> teachers: [<span class="type">Teacher</span>] = []</div><div class="line">  </div><div class="line">  <span class="keyword">var</span> ignored: <span class="type">String</span> = <span class="string">""</span></div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">keyMapping</span>() -&gt;<span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">String</span>&gt;? </span>&#123;</div><div class="line">    <span class="keyword">return</span> [</div><div class="line">      <span class="string">"gender"</span>: <span class="string">"dictionary, gender"</span>,</div><div class="line">      <span class="string">"teachers"</span>: <span class="string">"student, t"</span></div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">classMapping</span>() -&gt;<span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">AnyClass</span>&gt;? </span>&#123;</div><div class="line">    <span class="keyword">return</span> [</div><div class="line">      <span class="string">"student"</span>: <span class="type">Student</span>.<span class="keyword">self</span>,</div><div class="line">      <span class="string">"teachers"</span>: <span class="type">Teacher</span>.<span class="keyword">self</span></div><div class="line">    ]</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">ignoredKey</span>() -&gt;[<span class="title">String</span>]? </span>&#123;</div><div class="line">    <span class="keyword">return</span> [<span class="string">"ignored"</span>]</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Student</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> sname: <span class="type">String</span> = <span class="string">""</span></div><div class="line">  <span class="keyword">var</span> sage: <span class="type">Int</span> = <span class="number">0</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Teacher</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> tname: <span class="type">String</span> = <span class="string">""</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果<code>dynamic var name: String?</code>的话，后果自负…会提示错误不能转换为OC类型。这里我附上完整的Model处理的代码以及测试代码，在Model文件夹下新建文件<code>Model.swift</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> SwiftyJSON</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">PropertyType</span>: <span class="title">String</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> tString = <span class="string">"T@\"NSString\""</span></div><div class="line">  <span class="keyword">case</span> tNSArray = <span class="string">"T@\"NSArray\""</span></div><div class="line">  <span class="keyword">case</span> tNSDictionary = <span class="string">"T@\"NSDictionary\""</span></div><div class="line">  <span class="keyword">case</span> tBool = <span class="string">"TB"</span></div><div class="line">  <span class="keyword">case</span> tClass = <span class="string">"T@\"_TtC"</span></div><div class="line">  <span class="keyword">case</span> tDouble = <span class="string">"Td"</span></div><div class="line">  <span class="keyword">case</span> tFloat = <span class="string">"Tf"</span></div><div class="line">  <span class="keyword">case</span> tInt = <span class="string">"Tq"</span></div><div class="line">  <span class="keyword">case</span> tInt8 = <span class="string">"Tc"</span></div><div class="line">  <span class="keyword">case</span> tInt16 = <span class="string">"Ts"</span></div><div class="line">  <span class="keyword">case</span> tInt32 = <span class="string">"Ti"</span></div><div class="line">  <span class="keyword">case</span> tUInt = <span class="string">"TQ"</span></div><div class="line">  <span class="keyword">case</span> tUInt8 = <span class="string">"TC"</span></div><div class="line">  <span class="keyword">case</span> tUInt16 = <span class="string">"TS"</span></div><div class="line">  <span class="keyword">case</span> tUInt32 = <span class="string">"TI"</span></div><div class="line">  <span class="keyword">case</span> unknow = <span class="string">"UNKNOWTYPE"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="comment">/// 提供属性的对应Map</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - returns: 字典，为：属性名称：JSON对象中名称</span></div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">keyMapping</span>() -&gt;<span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">String</span>&gt;? </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 提供的类对应Map</span></div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">classMapping</span>() -&gt;<span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">AnyClass</span>&gt;? </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 忽略的属性的名称</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - returns: 数组，忽略的属性名称数组</span></div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">ignoredKey</span>() -&gt;[<span class="title">String</span>]? </span>&#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 模型生成工厂</span></div><div class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ModelFactory</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="comment">// MARK: - 对象生成</span></div><div class="line">  </div><div class="line">  <span class="comment">/// 转换JSON-&gt;Model</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - parameter json: JSON对象</span></div><div class="line">  <span class="comment">/// - parameter cls: 类型</span></div><div class="line">  <span class="comment">/// - returns: AnyObject</span></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">Convert</span>(<span class="title">JSON</span> <span class="title">json</span>: <span class="title">JSON</span>?, <span class="title">to</span> <span class="title">cls</span>: <span class="title">AnyClass</span>) -&gt;<span class="title">AnyObject</span>? </span>&#123;</div><div class="line">    <span class="keyword">let</span> model = cls.alloc()</div><div class="line">    <span class="keyword">let</span> keyMapping = cls.keyMapping()</div><div class="line">    <span class="keyword">let</span> classMapping = cls.classMapping()</div><div class="line">    </div><div class="line">    setValue(with: fullPropertyFor(<span class="class"><span class="keyword">class</span>: <span class="title">cls</span>), <span class="title">for</span>: <span class="title">model</span>, <span class="title">with</span>: <span class="title">classMapping</span>, <span class="title">with</span>: <span class="title">keyMapping</span>, <span class="title">data</span>: <span class="title">json</span>)</span></div><div class="line">    <span class="title">return</span> <span class="title">model</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  // <span class="title">MARK</span>: - <span class="title">Private</span> <span class="title">methods</span></div><div class="line">  </div><div class="line">  /// 赋值</div><div class="line">  /// - <span class="title">parameter</span> <span class="title">props</span>: 属性对应字典</div><div class="line">  /// - <span class="title">parameter</span> <span class="title">object</span>: 赋值的对象</div><div class="line">  /// - <span class="title">parameter</span> <span class="title">clsMap</span>: 类型映射字典</div><div class="line">  /// - <span class="title">parameter</span> <span class="title">mapping</span>: 属性映射字典</div><div class="line">  /// - <span class="title">parameter</span> <span class="title">data</span>: <span class="title">JSON</span>对象</div><div class="line">  <span class="title">public</span> <span class="title">class</span> <span class="title">func</span> <span class="title">setValue</span>(<span class="title">with</span> <span class="title">props</span>: <span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">String</span>&gt;?,</div><div class="line">                             <span class="title">for</span> <span class="title">object</span>: <span class="title">AnyObject</span>,</div><div class="line">                             <span class="title">with</span> <span class="title">clsMap</span>: <span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">AnyClass</span>&gt;?,</div><div class="line">                             <span class="title">with</span> <span class="title">mapping</span>: <span class="title">Dictionary</span>&lt;<span class="title">String</span>, <span class="title">String</span>&gt;?,</div><div class="line">                             <span class="title">data</span> <span class="title">data</span>: <span class="title">JSON</span>?) &#123;</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> fullInfos = props, fullInfos.<span class="built_in">count</span> != <span class="number">0</span>, <span class="keyword">let</span> json = data <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="comment">/// 将所有的Info取出来</span></div><div class="line">    <span class="keyword">for</span> (key, typeString) <span class="keyword">in</span> fullInfos &#123;</div><div class="line">      <span class="comment">/// 首先从Mapping中检测是否有对应的Mapper</span></div><div class="line">      <span class="keyword">let</span> <span class="type">JSONKey</span> = mapping?[key] ?? key</div><div class="line">      <span class="keyword">var</span> <span class="type">JSONValue</span> = json[<span class="type">JSONKey</span>]</div><div class="line">      <span class="keyword">if</span> <span class="type">JSONKey</span>.<span class="built_in">contains</span>(<span class="string">","</span>) &#123;</div><div class="line">        <span class="keyword">var</span> items: <span class="type">Array</span>&lt;<span class="type">String</span>&gt; = []</div><div class="line">        <span class="keyword">for</span> item <span class="keyword">in</span> <span class="type">JSONKey</span>.components(separatedBy: <span class="string">","</span>) &#123;</div><div class="line">          items.append(item.replacingOccurrences(of: <span class="string">" "</span>, with: <span class="string">""</span>))</div><div class="line">        &#125;</div><div class="line">        <span class="type">JSONValue</span> = json[items]</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="keyword">let</span> propType = <span class="type">PropertyType</span>(rawValue: typeString)</div><div class="line">      </div><div class="line">      <span class="keyword">if</span> <span class="keyword">let</span> classMapping = clsMap, <span class="keyword">let</span> pointedClass = classMapping[key] &#123;</div><div class="line">        <span class="comment">// 该属性实现了类型Map</span></div><div class="line">        <span class="keyword">if</span> propType == .tClass &#123;</div><div class="line">          <span class="keyword">let</span> sweetObject = <span class="type">Convert</span>(<span class="type">JSON</span>: <span class="type">JSONValue</span>, to: pointedClass)</div><div class="line">          object.setValue(sweetObject, forKey: key)</div><div class="line">          <span class="keyword">continue</span></div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> propType == .tNSArray &#123;</div><div class="line">          <span class="keyword">let</span> list: <span class="type">Array</span>&lt;<span class="type">JSON</span>&gt; = <span class="type">JSONValue</span>.arrayValue</div><div class="line">          <span class="keyword">var</span> objectArray: <span class="type">Array</span>&lt;<span class="type">AnyObject</span>&gt; = []</div><div class="line">          <span class="keyword">for</span> item <span class="keyword">in</span> list &#123;</div><div class="line">            <span class="keyword">guard</span> <span class="keyword">let</span> arrayObject = <span class="type">Convert</span>(<span class="type">JSON</span>: item, to: pointedClass) <span class="keyword">else</span> &#123;</div><div class="line">              <span class="keyword">continue</span></div><div class="line">            &#125;</div><div class="line">            objectArray.append(arrayObject)</div><div class="line">          &#125;</div><div class="line">          object.setValue(objectArray, forKey: key)</div><div class="line">          <span class="keyword">continue</span></div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="keyword">var</span> value: <span class="type">Any</span>? = <span class="type">JSONValue</span></div><div class="line">      <span class="keyword">if</span> propType == .tString &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.stringValue</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> propType == .tInt || propType == .tInt8 || propType == .tInt16 || propType == .tInt32 ||</div><div class="line">         propType == .tUInt || propType == .tUInt8 || propType == .tUInt16 || propType == .tUInt32 &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.intValue</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> propType == .tDouble &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.doubleValue</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> propType == .tFloat &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.floatValue</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> propType == .tBool &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.boolValue</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> propType == .tNSArray &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.arrayObject</div><div class="line">      &#125;</div><div class="line">      <span class="keyword">if</span> propType == .tNSDictionary &#123;</div><div class="line">        value = <span class="type">JSONValue</span>.dictionaryObject</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      object.setValue(value, forKey: key)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 获得子类与父类叠加后的属性列表</span></div><div class="line">  <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">fullPropertyFor</span>(<span class="title">class</span> <span class="title">cls</span>: <span class="title">AnyClass</span>) -&gt;[<span class="title">String</span>: <span class="title">String</span>]? </span>&#123;</div><div class="line">    <span class="keyword">var</span> currentCls: <span class="type">AnyClass</span> = cls</div><div class="line">    <span class="keyword">var</span> infoDict = [<span class="type">String</span>: <span class="type">String</span>]()</div><div class="line">    </div><div class="line">    <span class="keyword">while</span> <span class="keyword">let</span> parent: <span class="type">AnyClass</span> = currentCls.superclass() &#123;</div><div class="line">      infoDict.merge(dict: propertyFor(<span class="class"><span class="keyword">class</span>: <span class="title">currentCls</span>))</span></div><div class="line">      <span class="title">currentCls</span> = <span class="title">parent</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="title">return</span> <span class="title">infoDict</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  /// 获取类的全部属性</div><div class="line">  <span class="title">public</span> <span class="title">class</span> <span class="title">func</span> <span class="title">propertyFor</span>(<span class="title">class</span> <span class="title">cls</span>: <span class="title">AnyClass</span>) -&gt;[<span class="title">String</span>: <span class="title">String</span>]? &#123;</div><div class="line">    <span class="keyword">var</span> <span class="built_in">count</span>: <span class="type">UInt32</span> = <span class="number">0</span></div><div class="line">    <span class="keyword">let</span> properties = class_copyPropertyList(cls, &amp;<span class="built_in">count</span>)</div><div class="line">    <span class="keyword">let</span> ignoredKeys = cls.ignoredKey() ?? []</div><div class="line">    </div><div class="line">    <span class="keyword">var</span> infoDict = [<span class="type">String</span>: <span class="type">String</span>]()</div><div class="line">    <span class="keyword">for</span> index <span class="keyword">in</span> <span class="number">0</span>..&lt;<span class="built_in">numericCast</span>(<span class="built_in">count</span>) &#123;</div><div class="line">      <span class="keyword">let</span> prop = properties?[<span class="type">Int</span>(index)]</div><div class="line">      </div><div class="line">      <span class="keyword">let</span> pname = <span class="type">String</span>(cString: property_getName(prop))</div><div class="line">      <span class="keyword">let</span> ptype = <span class="type">String</span>(cString: property_getAttributes(prop))</div><div class="line">      </div><div class="line">      <span class="keyword">var</span> propertyRealType: <span class="type">PropertyType</span></div><div class="line">      <span class="keyword">let</span> index = ptype.index(ptype.startIndex, offsetBy: <span class="number">2</span>)</div><div class="line">      </div><div class="line">      <span class="keyword">if</span> <span class="keyword">let</span> type = <span class="type">PropertyType</span>.<span class="keyword">init</span>(rawValue: ptype.substring(to: index)) &#123;</div><div class="line">        propertyRealType = type</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">if</span> ptype.hasPrefix(<span class="type">PropertyType</span>.tString.rawValue) &#123;</div><div class="line">          propertyRealType = <span class="type">PropertyType</span>.tString</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ptype.hasPrefix(<span class="type">PropertyType</span>.tNSArray.rawValue) &#123;</div><div class="line">          propertyRealType = <span class="type">PropertyType</span>.tNSArray</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ptype.hasPrefix(<span class="type">PropertyType</span>.tNSDictionary.rawValue) &#123;</div><div class="line">          propertyRealType = <span class="type">PropertyType</span>.tNSDictionary</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">else</span> <span class="keyword">if</span> ptype.hasPrefix(<span class="type">PropertyType</span>.tClass.rawValue) &#123;</div><div class="line">          propertyRealType = <span class="type">PropertyType</span>.tClass</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">          propertyRealType = <span class="type">PropertyType</span>.unknow</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="keyword">if</span> !ignoredKeys.<span class="built_in">contains</span>(pname) &#123;</div><div class="line">        infoDict[pname] = propertyRealType.rawValue</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    free(properties)</div><div class="line">    </div><div class="line">    <span class="keyword">guard</span> infoDict.<span class="built_in">count</span> != <span class="number">0</span> <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> infoDict</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Dictionary</span> </span>&#123;</div><div class="line">  <span class="keyword">mutating</span> <span class="function"><span class="keyword">func</span> <span class="title">merge</span>&lt;K, V&gt;<span class="params">(dict: [K: V]?)</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> d = dict, d != <span class="literal">nil</span>, d.<span class="built_in">count</span> != <span class="number">0</span> <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (k, v) <span class="keyword">in</span> d &#123;</div><div class="line">      <span class="keyword">self</span>.updateValue(v <span class="keyword">as</span>! <span class="type">Value</span>, forKey: k <span class="keyword">as</span>! <span class="type">Key</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>测试代码（测试的类在上边给出了）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> json: <span class="type">JSON</span> =  [<span class="string">"name"</span>: <span class="string">"Jack"</span>,</div><div class="line">                       <span class="string">"ignored"</span>: <span class="string">"test ignored"</span>,</div><div class="line">                       <span class="string">"array"</span>:</div><div class="line">                        [</div><div class="line">                          <span class="string">"1"</span>, <span class="string">"2"</span>,</div><div class="line">                          <span class="string">"3"</span>, <span class="string">"4"</span></div><div class="line">                        ],</div><div class="line">                       <span class="string">"dictionary"</span>:</div><div class="line">                                  [</div><div class="line">                                    <span class="string">"2"</span>: <span class="literal">true</span>,</div><div class="line">                                    <span class="string">"options"</span>: <span class="number">666</span>,</div><div class="line">                                    <span class="string">"gender"</span>: <span class="literal">true</span></div><div class="line">                                  ],</div><div class="line">                       <span class="string">"student"</span>: [</div><div class="line">                                    <span class="string">"sname"</span>: <span class="string">"JACK"</span>,</div><div class="line">                                    <span class="string">"sage"</span>: <span class="number">10</span>,</div><div class="line">                                    <span class="string">"t"</span>: [</div><div class="line">                                      [<span class="string">"tname"</span>: <span class="string">"teacher1"</span>],</div><div class="line">                                      [<span class="string">"tname"</span>: <span class="string">"teacher2"</span>],</div><div class="line">                                      [<span class="string">"tname"</span>: <span class="string">"teacher3"</span>]</div><div class="line">                                    ]</div><div class="line">                                  ]</div><div class="line">                      ]</div><div class="line"><span class="keyword">let</span> object: <span class="type">Person</span> = <span class="type">ModelFactory</span>.<span class="type">Convert</span>(<span class="type">JSON</span>: json, to: <span class="type">Person</span>.<span class="keyword">self</span>) <span class="keyword">as</span>! <span class="type">Person</span></div><div class="line"><span class="comment">// 使用filter答应、、</span></div><div class="line"><span class="keyword">let</span> s = object.teachers.<span class="built_in">filter</span> &#123;</div><div class="line">  <span class="keyword">let</span> teacher: <span class="type">Teacher</span> = $<span class="number">0</span></div><div class="line">  <span class="built_in">print</span>(teacher.tname)</div><div class="line">  <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">&#125;</div><div class="line"><span class="comment">// 在32行之前加一个断点查看对象属性！</span></div><div class="line"><span class="type">ILog</span>(.debug, object)</div></pre></td></tr></table></figure>
+<p>注：其实在实现Model提供Mapping的时候，期望还是使用Protocol的方式来做，但是不能解决static fun这个问题，static 代表着final class，所以会出现子类无法覆盖的问题。如果有解决方法还请告知，当然，这上边是我们自己手写的代码，在正真环境中，我还是选择了<code>YYModel</code>，前边仅是为了让大家了解一下转换代码。记得去掉SwiftJSON，等下我们的操作是<a href="https://github.com/Alamofire/Alamofire" target="_blank" rel="external">Alamofire</a>-&gt;YYModel-&gt;LKDBHelper，是不是很懒。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod '<span class="type">YYModel'</span></div></pre></td></tr></table></figure>
+<p>明确目标2：</p>
+<ul>
+<li>模型-数据库中的操作（数据库的基本语法在这里不做介绍）</li>
+</ul>
+<p>说到模型-数据库中的操作，其实特别想把<code>LKDBHelper</code>拿来直接使用，这里比较懒，因为代码其实和上边差不多，多个数据库操作而已，所以不写了。LKDBHelper是一套OC的代码而且在Swift上测试没有问题。但是他的Demo是4个月前更新的，应该是Swift2.3版本，所以我们决定，fork一份代码并切转换到Swift3.0做测试，如果没问题，直接拿来用，以减少我们框架模块的编写时间。</p>
+<p>好了，测试没有问题，并且提交了<a href="https://github.com/li6185377/LKDBHelper-SQLite-ORM/pull/83" target="_blank" rel="external">PR</a>。我们现在拉过来使用，作者目前还没有合并到master，大家可以先来<a href="https://github.com/WildDylan/LKDBHelper-SQLite-ORM" target="_blank" rel="external">我的仓库</a>查看使用的Demo。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'LKDBHelper'</span></div></pre></td></tr></table></figure>
+<p>这样我们JSON-模型-数据库的代码基本完成了30%。剩下的都是后期的针对业务的修改。</p>
+<h6 id="网络请求模块"><a href="#网络请求模块" class="headerlink" title="网络请求模块"></a>网络请求模块</h6><p>使用<a href="https://github.com/Alamofire/Alamofire" target="_blank" rel="external">Alamofire</a>，写到这里，读者肯定说我这个框架没有什么技术含量；要知道，这些库的成长经历了多少人的洗礼，而我只有3个人的小团队，创业公司的项目压力各位应该知道。所以合理的使用第三方库也是一个好的选择！如果你在一个大的团队，那么就可以为了晋升去写一点东西了。知道原理就好了，知道原理不写的原因是没有人家那么考虑的全面、构思的缜密。</p>
+<p>新建文件<code>Request.swift</code>，Request对象作为在网络层流动的对象，Alamofire作为支撑。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'Alamofire'</span></div></pre></td></tr></table></figure>
+<p>但是你真的以为我会这么做么？这么做太麻烦了，我很懒的。我们使用<code>Moya</code>+<code>Alamofire</code>。直接上使用流程：可以选择继承INSRequest来实现自己的Request类，也可以直接下一个枚举统一管理，但是Moya这里有个问题是：实现Moya的协议必须要实现所有的方法，该协议中所有的属性全部是required（而且让我不理解的是，sampleData这种非必须数据竟然不是<code>？</code>，已经提了一个issue提问，因为文档没有很明确），对其中的一些属性做解释：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'Moya'</span></div></pre></td></tr></table></figure>
+<p>记得把<strong>开发环境</strong>调整到iOS 9.0</p>
+<p>baseURL： 根地址</p>
+<p>path：网络请求路径</p>
+<p>method：网络请求方法</p>
+<p>parameters： 参数</p>
+<p>sampleData：默认的Response data</p>
+<p>task：当前任务的形态，一般为request，还有upload和download</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> Moya</div><div class="line"></div><div class="line"><span class="comment">/// 在这里完成API的名称定义</span></div><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">MMAPI</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> launch</div><div class="line">  <span class="keyword">case</span> signin(mobilePhoneNumber: <span class="type">String</span>, password: <span class="type">String</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 在这里完成API所需信息补全</span></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">MMAPI</span>: <span class="title">TargetType</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> baseURL: <span class="type">URL</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="type">URL</span>(string: <span class="string">"http://leaf.leanapp.cn/api/"</span>)!</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> path: <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">    <span class="keyword">case</span> .launch:</div><div class="line">      <span class="keyword">return</span> <span class="string">"launch.json"</span></div><div class="line">    <span class="keyword">case</span> .signin:</div><div class="line">      <span class="keyword">return</span> <span class="string">"login"</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> method: <span class="type">Moya</span>.<span class="type">Method</span> &#123;</div><div class="line">    <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">    <span class="keyword">case</span> .signin:</div><div class="line">      <span class="keyword">return</span> .<span class="type">POST</span></div><div class="line">    <span class="keyword">default</span>:</div><div class="line">      <span class="keyword">return</span> .<span class="type">GET</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> parameters: [<span class="type">String</span>: <span class="type">Any</span>]? &#123;</div><div class="line">    <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">    <span class="keyword">case</span> .signin(<span class="keyword">let</span> number, <span class="keyword">let</span> password):</div><div class="line">      <span class="keyword">return</span> [<span class="string">"phone"</span>: number, <span class="string">"passwd"</span>: password]</div><div class="line">    <span class="keyword">default</span>:</div><div class="line">      <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">var</span> sampleData: <span class="type">Data</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="type">Data</span>(base64Encoded: <span class="string">""</span>)!</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">var</span> task: <span class="type">Task</span> &#123;</div><div class="line">    <span class="keyword">return</span> .request</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在使用时候（顺便贴上<a href="https://github.com/Moya/Moya/blob/master/Demo/Demo/GitHubAPI.swift" target="_blank" rel="external">官方Demo</a>的地址）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> provider = <span class="type">MoyaProvider</span>&lt;<span class="type">MMAPI</span>&gt;()</div><div class="line">provider.request(.launch) &#123; result <span class="keyword">in</span></div><div class="line">  <span class="keyword">switch</span> result &#123;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .success(response):</div><div class="line">      <span class="keyword">do</span> &#123;</div><div class="line">        <span class="keyword">if</span> <span class="keyword">let</span> json = <span class="keyword">try</span> response.mapJSON() <span class="keyword">as</span>? <span class="type">NSArray</span> &#123;</div><div class="line">          <span class="type">ILog</span>(.debug, <span class="string">"\(json) \n \(response.statusCode)"</span>)</div><div class="line">        &#125; <span class="keyword">else</span> &#123;&#125;</div><div class="line">        &#125; <span class="keyword">catch</span> &#123;&#125;</div><div class="line">    <span class="keyword">case</span> <span class="keyword">let</span> .failure(error):</div><div class="line">      <span class="type">ILog</span>(.debug, error.localizedDescription)</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-12%20%E4%B8%8B%E5%8D%881.25.29.png" alt=""></p>
+<p>也是看到成功了，这个时候，我们把开始写的-&gt;Model-&gt;DB顺便测试一下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> <span class="keyword">let</span> json = <span class="keyword">try</span> response.mapJSON() <span class="keyword">as</span>? <span class="type">NSDictionary</span> &#123;</div><div class="line">  <span class="comment">// 转换成对象</span></div><div class="line">  <span class="keyword">let</span> launchModel = <span class="type">LaunchModel</span>.yy_model(withJSON: json)</div><div class="line">  <span class="type">ILog</span>(.debug, <span class="string">"\(launchModel?.imageUri) \n \(response.statusCode)"</span>)</div><div class="line">  </div><div class="line">  <span class="comment">// 存储到数据库</span></div><div class="line">  <span class="type">ILog</span>(.debug, <span class="string">"Save to DB result \(launchModel?.saveToDB())"</span>)</div><div class="line">  </div><div class="line">  <span class="comment">// 查询</span></div><div class="line">  <span class="keyword">let</span> searchedObject = <span class="type">LaunchModel</span>.searchSingle(withWhere: <span class="literal">nil</span>, orderBy: <span class="literal">nil</span>) <span class="keyword">as</span>! <span class="type">LaunchModel</span></div><div class="line">  <span class="type">ILog</span>(.debug, <span class="string">"Searched result \(searchedObject.imageUri)"</span>)</div><div class="line">            </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">⚒[DEBUG] [ViewController.swift: viewDidLoad(): 33] </div><div class="line"> Save to DB result Optional(true)</div><div class="line"></div><div class="line">⚒[DEBUG] [ViewController.swift: viewDidLoad(): 36] </div><div class="line"> Searched result Optional(&quot;http://static.zhaogeshi.com&quot;)</div></pre></td></tr></table></figure>
+<p>这里有一个坑大家注意： 在Swift上使用LKDB的时候，必须重写返回类名的方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">LaunchModel</span>: <span class="title">Model</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> bizUri: <span class="type">String</span>?</div><div class="line">  <span class="keyword">var</span> domains: <span class="type">NSArray</span>?</div><div class="line">  <span class="keyword">var</span> hotFixJS: <span class="type">String</span>?</div><div class="line">  <span class="keyword">var</span> imageUri:<span class="type">String</span>?</div><div class="line">  <span class="keyword">var</span> learningURL: <span class="type">String</span>?</div><div class="line">  <span class="keyword">var</span> status: <span class="type">String</span>?</div><div class="line">  <span class="keyword">var</span> version: <span class="type">String</span>?</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">getPrimaryKey</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"version"</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">getTableName</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"LaunchModel"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>否则，Swift这边读出的表名称会有问题，导致数据存储失败。</p>
+<p>这样，借助第三方之手，我们美美的解决了领导给的2大块任务，数据模块与网络模块。依旧只能说，这2大功能模块只是提供了基础的功能，上层的封装还需要我们在接触业务的时候定制。所以这里只说，2大模块只完成了30%。</p>
+<p>下一节开始写日志上报、异常捕获与处理、推送、位置、数据打点等。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/11/如何构造Swift框架（三）/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/13/如何构造Swift框架（四）/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    如何构造Swift框架（四）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/11/如何构造Swift框架（二）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何构造Swift框架（二）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/13/如何构造Swift框架（四）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（四）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/13/如何构造Swift框架（四）/" class="title">如何构造Swift框架（四）</a></p>
+                            <p class="item-date"><time datetime="2016-10-13T03:31:43.000Z" itemprop="datePublished">2016-10-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/11/如何构造Swift框架（三）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（三）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/11/如何构造Swift框架（三）/" class="title">如何构造Swift框架（三）</a></p>
+                            <p class="item-date"><time datetime="2016-10-11T04:16:46.000Z" itemprop="datePublished">2016-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/11/如何构造Swift框架（二）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（二）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/11/如何构造Swift框架（二）/" class="title">如何构造Swift框架（二）</a></p>
+                            <p class="item-date"><time datetime="2016-10-11T03:49:34.000Z" itemprop="datePublished">2016-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/09/如何构造Swift框架（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/09/如何构造Swift框架（一）/" class="title">如何构造Swift框架（一）</a></p>
+                            <p class="item-date"><time datetime="2016-10-09T10:56:43.000Z" itemprop="datePublished">2016-10-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/23/IAP/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.sy.kuaiyong.com/kuaiyong/iosnews/2016-01-25/16b5aedc1c332472d0c9d3b1a05ac8a5.jpg)" alt="IAP" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/23/IAP/" class="title">IAP</a></p>
+                            <p class="item-date"><time datetime="2016-09-23T02:08:53.000Z" itemprop="datePublished">2016-09-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2016 dylan
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2116265"></script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

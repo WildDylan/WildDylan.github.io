@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Crash 收集 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="通常情况下, App中会做崩溃的日志收集, 以便进行问题的追踪。奋斗提供了多个平台日志捕获的代码片断。
+崩溃捕获在iOS中碰到异常之后, 捕获异常, 在Log的位置做日志记录, 崩溃次数统计, 下次启动可以做日志上传或者应用启动保护。下边的runLoop相关的代码的所用是把当前App的RunLoop跑起来, 让程序可以继续运作, 但是某些功能可能无法使用, 可以避免大部分闪退。这段代码是很久以前学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Crash 收集">
+<meta property="og:url" content="https://wilddylan.github.io/2016/08/05/Crash/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="通常情况下, App中会做崩溃的日志收集, 以便进行问题的追踪。奋斗提供了多个平台日志捕获的代码片断。
+崩溃捕获在iOS中碰到异常之后, 捕获异常, 在Log的位置做日志记录, 崩溃次数统计, 下次启动可以做日志上传或者应用启动保护。下边的runLoop相关的代码的所用是把当前App的RunLoop跑起来, 让程序可以继续运作, 但是某些功能可能无法使用, 可以避免大部分闪退。这段代码是很久以前学">
+<meta property="og:image" content="http://images.17173.com/2012/news/2012/12/18/hxz1218mwjs05s.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Crash 收集">
+<meta name="twitter:description" content="通常情况下, App中会做崩溃的日志收集, 以便进行问题的追踪。奋斗提供了多个平台日志捕获的代码片断。
+崩溃捕获在iOS中碰到异常之后, 捕获异常, 在Log的位置做日志记录, 崩溃次数统计, 下次启动可以做日志上传或者应用启动保护。下边的runLoop相关的代码的所用是把当前App的RunLoop跑起来, 让程序可以继续运作, 但是某些功能可能无法使用, 可以避免大部分闪退。这段代码是很久以前学">
+<meta name="twitter:image" content="http://images.17173.com/2012/news/2012/12/18/hxz1218mwjs05s.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Crash" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Crash 收集
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/05/Crash/">
+            <time datetime="2016-08-05T01:30:49.000Z" itemprop="datePublished">2016-08-05</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/崩溃日志/">崩溃日志</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>通常情况下, App中会做崩溃的日志收集, 以便进行问题的追踪。<a href="http://www.blogfshare.com/crash_reporter.html" target="_blank" rel="external">奋斗</a>提供了多个平台日志捕获的代码片断。</p>
+<h2 id="崩溃捕获"><a href="#崩溃捕获" class="headerlink" title="崩溃捕获"></a>崩溃捕获</h2><p>在iOS中碰到异常之后, 捕获异常, 在Log的位置做日志记录, 崩溃次数统计, 下次启动可以做日志上传或者应用启动保护。<br>下边的<code>runLoop</code>相关的代码的所用是把当前App的<code>RunLoop</code>跑起来, 让程序可以继续运作, 但是某些功能可能无法使用, 可以避免大部分闪退。这段代码是很久以前学自<code>孙源</code>。</p>
+<p>下边的代码可以满足最简单的日志收集。成熟的开源项目有 <code>KSCrash</code>、<code>plcrashreporter</code>、<code>CrashKit</code>等。如果想自己的做的更全面就要涉及到更多的知识了, 这篇文章可以帮到你<a href="http://mp.weixin.qq.com/s?__biz=MjM5NTIyNTUyMQ==&amp;mid=208483273&amp;idx=1&amp;sn=37ee88e06e7426f59f3074c536370317&amp;scene=21" target="_blank" rel="external">漫谈iOS Crash收集</a>, 如果细读的话, 请注意<code>多个 Crash 日志收集服务共存的坑</code>。</p>
+<a id="more"></a>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">-(<span class="built_in">BOOL</span>)install&#123;</div><div class="line">    <span class="built_in">NSSetUncaughtExceptionHandler</span>(&amp;UncaughtExceptionHandler);</div><div class="line">    <span class="keyword">return</span> <span class="literal">YES</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">void</span> UncaughtExceptionHandler(<span class="built_in">NSException</span> *exception) &#123;</div><div class="line">  <span class="built_in">NSArray</span> *callStack = [exception callStackSymbols];</div><div class="line">    <span class="built_in">NSString</span> *reason = [exception reason];</div><div class="line">    <span class="built_in">NSString</span> *name = [exception name];</div><div class="line">    <span class="built_in">NSString</span> *content = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"\n异常错误报告\nname:%@\nreason:\n%@\ncallStackSymbols:\n%@"</span>,name,reason,[callStack componentsJoinedByString:<span class="string">@"\n"</span>]];</div><div class="line">    DLogOut(<span class="string">@"%@"</span>, content);</div><div class="line">    <span class="built_in">CFRunLoopRef</span> runLoop = <span class="built_in">CFRunLoopGetCurrent</span>();</div><div class="line">    <span class="built_in">NSArray</span> * modes = <span class="built_in">CFBridgingRelease</span>(<span class="built_in">CFRunLoopCopyAllModes</span>(runLoop));</div><div class="line">    <span class="keyword">while</span> (<span class="number">1</span>) &#123;</div><div class="line">        <span class="keyword">for</span> (<span class="built_in">NSString</span> * mode <span class="keyword">in</span> modes) &#123;</div><div class="line">            <span class="built_in">CFRunLoopRunInMode</span>((<span class="built_in">CFStringRef</span>)mode, <span class="number">0.001</span>, <span class="literal">false</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h2 id="信息上传"><a href="#信息上传" class="headerlink" title="信息上传"></a>信息上传</h2><p>收集到错误信息后, 在第二次启动的时候自然要上传用户的崩溃信息。<br>一般来说, 部分程序提供了关闭日志与错误搜集这个功能的开关。但是大部分程序都是默认开启这项功能, 包括苹果一直在默默的收集Crash日志。</p>
+<p>主要的流程：<code>-ApplicationDidFinishLaunch</code>之后首先检查用户是否开启了错误收集与反馈, 进而决定是否上传错误日志。 判断本地是否存在未上报的错误日志文件, 如果符合条件, 上报当前的崩溃日志, 清空本地日志。一个简单的网络请求而已, 这里不做代码的展示。 当然, App也可以合理的提供一些BUG反馈的界面, 如果没有提供可以使用<code>友盟</code>、<code>蒲公英</code>类似的摇一摇反馈等。</p>
+<h2 id="程序崩溃保护"><a href="#程序崩溃保护" class="headerlink" title="程序崩溃保护"></a>程序崩溃保护</h2><ul>
+<li>启动崩溃</li>
+</ul>
+<p>程序有可能在启动的时候就崩溃了, 这怎么办呢？微信读书给出了很好的方案, 原文在这里<a href="http://wereadteam.github.io/2016/05/23/GYBootingProtection/" target="_blank" rel="external">启动连续闪退保护</a>。原理其实很简单, 捕获到程序在一定时间内没有退出的话, 为正常启动。否则清零计数, 当错误计数达到了设置的最大次数时候, 调用Block进行用户自己的一些处理（文中一处有思路问题：程序启动用户就滑掉了, 其实不会影响的, 只要在AppDelegate-程序退入后台的方法中做一些手脚就好了, 滑掉应用也是要先退入后台）。 总体来说框架思路还是很直接的, 程序启动嘛, 5s差不多用户已经进去了, 所以代码达到了作者的初始思路。光是启动保护其实并没有什么大的用处, 可以在自己做的时候加入一些更好的处理方式。启动崩溃使用上边提到的框架可以解决部分问题。</p>
+<ul>
+<li>使用中崩溃</li>
+</ul>
+<p>在使用中崩溃, 在调试的时候, 有很多次实际是崩溃到了<code>main</code>函数中, 在我们打开全局断电以及僵尸模式等调试设置后, 大部分的崩溃还是会定位到出错的位置, 但是我们在不调试的时候怎么知道某一个用户是崩溃到什么位置呢？因为什么崩溃？还是要牵扯到最开始提到的Crash捕获, 在这里我们就要做错误的分析。通常的崩溃的<code>callstack</code>中我们可以得到部分想要的信息, 然后就是联合判断。</p>
+<p>实际我们做的, 所有的Model都继承基类, 会有自己的标识, 被持有的对象标识等, 其他视图的基类也有对应的标识。建议大家这么做, 任何时候都有好处。</p>
+<p>核心的思路是, 获取到Window当前的VC, 然后运行时取出这个VC相关的信息, 进行定位与分析。</p>
+<p>这个方法可以准确的定位到80%的错误发生, 可以直接定位到具体的VC, 然后结合<code>callStack</code>中的一些信息就可以方便的定位到错误。这样, 我们定位错误的能力提升到80%, 在加上我们对应用的数据打点以及用户的行为追踪, 定位错误的能力提升了更多！。</p>
+<p>这里提供一片关于BUG信息分析的文章<a href="http://blog.csdn.net/cuiweijie3/article/details/8778198/" target="_blank" rel="external">iOS崩溃日志解密</a>。当然为了懒, 你也可以使用念茜提到的<code>Crashlytics</code>, <code>Hockeyapp</code>这样一体的解决方案。</p>
+<hr>
+<h4 id="文章到此结束-下边是本周干货"><a href="#文章到此结束-下边是本周干货" class="headerlink" title="文章到此结束, 下边是本周干货"></a>文章到此结束, 下边是本周干货</h4><hr>
+<h2 id="杀死野指针（MRC老项目细看）"><a href="#杀死野指针（MRC老项目细看）" class="headerlink" title="杀死野指针（MRC老项目细看）"></a>杀死野指针（MRC老项目细看）</h2><ul>
+<li>开发期间</li>
+</ul>
+<p>开发中我们发现, 哎呦, 我们自己测试的没有问题, 为什么别人一用就有问题, 或者是偶尔出现问题？这就是已经被释放的对象在搞鬼。有些对象被release了, 但是他占用的那一块内存保存完好, 有可能不Crash, 访问了不可访问的数据, 肯定会Crash。对象释放后内存被改动过，写上了可以访问的数据，但是再次访问的时候执行的代码把别的数据写坏了，遇到这种Crash只能哭了（随机Crash，难度大，概率低）, 对象释放后再次release（几乎是必现Crash，但也有例外，很常见）。</p>
+<ol>
+<li>加入全局断点</li>
+<li>做下边的配置</li>
+</ol>
+<p><img src="http://um.devdylan.cn/blog-8-5-1.png" alt=""></p>
+<p>在调试中, 看看就知道, 总之我知道最常见的野指针是会出来见你的。</p>
+<p>但是这是你插着调试, 如果打包内测就没有办法了, 所以这里我们还提供另一种方法, HOOK, 涉及到的方法一般是dealloc,object_dispose,free。这里我们直接选择去<code>hook</code>C语言的free方法, 这里用到了<a href="https://github.com/facebook/fishhook" target="_blank" rel="external">facebook·fishhook</a>, 在Main函数中直接进行Hook。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#import <span class="meta-string">"fishhook.h"</span></span></div><div class="line"><span class="meta">#import <span class="meta-string">&lt;malloc/malloc.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">static</span> <span class="keyword">void</span> (*origin_free)(<span class="keyword">void</span> *);</div><div class="line"></div><div class="line"><span class="keyword">void</span> hook_free(<span class="keyword">void</span> * p) &#123;</div><div class="line">    size_t memSiziee = malloc_size(p);</div><div class="line">    memset(p, <span class="number">0x55</span>, memSiziee);</div><div class="line"></div><div class="line">    printf(<span class="string">"call origin free"</span>);</div><div class="line">    origin_free(p);</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">int</span> main(<span class="keyword">int</span> argc, <span class="keyword">char</span> * argv[]) &#123;</div><div class="line">    <span class="keyword">@autoreleasepool</span> &#123;</div><div class="line"></div><div class="line">        <span class="comment">// Hook free method.</span></div><div class="line">        rebind_symbols((<span class="keyword">struct</span> rebinding[<span class="number">1</span>])&#123;&#123;<span class="string">"free"</span>, hook_free, (<span class="keyword">void</span> *)&amp;origin_free&#125;&#125;, <span class="number">1</span>);</div><div class="line"></div><div class="line">        <span class="keyword">return</span></div><div class="line">        <span class="built_in">UIApplicationMain</span>(argc, argv, <span class="literal">nil</span>, <span class="built_in">NSStringFromClass</span>([INSApp <span class="keyword">class</span>]));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个时候运行程序发现调用了我们的hook-free方法, 这里为什么把已经被free的内容覆盖为0x55呢？</p>
+<blockquote>
+<p>实际上填写数据的关键在于填写数据后其地址指向不可读的内存。而填写0x55，和出现异常情况的对象地址0x555555连接起来被当成指针使用的话，就会被识别为0x55555555，而CPU访问这个地址就会抛出异常。另外一点，就是方便区分野指针，例如在Xcode启用Enable Scribble时，指定alloc之后填写的地址为0xaa，防止内存初始化就使用，也是为了方便和free之后的内存做区分。</p>
+</blockquote>
+<p>下边的文章自行细读, 我就不在这里扯了 ~</p>
+<p><a href="http://bugly.qq.com/bbs/forum.php?mod=viewthread&amp;tid=31&amp;highlight=%E5%85%88%E6%8F%90%E9%AB%98%E9%87%8E%E6%8C%87%E9%92%88" target="_blank" rel="external">调试时候让Crash随机成必现1</a></p>
+<p><a href="http://blog.csdn.net/tencent_bugly/article/details/46374401" target="_blank" rel="external">调试时候让Crash随机成比现2</a></p>
+<p><a href="http://blog.csdn.net/tencent_bugly/article/details/46545155" target="_blank" rel="external">让野指针自报家门</a></p>
+<h2 id="HTTPS"><a href="#HTTPS" class="headerlink" title="HTTPS"></a>HTTPS</h2><p><a href="http://blog.csdn.net/tencent_bugly/article/details/51540300" target="_blank" rel="external">HTTPS 安全在哪里呢?</a></p>
+<h2 id="逆向工程（你想自动拆红包？-lt-老文章了-gt-）"><a href="#逆向工程（你想自动拆红包？-lt-老文章了-gt-）" class="headerlink" title="逆向工程（你想自动拆红包？&lt;老文章了&gt;）"></a>逆向工程（你想自动拆红包？&lt;老文章了&gt;）</h2><p><a href="http://blog.csdn.net/tencent_bugly/article/details/52058093" target="_blank" rel="external">揭秘1</a></p>
+<p><a href="http://blog.csdn.net/tencent_bugly/article/details/51878332" target="_blank" rel="external">揭秘2</a></p>
+<h2 id="动画渲染机制"><a href="#动画渲染机制" class="headerlink" title="动画渲染机制"></a>动画渲染机制</h2><p><a href="http://blog.csdn.net/tencent_bugly/article/details/50350743" target="_blank" rel="external">动画渲染机制</a></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/05/Crash/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/05/Crash/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    方便的处理在StoryBoard、Xib中的圆角设置
+                
+            </div>
+        </a>
+    
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/08/05/Crash/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

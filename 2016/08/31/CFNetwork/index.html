@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>CFNetwork | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="CFNetwork存在于CoreFoundation中的一个地级别但高性能的网络框架。BSD套接字的扩展，CFNetwork物理上和理论上都基于BSD套接字。有大量的Cocoa框架依赖于CFNetwork。
+CFNetwork更侧重与网络协议，Foundation则更倾向于API数据请求等，虽然框架也提供了一些操作，但是远不如CFNetwork丰富。在学习CFNetwork之前，需要先了解2个基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CFNetwork">
+<meta property="og:url" content="https://wilddylan.github.io/2016/08/31/CFNetwork/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="CFNetwork存在于CoreFoundation中的一个地级别但高性能的网络框架。BSD套接字的扩展，CFNetwork物理上和理论上都基于BSD套接字。有大量的Cocoa框架依赖于CFNetwork。
+CFNetwork更侧重与网络协议，Foundation则更倾向于API数据请求等，虽然框架也提供了一些操作，但是远不如CFNetwork丰富。在学习CFNetwork之前，需要先了解2个基础">
+<meta property="og:image" content="http://www.51wendang.com/pic/00a226f3c9fa6ed45d1d781c/1-817-png_6_0_0_300_110_360_270_892.5_1263-1200-0-0-1200.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:11.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="CFNetwork">
+<meta name="twitter:description" content="CFNetwork存在于CoreFoundation中的一个地级别但高性能的网络框架。BSD套接字的扩展，CFNetwork物理上和理论上都基于BSD套接字。有大量的Cocoa框架依赖于CFNetwork。
+CFNetwork更侧重与网络协议，Foundation则更倾向于API数据请求等，虽然框架也提供了一些操作，但是远不如CFNetwork丰富。在学习CFNetwork之前，需要先了解2个基础">
+<meta name="twitter:image" content="http://www.51wendang.com/pic/00a226f3c9fa6ed45d1d781c/1-817-png_6_0_0_300_110_360_270_892.5_1263-1200-0-0-1200.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-CFNetwork" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            CFNetwork
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/31/CFNetwork/">
+            <time datetime="2016-08-31T08:01:14.000Z" itemprop="datePublished">2016-08-31</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/CoreFoundation/">CoreFoundation</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="CFNetwork"><a href="#CFNetwork" class="headerlink" title="CFNetwork"></a>CFNetwork</h4><p>存在于<code>CoreFoundation</code>中的一个地级别但高性能的网络框架。<a href="http://blog.csdn.net/blueman2012/article/details/6693605" target="_blank" rel="external">BSD套接字</a>的扩展，<code>CFNetwork</code>物理上和理论上都基于BSD套接字。有大量的Cocoa框架依赖于<code>CFNetwork</code>。</p>
+<p><code>CFNetwork</code>更侧重与网络协议，Foundation则更倾向于API数据请求等，虽然框架也提供了一些操作，但是远不如<code>CFNetwork</code>丰富。在学习<code>CFNetwork</code>之前，需要先了解2个基础API框架： <code>CFSocket</code>、<code>CFStream</code>。</p>
+<h6 id="CFSocket-API"><a href="#CFSocket-API" class="headerlink" title="CFSocket API"></a>CFSocket API</h6><p>套接字是网络通信的底层，一个套接字类似于电话的插孔，他允许链接到另外一个电话插孔并传输一些信息过去。最常见的套接字是BSD套接字。<code>CFSocket</code>是BSD套接字的一个抽象概念，在很小开销的情况下，几乎提供了全部BSD套接字的功能，并将套接字集成到一个Loop中。并且，<code>CFSocket</code>可以处理任何类型的套接字。</p>
+<a id="more"></a>
+<h6 id="CFStream-API"><a href="#CFStream-API" class="headerlink" title="CFStream API"></a>CFStream API</h6><p>读写流，提供一种简单的方法进行媒体数据的交换，与设备无关。你可以为内存中、文件中或者网络中的数据创建流，并且你可以在不把数据加载到内存中的情况下使用流。流是一个字节序列串行传输的通信路径，流是单向的，通常情况下，为了双向通信，需要输入（CFReadStream）、输出流（CFWriteStream）。除了基于文件的流，你不能寻找一个流，一旦数据流被提供或者被消耗，就不能从流中重新取出。</p>
+<hr>
+<p><code>CFStream</code>构建在<code>CFSocket</code>之上，在<code>CFHTTP</code>和<code>CFFTP</code>之下。如图可以看出，尽管<code>CFStream</code>不是<code>CFNetwork</code>正式的部分，但它是几乎所有<code>CFNetwork</code>的基础。<code>CFNetwork</code>框架的层级设计：</p>
+<p><img src="https://developer.apple.com/library/ios/documentation/Networking/Conceptual/CFNetwork/Art/framework_layers_2x.png" alt="图1-1"></p>
+<h5 id="CFNetwork-API"><a href="#CFNetwork-API" class="headerlink" title="CFNetwork API"></a>CFNetwork API</h5><p>CFNetwork又分成了几个单独的API，分别负责一个特定的的网络协议，这些API可以结合或分开使用，这取决于App的实际需要。</p>
+<h6 id="CFFTP"><a href="#CFFTP" class="headerlink" title="CFFTP"></a>CFFTP</h6><p>CFFTP使与FTP服务器通信更加便利。创建写入流与读取流，使用读写流，你可以进行的操作包括：</p>
+<ul>
+<li>从FTP服务器下载文件</li>
+<li>上传文件到FTP服务器</li>
+<li>获得FTP服务器下目录</li>
+<li>创建目录到FTP服务器</li>
+</ul>
+<h6 id="CFHTTP"><a href="#CFHTTP" class="headerlink" title="CFHTTP"></a>CFHTTP</h6><p>发送和接受HTTP消息，CFFTP是FTP协议的抽象，CFHTTP是HTTP协议的抽象。超文本传输协议（HTTP）是一种客户端/服务端的请求/响应协议，客户端创建请求消息，请求消息被序列化，转换为原始字节流，发送字节流到服务器，服务器收到进行反序列化处理并响应。</p>
+<p>要创建一个HTTP请求，需指定一些基础的内容：</p>
+<ul>
+<li>请求的方法，比如GET、POST、HEAD等</li>
+<li>URL 资源定位，比如<a href="http://www.apple.com" target="_blank" rel="external">http://www.apple.com</a></li>
+<li>HTTP版本，比如1.0、2.0</li>
+<li>消息主题，字节流</li>
+<li>消息头</li>
+</ul>
+<p>消息创建后，需将其序列化后进行传递，序列化后一般的请求样式为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">GET / HTTP/1.0\r\nUser-Agent: UserAgent\r\nContent-Length: 0\r\n\r\n</div></pre></td></tr></table></figure>
+<h6 id="CFHTTPAuthentication"><a href="#CFHTTPAuthentication" class="headerlink" title="CFHTTPAuthentication"></a>CFHTTPAuthentication</h6><p>完成身份验证。</p>
+<h6 id="CFHost"><a href="#CFHost" class="headerlink" title="CFHost"></a>CFHost</h6><p>获取主机信息，包括名称、地址、可达性信息等。获取信息的过程被称为<code>解析</code>。</p>
+<p>所有的CFNetwork、CFHost都兼容IPv4与IPv6，使用CFHost，可以透明的使用代码对IPv4、IPv6进行处理。</p>
+<h6 id="CFNetServices"><a href="#CFNetServices" class="headerlink" title="CFNetServices"></a>CFNetServices</h6><p>如果你想让你的应用使用<code>Bonjour</code>注册一个服务或发现服务可以使用CFNetServices。Bonjour是苹果零配置网络（ZEROCONF）的实现，它允许你发布、发现和解析网络服务。</p>
+<h6 id="CFNetDiagnostics"><a href="#CFNetDiagnostics" class="headerlink" title="CFNetDiagnostics"></a>CFNetDiagnostics</h6><p>连接到网络的应用依赖于一个稳定的链接。如果网络不稳定，这将导致应用程序的问题。采用CFNetDiagnostics  API，用户可以自己诊断如下网络问题：</p>
+<ul>
+<li>物理连接失败（例如，未插入电缆）</li>
+<li>网络故障（例如，DNS或DHCP服务器不再响应）</li>
+<li>配置失败（例如，代理配置不正确）</li>
+</ul>
+<hr>
+<p>由下至上的进行学习</p>
+<h4 id="CFSocket"><a href="#CFSocket" class="headerlink" title="CFSocket"></a>CFSocket</h4><p><a href="https://developer.apple.com/library/ios/documentation/CoreFoundation/Reference/CFSocketRef/index.html#//apple_ref/doc/c_ref/CFSocketCreate" target="_blank" rel="external">官方文档</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">#import &lt;CFNetwork/CFNetwork.h&gt;</div><div class="line">#import &lt;sys/socket.h&gt;</div><div class="line">#import &lt;netinet/in.h&gt;</div><div class="line">#import &lt;arpa/inet.h&gt;</div><div class="line">#import &lt;unistd.h&gt;</div></pre></td></tr></table></figure>
+<p>进入第一个socket程序:</p>
+<ol>
+<li>添加2个全局变量供下面</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">CFSocketRef socket; // socket引用</div><div class="line">CFDataRef dataRef; 	// 存储服务器地址信息</div></pre></td></tr></table></figure>
+<ol>
+<li>创建socket并发送、接收消息</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">// 创建socket连接</div><div class="line">CFSocketContext context = &#123;</div><div class="line">    0,                          // 结构体的版本，必须为0</div><div class="line">    (__bridge void *)(self),    // 一个任意指针的数据，可以用在创建时CFSocket对象相关联。这个指针被传递给所有的上下文中定义的回调。</div><div class="line">    NULL,                       // 一个定义在上面指针中的retain的回调， 可以为NULL</div><div class="line">    NULL,</div><div class="line">    NULL</div><div class="line">&#125;;</div><div class="line"></div><div class="line">// 创建socket引用</div><div class="line">socket = CFSocketCreate(</div><div class="line">                        kCFAllocatorDefault,  // 为新对象分配内存，可以为nil</div><div class="line">                        PF_INET, // 协议族，如果为0或者负数，则默认为PF_INET</div><div class="line">                        SOCK_STREAM, // 套接字类型，如果协议族为PF_INET,则它会默认为SOCK_STREAM,</div><div class="line">                        IPPROTO_TCP, // 套接字协议，如果协议族是PF_INET且协议是0或者负数，它会默认为IPPROTO_TCP</div><div class="line">                        kCFSocketConnectCallBack, // 触发回调函数的socket消息类型，具体见Callback Types</div><div class="line">                        TCPServerConnectCallBack, // 上面情况下触发的回调函数</div><div class="line">                        &amp;context // 一个持有CFSocket结构信息的对象，可以为nil</div><div class="line">                        );</div></pre></td></tr></table></figure>
+<p>实现callBack方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">static void</div><div class="line">TCPServerConnectCallBack(CFSocketRef s, CFSocketCallBackType type, CFDataRef address, const void *data, void *info) &#123;</div><div class="line">    if ( data != NULL ) &#123;</div><div class="line">        // 当socket为kCFSocketConnectCallBack时，失败时回调失败会返回一个错误代码指针，其他情况返回NULL</div><div class="line">        NSLog(@&quot;连接失败&quot;);</div><div class="line">        return;</div><div class="line">    &#125;</div><div class="line">    UIViewController * vc = (__bridge UIViewController *) info;</div><div class="line">    [vc performSelector:@selector(sendMessage) withObject:nil];</div><div class="line">    [vc performSelector:@selector(readStream) withObject:nil];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>创建服务器地址信息</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// 创建服务端信息</div><div class="line">   struct sockaddr_in addr4; // IPv4, sockaddr_in6</div><div class="line">   memset(&amp;addr4, 0, sizeof(addr4));</div><div class="line">   addr4.sin_len = sizeof(addr4);</div><div class="line">   addr4.sin_family = AF_INET;</div><div class="line">   addr4.sin_port = htons(18800);</div><div class="line">   addr4.sin_addr.s_addr = inet_addr([localHost UTF8String]);</div><div class="line">   dataRef = CFDataCreate(kCFAllocatorDefault, (UInt8 *)&amp;addr4, sizeof(addr4));</div></pre></td></tr></table></figure>
+<ol>
+<li>连接</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">if ( socket ) &#123;</div><div class="line">        CFSocketError e = CFSocketConnectToAddress(socket, dataRef, -1);</div><div class="line">        </div><div class="line">        if ( e ) &#123;</div><div class="line">            NSLog(@&quot;Error!&quot;);</div><div class="line">            return;</div><div class="line">        &#125;</div><div class="line">        </div><div class="line">        CFRunLoopRef runLoopRef = CFRunLoopGetCurrent();</div><div class="line">        CFRunLoopSourceRef runLoopSourcesRef = CFSocketCreateRunLoopSource(kCFAllocatorDefault, socket, 0);</div><div class="line">        CFRunLoopAddSource(runLoopRef, runLoopSourcesRef, kCFRunLoopCommonModes);</div><div class="line">        CFRelease(runLoopSourcesRef);</div><div class="line">    &#125; else &#123;</div><div class="line">        NSLog(@&quot;连接失败&quot;);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>接收与发送消息</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (void) readStream &#123;</div><div class="line">    char buffer[1024];</div><div class="line">    while (recv(CFSocketGetNative(socket), //与本机关联的Socket 如果已经失效返回－1:INVALID_SOCKET</div><div class="line">                buffer, sizeof(buffer), 0)) &#123;</div><div class="line">        NSLog(@&quot;%@&quot;, [NSString stringWithUTF8String:buffer]);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">- (void)sendMessage &#123;</div><div class="line">    NSString *stringTosend = @&quot;你好&quot;;</div><div class="line">    CFSocketError e = CFSocketSendData(socket, dataRef, CFDataCreate(kCFAllocatorDefault, (UInt8 *)[stringTosend UTF8String], sizeof([stringTosend UTF8String])), 1);</div><div class="line">    if ( e ) &#123;</div><div class="line">        </div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSString * localHost = @&quot;120.27.139.39&quot;; // 该地址为测试IP地址, 仅供测试连接使用</div></pre></td></tr></table></figure>
+<p>以上步骤没问题的话，可以成功的连接到服务器并发送一条消息。</p>
+<p><a href="http://www.cnblogs.com/tryingx/articles/3867645.html" target="_blank" rel="external">参考文档</a></p>
+<h4 id="CFStream"><a href="#CFStream" class="headerlink" title="CFStream"></a>CFStream</h4><p>尝试对文件的读取，文件直接存在于项目工程目录下，通过NSBundle来加载。</p>
+<ul>
+<li>创建读入流</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// 创建读入流</div><div class="line">   NSString *pdfPath = [[NSBundle mainBundle]</div><div class="line">                        pathForResource:@&quot;File&quot; ofType:@&quot;txt&quot;];</div><div class="line">   NSURL *pdfUrl = [NSURL fileURLWithPath:pdfPath];</div><div class="line">   CFReadStreamRef myReadStream = CFReadStreamCreateWithFile(kCFAllocatorDefault, (CFURLRef)pdfUrl);</div></pre></td></tr></table></figure>
+<p>读取文件内容</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line">if (!CFReadStreamOpen(myReadStream)) &#123;</div><div class="line">    CFStreamError myErr = CFReadStreamGetError(myReadStream);</div><div class="line">    // 发生了错误</div><div class="line">    if (myErr.domain == kCFStreamErrorDomainPOSIX) &#123;</div><div class="line">        // Interpret myErr.error as a UNIX errno.</div><div class="line">    &#125; else if (myErr.domain == kCFStreamErrorDomainMacOSStatus) &#123;</div><div class="line">        // Interpret myErr.error as a MacOS error code.</div><div class="line">        OSStatus macError = (OSStatus)myErr.error;</div><div class="line">        NSLog(@&quot;%d&quot;, macError);</div><div class="line">    &#125;</div><div class="line">&#125; else &#123;</div><div class="line">    NSLog(@&quot;打开成功&quot;);</div><div class="line">    CFIndex numBytesRead;</div><div class="line">    do &#123;</div><div class="line">        UInt8 buf[1024 * 1024]; // define myReadBufferSize as desired</div><div class="line">        numBytesRead = CFReadStreamRead(myReadStream, buf, sizeof(buf));</div><div class="line">        if( numBytesRead &gt; 0 ) &#123;</div><div class="line">            NSLog(@&quot;%s&quot;, buf);</div><div class="line">        &#125; else if( numBytesRead &lt; 0 ) &#123;</div><div class="line">            CFStreamError error = CFReadStreamGetError(myReadStream);</div><div class="line">            NSLog(@&quot;%ld %d&quot;, error.domain, error.error);</div><div class="line">        &#125; else &#123;</div><div class="line">            NSLog(@&quot;去读结束&quot;);</div><div class="line">        &#125;</div><div class="line">    &#125; while( numBytesRead &gt; 0 );</div><div class="line">    </div><div class="line">    NSLog(@&quot;读取完毕&quot;);</div><div class="line">    CFReadStreamClose(myReadStream);</div><div class="line">    CFRelease(myReadStream);</div><div class="line">    myReadStream = NULL;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>正常执行，会在控制台打印工程目录下File.txt文件的内容。</p>
+<ul>
+<li>创建写入流</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">NSString * document = NSSearchPathForDirectoriesInDomains(NSLibraryDirectory, NSUserDomainMask, YES).lastObject;</div><div class="line">   NSString * p = [document stringByAppendingPathComponent:@&quot;a.txt&quot;];</div><div class="line">   </div><div class="line">   if ( ![[NSFileManager defaultManager] fileExistsAtPath:p] ) &#123;</div><div class="line">       [[NSFileManager defaultManager] createFileAtPath:p contents:nil attributes:nil];</div><div class="line">   &#125;</div><div class="line">   </div><div class="line">   CFWriteStreamRef myWriteStream =</div><div class="line">   CFWriteStreamCreateWithFile(kCFAllocatorDefault, (CFURLRef)[NSURL fileURLWithPath:p]);</div></pre></td></tr></table></figure>
+<p>开始写入操作</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">if (!CFWriteStreamOpen(myWriteStream)) &#123;</div><div class="line">     CFStreamError myErr = CFWriteStreamGetError(myWriteStream);</div><div class="line">     // An error has occurred.</div><div class="line">     if (myErr.domain == kCFStreamErrorDomainPOSIX) &#123;</div><div class="line">         // Interpret myErr.error as a UNIX errno.</div><div class="line">     &#125; else if (myErr.domain == kCFStreamErrorDomainMacOSStatus) &#123;</div><div class="line">         // Interpret myErr.error as a MacOS error code.</div><div class="line">         OSStatus macError = (OSStatus)myErr.error;</div><div class="line">         // Check other error domains.</div><div class="line">         NSLog(@&quot;%d&quot;, macError);</div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> NSLog(@&quot;%ld&quot;,CFWriteStreamGetStatus(myWriteStream));</div><div class="line"> </div><div class="line"> const char * buf = &quot;World !&quot;;</div><div class="line"> CFIndex bufLen = (CFIndex)strlen(buf);</div><div class="line"> </div><div class="line"> if ( CFWriteStreamCanAcceptBytes(myWriteStream) ) &#123;</div><div class="line">     NSLog(@&quot;可以接受字节&quot;);</div><div class="line">     CFIndex bytesWritten = CFWriteStreamWrite(myWriteStream, (UInt8 *)buf, (CFIndex)bufLen);</div><div class="line">     NSLog(@&quot;%ld&quot;, bytesWritten);</div><div class="line"> &#125; else &#123;</div><div class="line">     NSLog(@&quot;不可以接受字节&quot;);</div><div class="line"> &#125;</div><div class="line"> </div><div class="line"> CFWriteStreamClose(myWriteStream);</div><div class="line"> CFRelease(myWriteStream);</div><div class="line"> myWriteStream = NULL;</div></pre></td></tr></table></figure>
+<p>如果正常运行的话, 会在项目本沙箱地址Library中存在a.txt并且内容为World ！</p>
+<p><a href="https://developer.apple.com/library/ios/documentation/Networking/Conceptual/CFNetwork/CFStreamTasks/CFStreamTasks.html#//apple_ref/doc/uid/TP30001132-CH6-SW1" target="_blank" rel="external">官方文档</a></p>
+<h4 id="CFHTTP-1"><a href="#CFHTTP-1" class="headerlink" title="CFHTTP"></a>CFHTTP</h4><p>创建一个Request</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">CFStringRef bodyString = CFSTR(&quot;Hello&quot;);</div><div class="line"></div><div class="line">CFStringRef headerFieldName = CFSTR(&quot;X-My-Favorite-Field&quot;);</div><div class="line">CFStringRef headerFieldValue = CFSTR(&quot;Dreams&quot;);</div><div class="line"></div><div class="line">CFStringRef url = CFSTR(&quot;http://www.apple.com&quot;);</div><div class="line">CFURLRef myURL = CFURLCreateWithString(kCFAllocatorDefault, url, NULL);</div><div class="line"></div><div class="line">CFStringRef requestMethod = CFSTR(&quot;GET&quot;);</div><div class="line">CFHTTPMessageRef myRequest =</div><div class="line">CFHTTPMessageCreateRequest(kCFAllocatorDefault, requestMethod, myURL,</div><div class="line">                           kCFHTTPVersion1_1);</div><div class="line"></div><div class="line">CFDataRef bodyDataExt = CFStringCreateExternalRepresentation(kCFAllocatorDefault, bodyString, kCFStringEncodingUTF8, 0);</div><div class="line">CFHTTPMessageSetBody(myRequest, bodyDataExt);</div><div class="line">CFHTTPMessageSetHeaderFieldValue(myRequest, headerFieldName, headerFieldValue);</div><div class="line">CFDataRef mySerializedRequest = CFHTTPMessageCopySerializedMessage(myRequest);</div><div class="line"></div><div class="line">CFRelease(myRequest);</div><div class="line">CFRelease(myURL);</div><div class="line">CFRelease(url);</div><div class="line">CFRelease(mySerializedRequest);</div><div class="line">myRequest = NULL;</div><div class="line">mySerializedRequest = NULL;</div></pre></td></tr></table></figure>
+<p><code>mySerializedRequest</code>即为序列化后的Request内容。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">(lldb) po [[NSString alloc] initWithData:(NSData *)mySerializedRequest encoding:NSUTF8StringEncoding]</div><div class="line">GET / HTTP/1.1</div><div class="line">X-My-Favorite-Field: Dreams</div><div class="line"></div><div class="line">Hello</div></pre></td></tr></table></figure>
+<p>通过lldb打印可以看到内容。</p>
+<p>创建请求并发送</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">CFReadStreamRef myReadStream = CFReadStreamCreateForHTTPRequest(kCFAllocatorDefault, myRequest);</div><div class="line">CFReadStreamOpen(myReadStream);</div><div class="line"></div><div class="line">CFHTTPMessageRef myResponse = (CFHTTPMessageRef)CFReadStreamCopyProperty(myReadStream, kCFStreamPropertyHTTPResponseHeader);</div><div class="line">CFStringRef myStatusLine = CFHTTPMessageCopyResponseStatusLine(myResponse);</div><div class="line">UInt32 myErrCode = CFHTTPMessageGetResponseStatusCode(myResponse);</div></pre></td></tr></table></figure>
+<p>其中<code>CFReadStreamCreateForHTTPRequest</code>类似的API已经弃用，苹果希望使用NSURLSession。</p>
+<p><a href="https://developer.apple.com/library/ios/documentation/Networking/Conceptual/CFNetwork/CFHTTPTasks/CFHTTPTasks.html#//apple_ref/doc/uid/TP30001132-CH5-SW2" target="_blank" rel="external">官方文档</a></p>
+<h4 id="Communicating-with-Authenticating-HTTP-Servers"><a href="#Communicating-with-Authenticating-HTTP-Servers" class="headerlink" title="Communicating with Authenticating HTTP Servers"></a>Communicating with Authenticating HTTP Servers</h4><p><a href="https://developer.apple.com/library/ios/documentation/Networking/Conceptual/CFNetwork/CFHTTPAuthenticationTasks/CFHTTPAuthenticationTasks.html#//apple_ref/doc/uid/TP30001132-CH8-SW1" target="_blank" rel="external">官方文档</a></p>
+<h4 id="CFFTP-1"><a href="#CFFTP-1" class="headerlink" title="CFFTP"></a>CFFTP</h4><p><a href="https://developer.apple.com/library/ios/documentation/Networking/Conceptual/CFNetwork/CFFTPTasks/CFFTPTasks.html#//apple_ref/doc/uid/TP30001132-CH9-SW1" target="_blank" rel="external">官方文档</a></p>
+<h4 id="网络诊断"><a href="#网络诊断" class="headerlink" title="网络诊断"></a>网络诊断</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">CFNetDiagnosticDiagnoseProblemInteractively()</div></pre></td></tr></table></figure>
+<p>注：文中内容90%来自官方文档。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/31/CFNetwork/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/31/CFNetwork/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/09/23/IAP/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    IAP
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/08/30/Launch-Arguments-Environment-Variables/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Launch Arguments &amp; Environment Variables.</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/08/31/CFNetwork/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Springmvc学习笔记(14) springmvc校验 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../springmvc学习笔记(15)-数据回显/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#_1">校验理解</a></li>
+        <li class="main "><a href="#springmvc">springmvc校验需求</a></li>
+        <li class="main "><a href="#_2">环境准备</a></li>
+        <li class="main "><a href="#_3">配置校验器</a></li>
+        <li class="main "><a href="#pojo">在pojo中添加校验规则</a></li>
+        <li class="main "><a href="#_4">捕获和显示校验错误信息</a></li>
+        <li class="main "><a href="#_5">分组校验</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# springmvc学习笔记(14)-springmvc校验</p>
+<p>标签： springmvc</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#校验理解">校验理解</a></li>
+<li><a href="#springmvc校验需求">springmvc校验需求</a></li>
+<li><a href="#环境准备">环境准备</a></li>
+<li><a href="#配置校验器">配置校验器</a></li>
+<li><a href="#添加校验的错误提示信息">添加校验的错误提示信息</a></li>
+<li><a href="#在pojo中添加校验规则">在pojo中添加校验规则</a></li>
+<li><a href="#捕获和显示校验错误信息">捕获和显示校验错误信息</a></li>
+<li><a href="#分组校验">分组校验</a></li>
+</ul>
+<hr />
+<p>本文主要介绍springmvc校验，包括环境准备，校验器配置，pojo张添加校验规则，捕获和显示检验错误信息以及分组校验简单示例。</p>
+<h2 id="_1">校验理解</h2>
+<p>项目中，通常使用较多是前端的校验，比如页面中js校验。对于安全要求较高点建议在服务端进行校验。</p>
+<p>服务端校验：</p>
+<ul>
+<li>控制层conroller：校验页面请求的参数的合法性。在服务端控制层conroller校验，不区分客户端类型（浏览器、手机客户端、远程调用）</li>
+<li>业务层service（使用较多）：主要校验关键业务参数，仅限于service接口中使用的参数。</li>
+<li>持久层dao：一般是不校验的。</li>
+</ul>
+<h2 id="springmvc">springmvc校验需求</h2>
+<p>springmvc使用hibernate的校验框架validation(和hibernate没有任何关系)。</p>
+<p>校验思路：</p>
+<p>页面提交请求的参数，请求到controller方法中，使用validation进行校验。如果校验出错，将错误信息展示到页面。</p>
+<p>具体需求：</p>
+<p>商品修改，添加校验（校验商品名称长度，生产日期的非空校验），如果校验出错，在商品修改页面显示错误信息。</p>
+<h2 id="_2">环境准备</h2>
+<p>我们需要三个jar包：</p>
+<ul>
+<li>hibernate-validator.jar</li>
+<li>jboss-logging.jar</li>
+<li>validation-api.jar</li>
+</ul>
+<p>这里我们添加maven依赖</p>
+<pre><code class="xml">&lt;!-- hibernate 校验 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.hibernate&lt;/groupId&gt;
+    &lt;artifactId&gt;hibernate-validator&lt;/artifactId&gt;
+    &lt;version&gt;5.2.4.Final&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>查看maven依赖树</p>
+<pre><code>[INFO] \- org.hibernate:hibernate-validator:jar:5.2.4.Final:compile
+[INFO]    +- javax.validation:validation-api:jar:1.1.0.Final:compile
+[INFO]    +- org.jboss.logging:jboss-logging:jar:3.2.1.Final:compile
+[INFO]    \- com.fasterxml:classmate:jar:1.1.0:compile
+</code></pre>
+
+<p>可以看到，另外两个jar包被<code>hibernate-validator</code>依赖，所以不用再额外添加了。</p>
+<h2 id="_3">配置校验器</h2>
+<ul>
+<li>在springmvc.xml中添加</li>
+</ul>
+<pre><code class="xml">&lt;!-- 校验器 --&gt;
+&lt;bean id=&quot;validator&quot;
+      class=&quot;org.springframework.validation.beanvalidation.LocalValidatorFactoryBean&quot;&gt;
+    &lt;!-- hibernate校验器--&gt;
+    &lt;property name=&quot;providerClass&quot; value=&quot;org.hibernate.validator.HibernateValidator&quot; /&gt;
+    &lt;!-- 指定校验使用的资源文件，在文件中配置校验错误信息，如果不指定则默认使用classpath下的ValidationMessages.properties --&gt;
+    &lt;property name=&quot;validationMessageSource&quot; ref=&quot;messageSource&quot; /&gt;
+&lt;/bean&gt;
+&lt;!-- 校验错误信息配置文件 --&gt;
+&lt;bean id=&quot;messageSource&quot;
+      class=&quot;org.springframework.context.support.ReloadableResourceBundleMessageSource&quot;&gt;
+    &lt;!-- 资源文件名--&gt;
+    &lt;property name=&quot;basenames&quot;&gt;
+        &lt;list&gt;
+            &lt;value&gt;classpath:CustomValidationMessages&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+    &lt;!-- 资源文件编码格式 --&gt;
+    &lt;property name=&quot;fileEncodings&quot; value=&quot;utf-8&quot; /&gt;
+    &lt;!-- 对资源文件内容缓存时间，单位秒 --&gt;
+    &lt;property name=&quot;cacheSeconds&quot; value=&quot;120&quot; /&gt;
+&lt;/bean&gt;
+</code></pre>
+
+<ul>
+<li>校验器注入到处理器适配器中</li>
+</ul>
+<pre><code class="xml">&lt;mvc:annotation-driven conversion-service=&quot;conversionService&quot;
+                       validator=&quot;validator&quot;&gt;
+&lt;/mvc:annotation-driven&gt;
+</code></pre>
+
+<ul>
+<li>在CustomValidationMessages.properties配置校验错误信息：</li>
+</ul>
+<pre><code>#添加校验的错误提示信息
+items.name.length.error=请输入1到30个字符的商品名称
+items.createtime.isNUll=请输入商品的生产日期
+</code></pre>
+
+<h2 id="pojo">在pojo中添加校验规则</h2>
+<p>在ItemsCustom.java中添加校验规则：</p>
+<pre><code class="java">public class Items {
+    private Integer id;
+    //校验名称在1到30字符中间
+    //message是提示校验出错显示的信息
+    //groups：此校验属于哪个分组，groups可以定义多个分组
+    @Size(min=1,max=30,message=&quot;{items.name.length.error}&quot;)
+    private String name;
+
+    private Float price;
+
+    private String pic;
+
+    //非空校验
+    @NotNull(message=&quot;{items.createtime.isNUll}&quot;)
+    private Date createtime;
+</code></pre>
+
+<h2 id="_4">捕获和显示校验错误信息</h2>
+<pre><code class="java">@RequestMapping(&quot;/editItemsSubmit&quot;)
+public String editItemsSubmit(
+        Model model,
+        HttpServletRequest request,
+        Integer id,
+        @Validated ItemsCustom itemsCustom,
+        BindingResult bindingResult)throws Exception {
+</code></pre>
+
+<ul>
+<li>在controller中将错误信息传到页面即可</li>
+</ul>
+<pre><code>//获取校验错误信息
+if(bindingResult.hasErrors()){
+    // 输出错误信息
+    List&lt;ObjectError&gt; allErrors = bindingResult.getAllErrors();
+
+    for (ObjectError objectError :allErrors){
+        // 输出错误信息
+        System.out.println(objectError.getDefaultMessage());
+    }
+    // 将错误信息传到页面
+    model.addAttribute(&quot;allErrors&quot;, allErrors);
+
+    //可以直接使用model将提交pojo回显到页面
+    model.addAttribute(&quot;items&quot;, itemsCustom);
+
+    // 出错重新到商品修改页面
+    return &quot;items/editItems&quot;;
+}
+</code></pre>
+
+<ul>
+<li>页面显示错误信息：</li>
+</ul>
+<pre><code class="jsp">&lt;!-- 显示错误信息 --&gt;
+&lt;c:if test=&quot;${allErrors!=null }&quot;&gt;
+    &lt;c:forEach items=&quot;${allErrors }&quot; var=&quot;error&quot;&gt;
+        ${ error.defaultMessage}&lt;br/&gt;
+    &lt;/c:forEach&gt;
+&lt;/c:if&gt;
+</code></pre>
+
+<h2 id="_5">分组校验</h2>
+<ul>
+<li>需求：</li>
+<li>在pojo中定义校验规则，而pojo是被多个controller所共用，当不同的controller方法对同一个pojo进行校验，但是每个controller方法需要不同的校验</li>
+<li>解决方法：</li>
+<li>定义多个校验分组（其实是一个java接口），分组中定义有哪些规则</li>
+<li>每个controller方法使用不同的校验分组</li>
+</ul>
+<p>1.校验分组</p>
+<pre><code class="java">public interface ValidGroup1 {
+    //接口中不需要定义任何方法，仅是对不同的校验规则进行分组
+    //此分组只校验商品名称长度
+
+}
+</code></pre>
+
+<p>2.在校验规则中添加分组</p>
+<pre><code class="java">//校验名称在1到30字符中间
+//message是提示校验出错显示的信息
+//groups：此校验属于哪个分组，groups可以定义多个分组
+@Size(min=1,max=30,message=&quot;{items.name.length.error}&quot;,groups = {ValidGroup1.class})
+private String name;
+</code></pre>
+
+<p>3.在controller方法使用指定分组的校验</p>
+<pre><code class="java">// value={ValidGroup1.class}指定使用ValidGroup1分组的校验
+@RequestMapping(&quot;/editItemsSubmit&quot;)
+public String editItemsSubmit(
+        Model model,
+        HttpServletRequest request,
+        Integer id,
+        @Validated(value = ValidGroup1.class)ItemsCustom itemsCustom,
+        BindingResult bindingResult)throws Exception {
+</code></pre>
+
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> <code>|</code> <a href="http://blog.csdn.net/h3243212/">CSDN</a> <code>|</code> <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

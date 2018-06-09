@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>算法第四课 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="深度和广度是什么
+为什么叫做深度与广度优先呢，其实是针对图的遍历而言的，请看
+
+使用深度优先来便利这个图（具体什么是图，可以去搜索一下图论中关于图的定义）的具体过程是，假设从左边的顶点开始，沿着当前定点的边，走到未访问过的顶点；当没有未访问过的顶点时，返回到上一个点，继续试探别的点（沿着某一条分支走到底，然后回朔，再沿着另一条进行同样的操作）。所有的顶点都走过了或者是提前符合我们的条件，遍历结束。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法第四课">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/18/算法第四课/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="深度和广度是什么
+为什么叫做深度与广度优先呢，其实是针对图的遍历而言的，请看
+
+使用深度优先来便利这个图（具体什么是图，可以去搜索一下图论中关于图的定义）的具体过程是，假设从左边的顶点开始，沿着当前定点的边，走到未访问过的顶点；当没有未访问过的顶点时，返回到上一个点，继续试探别的点（沿着某一条分支走到底，然后回朔，再沿着另一条进行同样的操作）。所有的顶点都走过了或者是提前符合我们的条件，遍历结束。">
+<meta property="og:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法第四课">
+<meta name="twitter:description" content="深度和广度是什么
+为什么叫做深度与广度优先呢，其实是针对图的遍历而言的，请看
+
+使用深度优先来便利这个图（具体什么是图，可以去搜索一下图论中关于图的定义）的具体过程是，假设从左边的顶点开始，沿着当前定点的边，走到未访问过的顶点；当没有未访问过的顶点时，返回到上一个点，继续试探别的点（沿着某一条分支走到底，然后回朔，再沿着另一条进行同样的操作）。所有的顶点都走过了或者是提前符合我们的条件，遍历结束。">
+<meta name="twitter:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-算法第四课" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法第四课
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/18/算法第四课/">
+            <time datetime="2016-10-18T07:06:36.000Z" itemprop="datePublished">2016-10-18</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>深度和广度是什么</p>
+<p>为什么叫做深度与广度优先呢，其实是针对图的遍历而言的，请看</p>
+<p><img src="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&amp;fm=21&amp;gp=0.jpg" alt=""></p>
+<p>使用深度优先来便利这个图（具体什么是图，可以去搜索一下图论中关于图的定义）的具体过程是，假设从左边的顶点开始，沿着当前定点的边，走到未访问过的顶点；当没有未访问过的顶点时，返回到上一个点，继续试探别的点（沿着某一条分支走到底，然后回朔，再沿着另一条进行同样的操作）。所有的顶点都走过了或者是提前符合我们的条件，遍历结束。</p>
+<p>广度优先的思想是：首先以一个未被访问过的顶点作为起始顶点，访问其所有相邻的顶点，然后对每个相邻的定点，再访问他们相邻的未被访问过的点定点，直到所有的点都被访问或者提前符合我们的条件，遍历结束。</p>
+<a id="more"></a>
+<p>使用广度或者深度来遍历图，都会得到这个图的<strong>生成树</strong>，这个以后会提到😤。</p>
+<h4 id="城市地图"><a href="#城市地图" class="headerlink" title="城市地图"></a>城市地图</h4><p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0051.PNG" alt=""></p>
+<p>假期，小朋友A想去小朋友B家玩，怎么去呢？小朋友A用百度地图搜索除了到B家的最短路径。上边是城市的地图。</p>
+<p>数据是这样给出的：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="number">5</span> <span class="number">8</span></div><div class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">2</span> </div><div class="line"><span class="number">1</span> <span class="number">5</span> <span class="number">10</span></div><div class="line"><span class="number">2</span> <span class="number">3</span> <span class="number">3</span> </div><div class="line"><span class="number">2</span> <span class="number">5</span> <span class="number">7</span></div><div class="line"><span class="number">3</span> <span class="number">1</span> <span class="number">4</span></div><div class="line"><span class="number">3</span> <span class="number">4</span> <span class="number">4</span> </div><div class="line"><span class="number">4</span> <span class="number">5</span> <span class="number">5</span> </div><div class="line"><span class="number">5</span> <span class="number">3</span> <span class="number">3</span></div></pre></td></tr></table></figure>
+<p>第一行表示有5个城市，8条公路，接下来8行，每行都是类似于a，b，c这样的数据，表示有一条路可以从城市a到b（单向），并且路程有c公里。即a，b，c仅仅表示有一条路可以从城市a到城市b。小朋友A家在1号城市，小朋友B家在5号城市。请求出最短路径。</p>
+<p>已知，有5个城市，8条公路，我们用一个5*5的二维数组来存储这些信息。</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">+  <span class="number">1</span> - <span class="number">2</span> - <span class="number">3</span> - <span class="number">4</span> - <span class="number">5</span></div><div class="line"><span class="number">1</span>  <span class="number">0</span>   <span class="number">2</span>  <span class="number">-1</span>  <span class="number">-1</span>  <span class="number">10</span>  </div><div class="line"><span class="number">2</span> <span class="number">-1</span>   <span class="number">0</span>   <span class="number">3</span>  <span class="number">-1</span>   <span class="number">7</span></div><div class="line"><span class="number">3</span>  <span class="number">4</span>  <span class="number">-1</span>   <span class="number">0</span>   <span class="number">4</span>  <span class="number">-1</span></div><div class="line"><span class="number">4</span> <span class="number">-1</span>  <span class="number">-1</span>  <span class="number">-1</span>   <span class="number">0</span>   <span class="number">5</span> </div><div class="line"><span class="number">5</span> <span class="number">-1</span>  <span class="number">-1</span>   <span class="number">3</span>  <span class="number">-1</span>   <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>0表示自己到自己的距离，-1表示不可以到达，比如说 <code>map[2][1] = -1</code>意味着从城市2不能到达城市1，接下来我们就要寻找最短的距离了。我们一个一个找，你会发现之前写过这样的代码，对，在算法第三课种，迷宫就是这么想的。一个深度查找就可以知道了（我们来动手写一下代码）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">int</span> min = <span class="number">9999999</span>;</div><div class="line"><span class="keyword">int</span> book[<span class="number">101</span>];</div><div class="line"><span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">11</span>][<span class="number">11</span>];</div><div class="line"><span class="keyword">int</span> n; <span class="comment">// 多少个城市</span></div><div class="line"><span class="keyword">int</span> m; <span class="comment">// 多少条路</span></div><div class="line"></div><div class="line"><span class="keyword">int</span> des;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> currentCity, <span class="keyword">int</span> distance)</span> </span>&#123;</div><div class="line">  <span class="comment">// 如果当前走过的路，已经大于之前走过的路，直接返回，不需要继续了</span></div><div class="line">  <span class="keyword">if</span> (distance &gt; min) &#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> (currentCity == n) &#123;</div><div class="line">    <span class="keyword">if</span> (distance &lt; min) &#123;</div><div class="line">      min = distance;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="keyword">if</span> (<span class="built_in">map</span>[currentCity][i] != <span class="number">-1</span> &amp;&amp; book[i] == <span class="number">0</span>) &#123;</div><div class="line">      book[i] = <span class="number">1</span>;</div><div class="line">      dfs(i, distance + <span class="built_in">map</span>[currentCity][i]);</div><div class="line">      book[i] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="comment">// 初始化地图</span></div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j ++) &#123;</div><div class="line">      <span class="keyword">if</span> ( i == j ) &#123;</div><div class="line">        <span class="built_in">map</span>[i][j] = <span class="number">0</span>;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">map</span>[i][j] = <span class="number">-1</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 初始化道路</span></div><div class="line">  <span class="keyword">int</span> a, b, c;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;a, &amp;b, &amp;c);</div><div class="line">    <span class="built_in">map</span>[a][b] = c;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  book[<span class="number">1</span>] = <span class="number">1</span>; <span class="comment">// 从城市1出发</span></div><div class="line">  </div><div class="line">  dfs(<span class="number">1</span>, <span class="number">0</span>);</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d"</span>, min);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上边的地图我们发现城市之间只是单向的通道，如果改为双向的呢？大家把上边的地图修改一下看看。还有，发现了么，我们写了好多代码都离不开book这个数组，嘿嘿。广度优先和深度优先该什么时候使用呢（所有周边的权值相同的时候使用广度，思考为什么）。</p>
+<p>第四课其实是第三课的练习与只是的完善，但并不是，接下来我们来探讨最短路径问题：</p>
+<h4 id="最短路径"><a href="#最短路径" class="headerlink" title="最短路径"></a>最短路径</h4><h6 id="Floyd-Warshall"><a href="#Floyd-Warshall" class="headerlink" title="Floyd-Warshall"></a>Floyd-Warshall</h6><p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0053.JPG" alt=""></p>
+<p>上图中，有4个城市，8条线路，公路上的数字表示这条公路的长短，请注意这些公路是单向的，我们现在需要求任意两个城市之间的最短路程，也就是求2个点之间的最短路径，这个问题也被称为<code>多源最短路径</code>问题。</p>
+<p>现在需要一个数据结构来存储图的信息，依旧，跟以前一样，我们可以选择一个4*4的矩阵，比如1号城市到2号城市的距离为2，则设<code>map[1][2]=2</code>，2号城市无法到达4号城市，则设置距离为无穷大（之前我们用的是-1表示不可以到达），并约定一个城市自己到自己的路程为0。具体如下：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">+  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span></div><div class="line"><span class="number">1</span>  <span class="number">0</span>  <span class="number">2</span>  <span class="number">6</span>  <span class="number">4</span></div><div class="line"><span class="number">2</span>  /  <span class="number">0</span>  <span class="number">3</span>  /</div><div class="line"><span class="number">3</span>  <span class="number">7</span>  /  <span class="number">0</span>  <span class="number">1</span></div><div class="line"><span class="number">4</span>  <span class="number">5</span>  / <span class="number">12</span>  <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>通过之前的学习，我们可以使用深度或者广度优先搜索来寻找，即对每两个点都进行一次深度或者广度优先搜索，就可以求得结果，可是还有没有别的办法呢？</p>
+<p>根据以往的经验，我们思考下，如果要让任意两点之间的距离变短，只能引入第三个点<code>K</code>，并通过这个点中转，<code>A → K → B</code>，才可能缩短A到B的路程，那么这个中转点是1~n种的哪个点呢？而且有的时候不仅仅通过1个点中转，甚至通过2个点中转可以得到最短的路程（在图上，大家自己比划一下）。将这个问题一般化：当任意两点之间不允许经过第三个点时，这些城市之间的最短路程就是初始路程，假设，目前只允许经过1号顶点，求任意两点（i，j）之间的最短距离，该如何求呢？只需判断</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">map[i][<span class="number">1</span>] + map[<span class="number">1</span>][j] &lt; map[i][j]</div></pre></td></tr></table></figure>
+<p>这样，<code>map[i][1]</code>表示i点到1点的路程，<code>map[1][j]</code>表示从1号顶点到j点的路程。这样，i，j是不定的，我们要确认所有的2点之间的最短路程，所以i，j都是1~n循环：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">4</span>; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;=<span class="number">4</span>; j ++) &#123;</div><div class="line">      <span class="keyword">if</span> (<span class="built_in">map</span>[i][<span class="number">1</span>] + <span class="built_in">map</span>[<span class="number">1</span>][j] &lt; <span class="built_in">map</span>[i][j]) &#123;</div><div class="line">        <span class="built_in">map</span>[i][j] = <span class="built_in">map</span>[i][<span class="number">1</span>] + <span class="built_in">map</span>[<span class="number">1</span>][j];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样我们简单的算出了，只中转1号顶点，任意两点间的最短距离。同理，经过别的顶点都是一样的，所以，经过所有的顶点中转：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">0</span>; k &lt;= <span class="number">4</span>; k ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">4</span>; i ++) &#123;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;=<span class="number">4</span>; j ++) &#123;</div><div class="line">        <span class="keyword">if</span> (<span class="built_in">map</span>[i][k] + <span class="built_in">map</span>[k][j] &lt; <span class="built_in">map</span>[i][j]) &#123;</div><div class="line">          <span class="built_in">map</span>[i][j] = <span class="built_in">map</span>[i][k] + <span class="built_in">map</span>[k][j];</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>对你没看错，就是这样么简单，这种思想也被称为动态规划。核心代码只有5行，不过，它的时间复杂度为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(<span class="keyword">N</span>^<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>但是要注意，这种算法不能解决包含<code>负权回路</code>的图，自行科普一下什么叫做负权环。</p>
+<p>算了，因为带有负权环的图没有最短路径，查了之后思考一下。</p>
+</blockquote>
+<p>如果对时间要求不高，使用这种方法可谓最容易了，当然还有更快的算法：</p>
+<h4 id="Dijkstra"><a href="#Dijkstra" class="headerlink" title="Dijkstra"></a>Dijkstra</h4><p>上节我们说的是多源最短路径问题，任意的两个点，这次呢，我们来解决确定一个顶点，到其他各个顶点的最短路径，也称为<code>单源最短路径</code>问题，先来看一下图：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0054.JPG" alt=""></p>
+<p>如上图，我们求一下，从1号定点，到达其余各个点的最短路程，与之前的算法一样，我们使用二维数组来表示这些点之间的路程：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">+  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span></div><div class="line"><span class="number">1</span>  <span class="number">0</span>  <span class="number">1</span> <span class="number">12</span>  /  /  /</div><div class="line"><span class="number">2</span>  /  <span class="number">0</span>  <span class="number">9</span>  <span class="number">3</span>  /  /</div><div class="line"><span class="number">3</span>  /  /  <span class="number">0</span>  /  <span class="number">5</span>  /</div><div class="line"><span class="number">4</span>  /  /  <span class="number">4</span>  <span class="number">0</span> <span class="number">13</span> <span class="number">15</span></div><div class="line"><span class="number">5</span>  /  /  /  /  <span class="number">0</span>  <span class="number">4</span></div><div class="line"><span class="number">6</span>  /  /  /  /  /  <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>还需使用一个一维数组来存储1号顶点到其余点的路程，并将此时数组种的值描述为<code>估计值</code>：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">顶点: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span></div><div class="line">距离: <span class="number">0</span>  <span class="number">1</span> <span class="number">12</span>  /  /  /</div></pre></td></tr></table></figure>
+<p>既然是求1号顶点到其余各个点的值，那就先找一个离1号点最近的点，也就是2号点，这个时候，2号点的值从估计值变为确定值，即1号顶点到2号顶点的最短路径就是当前数组中的值。</p>
+<blockquote>
+<p>为什么？因为1号点的周围，除了2号点，别的点都要远，所以选择2号点作为接下来的中转点没问题吧？</p>
+</blockquote>
+<p>接着想，看上图，通过2号点，我们可以到达3号和4号，所以接下来我们要想的是，2到3能否让1到3更小。上边的数组我们用distance命名，即比较，<code>distance[3]</code>和<code>distance[2]+map[2][3]</code>的大小。<code>distance[2]</code>大家还记吧，表示点1到点2的路程，<code>map[2][3]</code>表示点2到点3的路程。我们发现，<code>distance[3] &gt; distance[2]+map[2][3]</code>，所以把<code>distance[3]</code>的值更新为10，这个过程，有个专业的术语，叫做<code>松弛</code>，1号到3号点的路程，通过2号到3号边松弛成功，这就是<code>Dijkstra</code>算法的主要思想：通过<code>边</code>来松弛1号点到其余点的路程。同理，对2号到4号点的距离可以松弛为<code>distance[2]+map[2][4]</code> ，所以把<code>distance[4]</code>改为4。2号所有的边都松弛结束后：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">顶点: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span></div><div class="line">距离: <span class="number">0</span>  <span class="number">1</span> <span class="number">10</span>  <span class="number">4</span>  /  /</div></pre></td></tr></table></figure>
+<p>接下来在剩下的3、4、5、6点中，选出距离1号最近的点，为4号点，然后对4号点的所有出边进行松弛（4到3，4到5，4到6）（为什么？我们确定了点1，点2，所以在松弛点4周边的时候，前面的线路就是1-2-4 然后到3，到5，到6）：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">顶点: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span></div><div class="line">距离: <span class="number">0</span>  <span class="number">1</span>  <span class="number">8</span>  <span class="number">4</span> <span class="number">17</span> <span class="number">19</span></div></pre></td></tr></table></figure>
+<p>接着在余下的3、5、6中选择最近的点3进行松弛（3到5）（点1，点2，点4，点3确定，所以接下来是1-2-4-3-5）：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">顶点: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span></div><div class="line">距离: <span class="number">0</span>  <span class="number">1</span>  <span class="number">8</span>  <span class="number">4</span> <span class="number">13</span> <span class="number">19</span></div></pre></td></tr></table></figure>
+<p>继续在余下的5、6点种对点5进行松弛（1-2-4-3-5）（5到6）：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">顶点: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span></div><div class="line">距离: <span class="number">0</span>  <span class="number">1</span>  <span class="number">8</span>  <span class="number">4</span> <span class="number">13</span> <span class="number">17</span></div></pre></td></tr></table></figure>
+<p>现在，我们已经确定了所有的距离，简单不。我们用代码实现上述的思路：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">10</span>][<span class="number">10</span>], distance[<span class="number">10</span>], book[<span class="number">10</span>];</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> UNACCESS_DISTANCE = <span class="number">999999</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> n, m; <span class="comment">// N表示点的个数，M表示边的条数</span></div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j ++) &#123;</div><div class="line">      <span class="keyword">if</span> ( i == j ) &#123;</div><div class="line">        <span class="built_in">map</span>[i][j] = <span class="number">0</span>;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">map</span>[i][j] = UNACCESS_DISTANCE;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 读入边</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">    <span class="keyword">int</span> tx, ty, td;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;tx, &amp;ty, &amp;td);</div><div class="line">    <span class="built_in">map</span>[tx][ty] = td;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 初始化distance数组，这里是1号顶点到其余点的初始路程</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    distance[i] = <span class="built_in">map</span>[<span class="number">1</span>][i];</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 标记数组初始化</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    book[i] = <span class="number">0</span>; <span class="comment">// 全部未定值</span></div><div class="line">  &#125;</div><div class="line">  book[<span class="number">1</span>] = <span class="number">1</span>; <span class="comment">// 我们通过把book置为1表示该点已经确定值。</span></div><div class="line">  </div><div class="line">  <span class="comment">// 核心算法</span></div><div class="line">  <span class="keyword">int</span> min = UNACCESS_DISTANCE;</div><div class="line">  <span class="keyword">int</span> fixedValue = <span class="number">0</span>; <span class="comment">// 定值</span></div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n - <span class="number">1</span>; i ++) &#123; <span class="comment">// 点1定了，所以少循环一次就够了</span></div><div class="line">    <span class="comment">// 找到距离1号的最近的点</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= n; j ++) &#123;</div><div class="line">      <span class="keyword">if</span> (book[j] == <span class="number">0</span> &amp;&amp; distance[j] &lt; min) &#123;</div><div class="line">        min = distance[j];</div><div class="line">        fixedValue = j;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    book[fixedValue] = <span class="number">1</span>;</div><div class="line">    min = UNACCESS_DISTANCE; <span class="comment">// 归位寻找最小值</span></div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= n; k ++) &#123;</div><div class="line">      <span class="keyword">if</span> ( <span class="built_in">map</span>[fixedValue][k] &lt; UNACCESS_DISTANCE ) &#123; <span class="comment">// 是可以连通的</span></div><div class="line">        <span class="keyword">if</span> ( distance[fixedValue] + <span class="built_in">map</span>[fixedValue][k] &lt; distance[k] ) &#123; <span class="comment">// 按照思路比较</span></div><div class="line">          distance[k] = distance[fixedValue] + <span class="built_in">map</span>[fixedValue][k];</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"到%d点%d "</span>, i, distance[i]);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过上述的代码，我们可以看出，时间复杂度为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(<span class="keyword">N</span>^<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>这里其实还可以优化，我们以后也会提到。另外，对于边数少于N^2的稀疏图来说<code>M远远小于N*N的图，M相对大的图，叫做稠密图</code>，我们可以使用<strong>邻接表</strong>（等下会说）来代替邻接矩阵，使得整个时间复杂度优化到：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(M+<span class="keyword">N</span>)logN</div></pre></td></tr></table></figure>
+<p>最快的情况，就是M=N^2，这个时候，(M+N)logN要比N*N还大。但是大多数情况下，边不会有那么多。接下来我们主要讲解邻接表，先看数据</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">4</span> <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="number">4</span> <span class="number">9</span></div><div class="line"><span class="number">4</span> <span class="number">3</span> <span class="number">8</span></div><div class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">5</span></div><div class="line"><span class="number">2</span> <span class="number">4</span> <span class="number">6</span></div><div class="line"><span class="number">1</span> <span class="number">3</span> <span class="number">7</span></div></pre></td></tr></table></figure>
+<p>第一行表示顶点个数与边数，接下来的每行，表示x到y的路程为z。现在要使用邻接表来存储这个图，先给出代码如下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> n, m; <span class="comment">// 点、边</span></div><div class="line">  </div><div class="line">  <span class="comment">// u、v、w数组的大小，要根据实际情况来设置，一般要比m大1</span></div><div class="line">  <span class="keyword">int</span> u[<span class="number">6</span>], v[<span class="number">6</span>], w[<span class="number">6</span>];</div><div class="line">  </div><div class="line">  <span class="comment">// first和next数组要比n大1</span></div><div class="line">  <span class="keyword">int</span> first[<span class="number">5</span>], next[<span class="number">5</span>];</div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</div><div class="line">  </div><div class="line">  <span class="comment">// 初始化first数组1~n的值为-1，表示1~n顶点暂时没有边</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    first[i] = <span class="number">-1</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;u[i], &amp;v[i], &amp;w[i]); <span class="comment">// 读入每条边</span></div><div class="line">    <span class="comment">// 重点操作</span></div><div class="line">    next[i] = first[u[i]];</div><div class="line">    first[u[i]] = i;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里展示的是使用数组来实现邻接表，首先我们为每一条边进行1~m的编号，用u、v、w三个数组来记录每条边的信息，即第i条边用<code>u[i],v[i]-&gt;w[i]</code>来表示，first数组的<code>1-&gt;n</code>分别用来存储1-&gt;n号点的第一条边的编号，即<code>first[u[i]]</code>保存点<code>u[i]</code>的第一条边的编号，<code>next[i]</code>存储<code>编号为i的边</code>的<code>下一条边</code>的编号。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0056.JPG" alt=""></p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0057.JPG" alt=""></p>
+<p>接下来如何遍每一条边呢？我们之前说过，其实first数组存着每个顶点i的第一条边，比如1号点的第一条边是编号为5的边（1，3，7），2号点的第一条边是编号为4的边（2，4，6），3号点没有出向边，4号点的第一条边是编号为2的边（4，3，8）。那么如何遍历1号点的每一条边呢？在找到1号点的第一条边后，剩下的都可以在next数组中依次找到：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> k = first[<span class="number">1</span>];</div><div class="line"><span class="keyword">while</span> (k != <span class="number">-1</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>, u[k], v[k], w[k]);</div><div class="line">    k = next[k];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出了</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span> <span class="number">3</span> <span class="number">7</span></div><div class="line"><span class="number">1</span> <span class="number">2</span> <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="number">4</span> <span class="number">9</span></div></pre></td></tr></table></figure>
+<p>细心的人会发现，此时遍历某个点的边的时候的遍历顺序，正好与读入的时候顺序相反，因为在每个点插入边的时候，都是直接插入<code>表</code>的首部而不是尾部，不过这并不会产生任何问题，这恰好是奇妙之处。遍历每个定点的边：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="keyword">int</span> k = first[i];</div><div class="line">    <span class="keyword">while</span> (k != <span class="number">-1</span>) &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>, u[k], v[k], w[k]);</div><div class="line">      k = next[k];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以发现，使用邻接表存储图的时候，时间空间复杂度是</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(M)</div></pre></td></tr></table></figure>
+<p>遍历一条边的时间复杂度也是同样的，如果一张图是稀疏图的话，选用邻接表来存储要比使用矩阵好的多。</p>
+<p>Dijkstra算法虽然不错，但是依旧无法解决负权边（哈哈，就是有边的路程是负数）的图，所以我们引出一个无论是思想上还是代码实现上都堪称完美的最短路径算法：</p>
+<h4 id="Bellman-Ford"><a href="#Bellman-Ford" class="headerlink" title="Bellman-Ford"></a>Bellman-Ford</h4><p>算法极其简单，核心的代码只有4行，我们先来看看它的样子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= n - <span class="number">1</span>; k ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">      <span class="keyword">if</span> (distance[v[i]] &gt; distance[u[i]] + w[i]) &#123;</div><div class="line">        distance[v[i]] = distance[u[i]] + w[i];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上边的代码中，外层循环一共循环了<code>n-1</code>次，内部循环循环了M次，即枚举每一条边，distance数组的作用与Dijkstra算法一样，记录源点到各个点的最短路径，u、v、w三个数组用来记录边的信息。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (distance[v[i]] &gt; distance[u[i]] + w[i]) &#123;</div><div class="line">  distance[v[i]] = distance[u[i]] + w[i];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面这行代码的意思是，看看能否通过<code>u[i]-&gt;v[i]（值为w[i]）</code>这条边，使得1号点到<code>v[i]</code>号顶点的距离变短。即1号点到<code>u[i]</code>号点的距离加上<code>u[i]-&gt;v[i]</code>这条边的值，是否会比原先1号点到<code>v[i]</code>号点的距离<code>dis[v[i]]</code>要小，这一点与松弛的操作是一样的，现在我们要把所有的边都松弛一遍：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">      <span class="keyword">if</span> (distance[v[i]] &gt; distance[u[i]] + w[i]) &#123;</div><div class="line">        distance[v[i]] = distance[u[i]] + w[i];</div><div class="line">      &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>把每条边松弛一遍后，会有什么效果呢？我们来看个具体的例子，求下图1号点到其余所有点的最短路径。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0058.JPG" alt=""></p>
+<p>我们还是使用一个distance数组来存储1号点到所有点的距离：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">position: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span></div><div class="line">distance: <span class="number">0</span>  /  /  /  /</div></pre></td></tr></table></figure>
+<p>我们开始对每一次输入的边进行松弛：</p>
+<p>首先输入了2，3，2，所以就是对2-&gt;3这条边松弛，即判断<code>distance[3]&gt;distance[2]+2</code>?此时，2与3都是未知，所以无穷大与无穷大+2不可以做比较，所以2-&gt;3松弛失败，接着对第二个输入1，2，-3进行松弛，即判断<code>distance[2]&gt;distance[1]+(-3)</code>，<code>distance[1]</code>是0，所以<code>distance[2]为无穷大，大于-3</code>，所遇<code>distance[2] = -3</code>，依次对每组输入的数字进行松弛，得到</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">position: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span></div><div class="line">distance: <span class="number">0</span> <span class="number">-3</span>  /  /  <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>我们发现，对每条边松弛之后，<code>distance[2]</code>与<code>distance[5]</code>的值变小。即1号点到2号与5号的路程都变小了。接下来我们对所有的边进行下一轮松弛：</p>
+<p>过程与上一轮一样（过程依旧是从第一组输入的边开始，大家脑补），结果为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">position: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span></div><div class="line">distance: <span class="number">0</span> <span class="number">-3</span> <span class="number">-1</span>  <span class="number">2</span>  <span class="number">5</span></div></pre></td></tr></table></figure>
+<p>在这一轮松弛后，我们发现，现在通过2 3 2这条边，可以使1号点到3号点的具体变短。实际上，第一轮松弛过后，得到的是从1号点<code>只能经过一条边</code>到达其余各点的最短路径长度。第二轮松弛过后，得到的是从1号点<code>最多经过2条边</code>到达各个点的最短路径长度，当然K轮就是K条边。现在有一个新的问题了，K是多少？多少轮可以让我们求得答案呢？</p>
+<p>只需要进行n-1轮就够了，因为在一个含有n个定点的图中，任意两点之间的最短路径最多包含n-1边。有人要问了，不是还有回路么？答案是，不可能，最短路径肯定是一个不包含回路的路径，假设有负数路程，那么每走一次就会减少一次，很明显不可能的。接下来，我们完成上边的后2轮松弛，第三轮过后：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">position: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span></div><div class="line">distance: <span class="number">0</span> <span class="number">-3</span> <span class="number">-1</span>  <span class="number">2</span>  <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>第四轮后：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">position: <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span></div><div class="line">distance: <span class="number">0</span> <span class="number">-3</span> <span class="number">-1</span>  <span class="number">2</span>  <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>最后，说白了，这个算法就是，对所有输入的边，进行<strong>最多</strong>n-1次松弛，但是我们会发现，我们在想的时候，一些已经确定的点，我们还是想了一下对他松弛的过程，是不是有些浪费呢？先来看完整的代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> n, m; <span class="comment">// 点、边</span></div><div class="line">  </div><div class="line">  <span class="keyword">int</span> distance[<span class="number">10</span>]; <span class="comment">// 用来存放源距各个点的路程</span></div><div class="line">  <span class="keyword">int</span> u[<span class="number">10</span>], v[<span class="number">10</span>], w[<span class="number">10</span>]; <span class="comment">// u -&gt; v 的路程是 w</span></div><div class="line">  <span class="keyword">int</span> UNACCESS_VALUE = <span class="number">999999</span>; <span class="comment">// 模拟正无穷大</span></div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;u[i], &amp;v[i], &amp;w[i]);</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 初始化路程数组</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123; </div><div class="line">    distance[i] = UNACCESS_VALUE;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  distance[<span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">  <span class="comment">// 核心算法</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n - <span class="number">1</span>; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) &#123;</div><div class="line">      <span class="comment">// 按照刚刚的思想去写代码：源到目的地的距离 &gt; 源到起点的距离 + 起点到目的地的距离</span></div><div class="line">      <span class="keyword">if</span> ( distance[v[j]] &gt; distance[u[j]] + w[j] ) &#123;</div><div class="line">        distance[v[j]] = distance[u[j]] + w[j];</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, distance[i]);</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>此外，这个算法还可以判断一个图是否有负权回路，如果在n-1轮后，依然存在</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> ( distance[v[j]] &gt; distance[u[j]] + w[j] ) &#123;</div><div class="line">  distance[v[j]] = distance[u[j]] + w[j];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>意味着，n-1轮松弛后，还可以继续松弛，说明有负权回路。这个算法的时间复杂度为：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">O</span>(M*<span class="keyword">N</span>)</div></pre></td></tr></table></figure>
+<p>这个时间复杂度貌似高于Dijkstra算法，我们还可以继续对它进行优化。在实际操作中（上边的例子也是），其实不需要n-1次就能算出最短路径，我们也说过，最多使用n-1次，所以我们可以添加一个变量，用来标记数组distance是否在本轮松弛中发生了变化，如果没有发生变化就提前跳出循环。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> check = <span class="number">0</span>;</div><div class="line">  </div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n - <span class="number">1</span>; i ++) &#123;</div><div class="line">    check = <span class="number">0</span>; <span class="comment">// 标记本轮松弛是否会发生</span></div><div class="line">    </div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) &#123;</div><div class="line">      <span class="keyword">if</span> ( distance[v[j]] &gt; distance[u[j]] + w[j] ) &#123;</div><div class="line">        distance[v[j]] = distance[u[j]] + w[j];</div><div class="line">        </div><div class="line">        check = <span class="number">1</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ( check == <span class="number">0</span> ) &#123;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>刚才我们也提到过，其实一些已经松弛成功的边还在被无用的松弛，所以我们继续优化，<strong>每次只对最短路径估计值发生了变化的点的所有出边进行松弛</strong>，我们称为Bellman-Ford的队列优化。</p>
+<p>每次选取队首点u，对点u的所有出边进行松弛操作，例如有一条u到v的边，如果通过n到v这条边使源点到点v的路程变短，而且点v不在当前的队列中，就将点v放入队尾。需要注意的是，同一个点同时在队列中出现多次是毫无意义的，所以我们需要一个数组来进行去重。在对点u的所有出边松弛完毕后，将u出队。反复操作至队列为空。我们用代码来讲解：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="comment">// 还记得之前讲到的邻接表么？这里我们使用邻接表来存储数据</span></div><div class="line">  <span class="keyword">int</span> n, m;</div><div class="line">  </div><div class="line">  <span class="comment">// first 比n大1 next比m大1</span></div><div class="line">  <span class="keyword">int</span> first[<span class="number">6</span>], next[<span class="number">8</span>];</div><div class="line">  <span class="keyword">int</span> u[<span class="number">8</span>], v[<span class="number">8</span>], w[<span class="number">8</span>];</div><div class="line">  <span class="keyword">int</span> distance[<span class="number">8</span>];</div><div class="line">  <span class="keyword">int</span> book[<span class="number">6</span>];</div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    first[i] = <span class="number">-1</span>; <span class="comment">// 初始化first数组，都暂时无边</span></div><div class="line">    book[i] = <span class="number">0</span>; <span class="comment">// 初始化标记数组，都不在队列中</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= m; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d %d %d"</span>, &amp;u[i], &amp;v[i], &amp;w[i]);</div><div class="line">    <span class="comment">// 建立邻接表的关联</span></div><div class="line">    next[i] = first[u[i]];</div><div class="line">    first[u[i]] = i;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 初始化初始路程</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    distance[i] = <span class="number">999999</span>;</div><div class="line">  &#125;</div><div class="line">  distance[<span class="number">1</span>] = <span class="number">0</span>;</div><div class="line">  </div><div class="line">  <span class="comment">// 创建队列</span></div><div class="line">  <span class="keyword">int</span> <span class="built_in">queue</span>[<span class="number">101</span>] = &#123;<span class="number">0</span>&#125;, head = <span class="number">1</span>, tail = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="comment">// 将1号顶点入队</span></div><div class="line">  <span class="built_in">queue</span>[tail] = <span class="number">1</span>;</div><div class="line">  tail ++;</div><div class="line">  </div><div class="line">  <span class="comment">// 标记这个点已经在队列中</span></div><div class="line">  book[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> k = <span class="number">0</span>;</div><div class="line">  <span class="keyword">while</span> (head &lt; tail) &#123; <span class="comment">// 将n-1的循环改为队列循环</span></div><div class="line">    </div><div class="line">    <span class="comment">// 邻接表的遍历方式</span></div><div class="line">    k = first[<span class="built_in">queue</span>[head]];</div><div class="line">    <span class="keyword">while</span> (k != <span class="number">-1</span>) &#123;</div><div class="line">      <span class="comment">// 是否可以松弛</span></div><div class="line">      <span class="keyword">if</span> ( distance[v[k]] &gt; distance[u[k]] + w[k] ) &#123;</div><div class="line">        distance[v[k]] = distance[u[k]] + w[k];</div><div class="line">        </div><div class="line">        <span class="comment">// 松弛成功，当前成功松弛的点是 v[k].</span></div><div class="line">        <span class="comment">// 入队，检查标记</span></div><div class="line">        <span class="keyword">if</span> (book[v[k]] == <span class="number">0</span>) &#123;</div><div class="line">          <span class="built_in">queue</span>[tail] = v[k];</div><div class="line">          tail ++;</div><div class="line">          book[v[k]] = <span class="number">1</span>;</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      k = next[k];</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 对首已经松弛结束了，置为0，因为本次可能不是松弛的最终结果</span></div><div class="line">    book[<span class="built_in">queue</span>[head]] = <span class="number">0</span>;</div><div class="line">    head ++;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, distance[i]);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>检查一个数字是否在队列中也可以遍历，但是时间复杂度是O(N)，但是使用book就变成了O(1)。并且，如果一个点，进入到队列的次数超出n次，这图也存在负权回路。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0059.JPG" alt=""></p>
+<p>至此，最短路径算法告一段落了，以后有优化我们再提起。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/18/算法第四课/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/18/算法第四课/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/19/算法第五课/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    算法第五课
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/15/算法第三课/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">算法第三课</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/18/算法第四课/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

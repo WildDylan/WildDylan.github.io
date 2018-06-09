@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Mybatis学习笔记(2) mybatis概述 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../mybatis学习笔记(18)-mybatis逆向工程/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../mybatis学习笔记(3)-入门程序一/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#mybatis">mybatis 介绍</a></li>
+        <li class="main "><a href="#_1">框架原理</a></li>
+        <li class="main "><a href="#mybatis_1">mybatis框架执行过程</a></li>
+        <li class="main "><a href="#mybatisdao">mybatis开发dao的方法</a></li>
+        <li class="main "><a href="#_2">输入映射和输出映射</a></li>
+        <li class="main "><a href="#sql">动态sql</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# mybatis学习笔记(2)-mybatis概述</p>
+<p>标签： mybatis</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#mybatis-介绍">mybatis 介绍</a></li>
+<li><a href="#框架原理">框架原理</a></li>
+<li><a href="#mybatis框架执行过程">mybatis框架执行过程</a></li>
+<li><a href="#mybatis开发dao的方法">mybatis开发dao的方法</a></li>
+<li><a href="#输入映射和输出映射">输入映射和输出映射</a></li>
+<li><a href="#动态sql">动态sql</a></li>
+</ul>
+<hr />
+<p>本文对mybatis做一个简单介绍，包括框架原理，执行过程，开发方法，输入输出映射以及动态sql,我会在后续的系列文章中一一详细说明</p>
+<h2 id="mybatis">mybatis 介绍</h2>
+<p>mybatis是一个持久层的框架，是apache下的顶级项目。</p>
+<p>mybatis托管到goolecode下，再后来托管到github下(https://github.com/mybatis/mybatis-3/releases)。</p>
+<p>mybatis让程序将主要精力放在sql上，通过mybatis提供的映射方式，自由灵活生成（半自动化，大部分需要程序员编写sql）满足需要sql语句。</p>
+<p>mybatis可以将向 preparedStatement中的输入参数自动进行输入映射，将查询结果集灵活映射成java对象。（输出映射）</p>
+<h2 id="_1">框架原理</h2>
+<p>mybatis框架</p>
+<p><img alt="mybatis框架图" src="http://7xph6d.com1.z0.glb.clouddn.com/mybatis_%E6%A1%86%E6%9E%B6%E5%9B%BE.png" /></p>
+<h2 id="mybatis_1">mybatis框架执行过程</h2>
+<p>1、配置mybatis的配置文件，SqlMapConfig.xml（名称不固定）</p>
+<p>2、通过配置文件，加载mybatis运行环境，创建SqlSessionFactory会话工厂(SqlSessionFactory在实际使用时按单例方式)</p>
+<p>3、通过SqlSessionFactory创建SqlSession。SqlSession是一个面向用户接口（提供操作数据库方法），实现对象是线程不安全的，建议sqlSession应用场合在方法体内。</p>
+<p>4、调用sqlSession的方法去操作数据。如果需要提交事务，需要执行SqlSession的commit()方法。</p>
+<p>5、释放资源，关闭SqlSession</p>
+<h2 id="mybatisdao">mybatis开发dao的方法</h2>
+<p>1.原始dao 的方法</p>
+<ul>
+<li>需要程序员编写dao接口和实现类</li>
+<li>需要在dao实现类中注入一个SqlSessionFactory工厂</li>
+</ul>
+<p>2.mapper代理开发方法（建议使用）</p>
+<p>只需要程序员编写mapper接口（就是dao接口）。
+程序员在编写mapper.xml(映射文件)和mapper.java需要遵循一个开发规范：</p>
+<ul>
+<li>mapper.xml中namespace就是mapper.java的类全路径。</li>
+<li>mapper.xml中statement的id和mapper.java中方法名一致。</li>
+<li>mapper.xml中statement的parameterType指定输入参数的类型和mapper.java的方法输入参数类型一致</li>
+<li>mapper.xml中statement的resultType指定输出结果的类型和mapper.java的方法返回值类型一致。</li>
+</ul>
+<p>SqlMapConfig.xml配置文件：可以配置properties属性、别名、mapper加载。</p>
+<h2 id="_2">输入映射和输出映射</h2>
+<ul>
+<li>输入映射：</li>
+<li>parameterType：指定输入参数类型可以简单类型、pojo、hashmap。</li>
+<li>
+<p>对于综合查询，建议parameterType使用包装的pojo，有利于系统扩展。</p>
+</li>
+<li>
+<p>输出映射：</p>
+<ul>
+<li>resultType：查询到的列名和resultType指定的pojo的属性名一致，才能映射成功。</li>
+<li>reusltMap：可以通过resultMap 完成一些高级映射。如果查询到的列名和映射的pojo的属性名不一致时，通过resultMap设置列名和属性名之间的对应关系（映射关系）。可以完成映射。<ul>
+<li>高级映射：
+    将关联查询的列映射到一个pojo属性中。（一对一）
+    将关联查询的列映射到一个List<pojo>中。（一对多）</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="sql">动态sql</h2>
+<ul>
+<li>动态sql：（重点）</li>
+<li>if判断（掌握）</li>
+<li>where</li>
+<li>foreach</li>
+<li>sql片段（掌握）</li>
+</ul>
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> | <a href="http://blog.csdn.net/h3243212/">CSDN</a> | <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

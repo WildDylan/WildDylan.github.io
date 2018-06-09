@@ -1,0 +1,138 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>机器学习（简述） | Machine-Learning</title>
+  <meta name="author" content="dylan">
+
+  
+  <meta name="description" content="A place of Machine-Learning">
+  
+  
+
+  <link rel="alternate" href="/atom.xml" title="Machine-Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/ml/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="">Machine-Learning</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">机器学习（简述）</h1>
+  
+
+    <time datetime="2017-01-16T13:48:01.000Z">
+  <span class="day">16</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h1 id="何谓机器学习"><a href="#何谓机器学习" class="headerlink" title="何谓机器学习"></a>何谓机器学习</h1><p>机器学习，就是把无序的数据，转换成有用的信息。</p>
+<hr>
+<h4 id="关键术语"><a href="#关键术语" class="headerlink" title="关键术语"></a>关键术语</h4><p>在入门机器学习之前，我们先了解一些简单的术语：</p>
+<ul>
+<li>特征：也称作<code>属性</code></li>
+<li>训练集：训练机器大脑的样本，包含特征与<code>目标变量</code></li>
+<li>测试数据：用于测试机器学习算法的效果，测试数据通常不包含<code>目标变量</code>，目标变量有机器学习算法得出</li>
+<li>精确度：比较预测结果与实际结果</li>
+</ul>
+<a id="more"></a>
+<h4 id="如何开发机器学习应用程序"><a href="#如何开发机器学习应用程序" class="headerlink" title="如何开发机器学习应用程序"></a>如何开发机器学习应用程序</h4><ul>
+<li>收集数据：收集数据的途径很多，爬虫、公开数据源、设备测量数据集等</li>
+<li>准备输入数据：确保数据符合<code>机器学习算法</code>的格式等要求</li>
+<li>分析输入数据：可能需要人工干预分析以前得到的数据，确保数据中没有垃圾数据</li>
+<li>训练算法：从数据中抽取知识与信息</li>
+<li>测试算法：评估算法处理后的<code>目标变量</code></li>
+<li>使用算法：转换算法为应用程序，执行实际任务</li>
+</ul>
+<h4 id="开发环境"><a href="#开发环境" class="headerlink" title="开发环境"></a>开发环境</h4><p>这里使用<code>python</code>作为开发语言，下边我们来配置环境：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">curl -O https://bootstrap.pypa.io/get-pip.py</div></pre></td></tr></table></figure>
+<p>如果你的版本是2.7：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python get-pip.py</div></pre></td></tr></table></figure>
+<p>如果是python3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">python3 get-pip.py</div></pre></td></tr></table></figure>
+<h4 id="基础库"><a href="#基础库" class="headerlink" title="基础库"></a>基础库</h4><p>我们使用了<code>NumPy</code>作为基础库，这里包含了线性代数等知识。比如说我们如何求一个矩阵的逆：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">randMat = mat(random.rand(<span class="number">4</span>, <span class="number">4</span>)) // 从随机的数组中创建矩阵</div><div class="line">invRandMat = randMat.I // invRandMat就是randMat逆矩阵</div></pre></td></tr></table></figure>
+<h4 id="入门知识小结"><a href="#入门知识小结" class="headerlink" title="入门知识小结"></a>入门知识小结</h4><p>学习机器学习算法，必须了解数据实例，每个数据实例有多个特征值组成。为了充分的构建和训练机器，我们必须已知大量的训练样本集。</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+    <a class="facebook" href="http://www.facebook.com/Dylanccccc" title="Facebook">Facebook</a>
+  
+  
+  
+    <a class="twitter" href="http://twitter.com/Dylanccccc" title="Twitter">Twitter</a>
+  
+  
+    <a class="github" href="https://github.com/WildDylan" title="GitHub">GitHub</a>
+  
+  <a class="rss" href="/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2017 dylan
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/ml/js/jquery.imagesloaded.min.js"></script>
+<script src="/ml/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/ml/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/ml/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/ml/js/phasebeam.js"></script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>机器学习（logistic回归） | Machine-Learning</title>
+  <meta name="author" content="dylan">
+
+  
+  <meta name="description" content="A place of Machine-Learning">
+  
+  
+
+  <link rel="alternate" href="/atom.xml" title="Machine-Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/ml/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="">Machine-Learning</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">机器学习（logistic回归）</h1>
+  
+
+    <time datetime="2017-01-18T12:40:36.000Z">
+  <span class="day">18</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="Logistic回归"><a href="#Logistic回归" class="headerlink" title="Logistic回归"></a>Logistic回归</h2><p>===</p>
+<p>这会是激动人心的一章，因为我们将首次接触到最优化算法。假设现在有一些数据点，我们用一条直线对这些点进行拟合（该线称为最佳拟合直线），这个拟合过程就称作回归。利用Logistic回归进行分类的主要思想是：根据现有数据对分类边界线建立回归公式，以此进行分类。这里的『回归』一词源于最佳拟合，表示要找到最佳拟合参数集，其背后的数学分析将在下一部分介绍。训练分类器时的做法就是寻找最佳拟合参数，使用的是最优化算法。</p>
+<ul>
+<li>收集数据：采用任意方法收集数据</li>
+<li>准备数据：由于需要进行距离运算，因此要求数据类型为数值型，另外，结构化数据格式最佳</li>
+<li>分析数据：采用任意方法对数据进行分析</li>
+<li>训练算法：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数</li>
+<li>测试算法：一旦训练步骤完成，分类将会很快</li>
+<li>使用算法：首先，我们需要输入一些数据，并将其转化为对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定他们属于哪个类别；最后，我们就可以在输出的类别上做一些其他的分析工作</li>
+</ul>
+<h4 id="基于Logistic回归和Sigmoid函数的分类"><a href="#基于Logistic回归和Sigmoid函数的分类" class="headerlink" title="基于Logistic回归和Sigmoid函数的分类"></a>基于Logistic回归和Sigmoid函数的分类</h4><blockquote>
+<p>优点：计算代价不高，易于理解和实现<br>缺点：容易欠拟合，分类精度可能不高<br>适用数据类型：数值型和标称型</p>
+</blockquote>
+<a id="more"></a>
+<p>我们想要的函数应该是，能接受所有的输入然后预测出类别。例如，在两个类的情况下，上述函数输出0或1。或许你之前接触过有这种性质的函数，该函数被称为<code>海维塞德阶跃函数</code>，或者直接称为<code>单位阶跃函数</code>。然而，海维塞德阶跃函数的问题在于：该函数在跳跃点上从0瞬间跳跃到1，这个瞬间跳跃过程有时很难处理。幸好，另一个函数也有类似的性质，而且数学上更易处理，这就是<code>Sigmoid</code>函数，它的具体计算公式如下：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-1.png" alt=""></p>
+<p>我们看一下根据上述公式在不同的坐标尺度下的两条曲线图。当x为0时，Sigmoid函数值为0.5，。随着x的增大，对应的Sigmoid的值将逼近于1；而随着x的减小，Sigmoid的值逼近于0.如果横坐标刻度足够大，Sigmoid函数看起来很像一个阶跃函数。</p>
+<p><img src="https://s3.amazonaws.com/grapher/exports/ovvnm2fhzg.png" alt=""></p>
+<p><img src="https://s3.amazonaws.com/grapher/exports/xr532wgsjf.png" alt=""></p>
+<p>因此，为了实现Logistic回归分类器，我们可以在每个特征上都乘以一个回归系数，然后把所有的结果值相加，将这个总和代入Sigmoid函数中，进而得到一个范围在 0 ~ 1 之间的数值。任何大于0.5的数据被分为1类，小于0.5的即被归位0类，所以，Logistic回归也可以被看成是一种概率估计。在确定了分类器的函数形式之后，现在的问题变成了：最佳回归系数是多少？如何确定它们的大小？</p>
+<h4 id="基于最优化方法的最佳回归系数确定"><a href="#基于最优化方法的最佳回归系数确定" class="headerlink" title="基于最优化方法的最佳回归系数确定"></a>基于最优化方法的最佳回归系数确定</h4><p>Sigmoid函数的输入记为z，由下面的公式得出：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-2.png" alt=""></p>
+<p>如果采用向量的写法，上述公式可以写成 z = w的T次 * x，它表示将两个数值向量对应元素相乘后相加得到z值。其中的向量x是分类器的输入数据，向量w也就是我们要找到的最佳参数（系数），从而使分类器尽可能的精确。为了寻找最佳系数，需要用到最优化理论的一些只是。下面首先介绍<code>梯度上升</code>这一最优化方法，我们将学习如何使用该方法求得数据集的最佳参数。</p>
+<h6 id="梯度上升法"><a href="#梯度上升法" class="headerlink" title="梯度上升法"></a>梯度上升法</h6><p>梯度上升法基于的思想是：要找到某函数的最大值，最好的方法是沿着该函数的梯度方向探寻。如果梯度记为▽，则函数 f(x, y) 的梯度由下表示：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-3.png" alt=""></p>
+<p>这是机器学习中一个混淆的地方，但在数学上并不难，需要做的只是牢记这些符号的意义。这个梯度意味着要沿x的方向移动 ∂f(x ,y) / ∂x，沿y的方向移动 ∂f(x, y) / ∂y。其中，函数 f(x, y) 必须要在待计算的点上有定义并且可微，一个具体的例子图：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-4.JPG" alt=""></p>
+<blockquote>
+<p>梯度上升算法到达每个点后都会重新估计移动的方向。从p0开始，计算完该点的梯度，函数就根据梯度移动到下一个点p1，在p1点，梯度再次被重新计算，并沿新梯度方向移动到p2，如此循环迭代，知道满足停止条件。迭代的过程中，梯度算子总是保证我们能选取到最佳的移动方向</p>
+</blockquote>
+<p>上图中的梯度上升算法沿梯度方向移动了一步，可以看到，梯度算子总是指向函数值增长最快的方向。这里所说的是移动的方向，而未提到移动量的大小。该量值称为<code>步长</code>，记作<code>α</code>，用向量来表示的话，梯度上升算法的迭代公式如下：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-5.png" alt=""></p>
+<p>该公式将一直被迭代执行，直到到达某个停止条件为止，比如迭代次数到达某个值或算法达到某个允许的误差范围等。</p>
+<blockquote>
+<p>扩展：梯度下降算法，只需要将上升算法中的<code>+</code>改为<code>-</code>即可。梯度上升算法用来求函数的最大值，下降算法用于求函数的最小值。</p>
+</blockquote>
+<p>基于上面的内容，我们来看一个Logistic回归分类器的应用例子，下图为我们采集用的数据集，我们要利用梯度上升法招到Logistic回归分类器在此数据集上的最佳回归系数：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-6.JPG" alt=""></p>
+<h6 id="训练算法：使用梯度上升找到最佳参数"><a href="#训练算法：使用梯度上升找到最佳参数" class="headerlink" title="训练算法：使用梯度上升找到最佳参数"></a>训练算法：使用梯度上升找到最佳参数</h6><p>在上边我们将要使用的图中，有100个样本点，每个点包含两个数值型特征，X1和X2。在此数据集上，我们将通过使用梯度上升发找到最佳回归系数，也就是拟合出Logistic回归模型的最佳参数。我们新建<code>logRegres.py</code>并在其中输入代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="comment"># 打开文本文件testSet.txt并进行逐行读取，每行前两个值分别是X1, X2，第三个数值是对应的类别标签</span></div><div class="line"><span class="comment"># 为了方便计算，我们将X0的初始值设置为1.0</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></div><div class="line">    dataMat = []</div><div class="line">    labelMat = []</div><div class="line">    fr = open(<span class="string">'testSet.txt'</span>)</div><div class="line"></div><div class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> fr.readlines():</div><div class="line">        lineArr = line.strip().split()</div><div class="line">        dataMat.append([<span class="number">1.0</span>, float(lineArr[<span class="number">0</span>]), float(lineArr[<span class="number">1</span>])])</div><div class="line">        labelMat.append(int(lineArr[<span class="number">2</span>]))</div><div class="line">        </div><div class="line">    <span class="keyword">return</span> dataMat,labelMat</div><div class="line"></div><div class="line"><span class="comment"># 按照我们上述提到的公式来写的方法</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">sigmoid</span><span class="params">(inx)</span> :</span></div><div class="line">    <span class="keyword">return</span> <span class="number">1.0</span> / (<span class="number">1</span> + exp(-inx))</div><div class="line"></div><div class="line"><span class="comment"># 梯度上升算法</span></div><div class="line"><span class="comment"># 参数1：2维Numpy矩阵，</span></div><div class="line"><span class="comment"># 参数2：类别标签， 1 x 100的行向量</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">gradAscent</span><span class="params">(dataMatIn, classLabels)</span> :</span></div><div class="line">    dataMatrix = mat(dataMatIn)</div><div class="line">    labelMat = mat(classLabels).transpose() <span class="comment"># 将行向量转换为列向量方便矩阵运算</span></div><div class="line">    m, n = shape(dataMatrix)</div><div class="line"></div><div class="line">    alpha = <span class="number">0.001</span> <span class="comment"># 向目标移动的步长</span></div><div class="line">    maxCycles = <span class="number">500</span> <span class="comment"># 迭代次数</span></div><div class="line">    weights = ones((n, <span class="number">1</span>))</div><div class="line"></div><div class="line">    <span class="comment"># for循环结束后将返回训练好的回归系数</span></div><div class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> range(maxCycles) :</div><div class="line"></div><div class="line">        <span class="comment"># 计算真实类别与预测类别的差值，接下来就是按照该差值的方向调整回归系数，以下2行是一个简单的数学推倒，有兴趣可以搜索下</span></div><div class="line">        h = sigmoid(dataMatrix * weights) <span class="comment"># h是一个列向量，列向量的元素个数等于100，  dataMatrix * weights 为矩阵相乘</span></div><div class="line">        error = (labelMat - h)</div><div class="line">        weights = weights + alpha * dataMatrix.transpose() * error</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> weights</div></pre></td></tr></table></figure>
+<p>我们运行得到如下结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> logRegres</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dataArr, labelMat = logRegres.loadDataSet()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>logRegres.gradAscent(dataArr, labelMat)</div><div class="line">matrix([[ <span class="number">4.12414349</span>],</div><div class="line">        [ <span class="number">0.48007329</span>],</div><div class="line">        [<span class="number">-0.6168482</span> ]])</div></pre></td></tr></table></figure>
+<h6 id="分析数据，画出决策边界"><a href="#分析数据，画出决策边界" class="headerlink" title="分析数据，画出决策边界"></a>分析数据，画出决策边界</h6><p>从上面已经解出了一组回归系数，它确定了不同类别数据之间的分割线。那么怎样画出该分割线，从而使得程序更加便于理解呢？我们继续添加代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">plotBestFit</span><span class="params">(weights)</span> :</span></div><div class="line">    <span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">    dataMat, labelMat = loadDataSet()</div><div class="line">    dataArr = array(dataMat)</div><div class="line">    n = shape(dataArr)[<span class="number">0</span>]</div><div class="line">    xcord1 = []</div><div class="line">    ycord1 = []</div><div class="line"></div><div class="line">    xcord2 = []</div><div class="line">    ycord2 = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(n) :</div><div class="line">        <span class="keyword">if</span> int(labelMat[i]) == <span class="number">1</span> :</div><div class="line">            xcord1.append(dataArr[i, <span class="number">1</span>])</div><div class="line">            ycord1.append(dataArr[i, <span class="number">2</span>])</div><div class="line">        <span class="keyword">else</span> :</div><div class="line">            xcord2.append(dataArr[i, <span class="number">1</span>])</div><div class="line">            ycord2.append(dataArr[i, <span class="number">2</span>])</div><div class="line">          </div><div class="line">    fig = plt.figure()</div><div class="line">    ax = fig.add_subplot(<span class="number">111</span>)</div><div class="line">    ax.scatter(xcord1, ycord1, s=<span class="number">30</span>, c=<span class="string">'red'</span>, marker=<span class="string">'s'</span>)</div><div class="line">    ax.scatter(xcord2, ycord2, s=<span class="number">30</span>, c=<span class="string">'green'</span>)</div><div class="line"></div><div class="line">    x = arange(<span class="number">-3.0</span>, <span class="number">3.0</span>, <span class="number">0.1</span>)</div><div class="line">    y = (-weights[<span class="number">0</span>] - weights[<span class="number">1</span>] * x) / weights[<span class="number">2</span>]</div><div class="line">    ax.plot(x, y)</div><div class="line">    plt.xlabel(<span class="string">'X1'</span>)</div><div class="line">    plt.ylabel(<span class="string">'X2'</span>)</div><div class="line">    plt.show()</div></pre></td></tr></table></figure>
+<p>然后我们运行：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>reload(logRegres)</div><div class="line">&lt;module <span class="string">'logRegres'</span> <span class="keyword">from</span> <span class="string">'logRegres.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>weights = logRegres.gradAscent(dataArr, labelMat)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>logRegres.plotBestFit(weights.getA())</div></pre></td></tr></table></figure>
+<p>得到结果：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-7.png" alt=""></p>
+<p>这个分类结果相当不错，从图上看只分错了两到四个点，但是，尽管例子简单而且数据集很小，这个方法确需要大量的计算（矩阵乘法部分），所以我们需要算法进行一些改进，从而可以使他用在真实数据上。</p>
+<h6 id="训练算法：随机梯度上升"><a href="#训练算法：随机梯度上升" class="headerlink" title="训练算法：随机梯度上升"></a>训练算法：随机梯度上升</h6><p>梯度上升算法在每次更新回归系数时都需要遍历整个数据集，该方法在处理100个左右的数据集时尚可，如果有十亿样本和成千上万的特征，该方法的复杂度就太高了。一种改进的方法是一次仅使用一个样本点来更新回归系数，该方法称为<code>随机梯度上升算法</code>。由于可以在新样本到来时，对分类器进行增量式更新，因而随机梯度上升算法是一个在线学习算法。与「在线学习相对应」，一次处理所有的数据被称作是<code>批处理</code>。我们继续来添加方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">stocGradAscent0</span><span class="params">(dataMatrix, classLabels)</span> :</span></div><div class="line">    m, n = shape(dataMatrix)</div><div class="line">    alpha = <span class="number">0.01</span></div><div class="line">    weights = ones(n)</div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">200</span>) :</div><div class="line">        h = sigmoid(sum(dataMatrix[i] * weights))</div><div class="line">        error = classLabels[i] - h</div><div class="line">        weights = weights + alpha * error * dataMatrix[i]</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> weights</div></pre></td></tr></table></figure>
+<p>可以看到，随机梯度上升算法与梯度上升算法在代码上很相似，但也有一些区别：第一，后者的变量h和误差error都是向量，而前者全是数值；第二，前者没有矩阵的转换过程，所有的变量的数据类型都是NumPy数组。我们来验证下结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> logRegres</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>dataArr, labelMat = logRegres.loadDataSet()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>weights = logRegres.stocGradAscent0(array(dataArr), labelMat)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>logRegres.plotBestFit(weights)</div></pre></td></tr></table></figure>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-8.png" alt=""></p>
+<p>通过上图我们可以看到，拟合的结果还不错，但是分类器错分了1/3的样本。 所以我们继续修改代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">stocGradAscent1</span><span class="params">(dataMatrix, classLabels, numIter=<span class="number">150</span>)</span> :</span></div><div class="line">    m, n = shape(dataMatrix)</div><div class="line">    weights = ones(n)</div><div class="line"></div><div class="line">    <span class="keyword">for</span> j <span class="keyword">in</span> range(numIter) :</div><div class="line">        dataIndex = range(m)</div><div class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> range(m) :</div><div class="line">            alpha = <span class="number">4</span> / (<span class="number">1.0</span> + j + i) + <span class="number">0.01</span></div><div class="line">            randIndex = int(random.uniform(<span class="number">0</span>, len(dataIndex)))</div><div class="line">            h = sigmoid(sum(dataMatrix[randIndex] * weights))</div><div class="line">            error = classLabels[randIndex] - h</div><div class="line">            weights = weights + alpha * error * dataMatrix[randIndex]</div><div class="line">            <span class="keyword">del</span>(dataIndex[randIndex])</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> weights</div></pre></td></tr></table></figure>
+<p>我们共增加了2处代码改进，alpha在每次迭代的过程中都会进行相应的调整，这回缓解数据波动或者高频波动，另外，虽然alpha会随着迭代次数不断的减小，但永远不会减小到0，这是因为在这里还存在一个常数项。这样做的原因是为了保证在多次迭代之后新数据仍然具有一定的影响力。如果要处理的问题是动态变化的，那么可以适当的增大上述的常数项，来确保新的值获取更大的回归系数。另一点需要注意的是，在降低aplha的函数中，alpha每次减少 1/(j+i) ，其中j是迭代次数，i是样本的下标。这样当 j &lt;&lt; max(i) 时，alpha不是严格下降的。第二个改进的地方是通过随机选取样本来更新回归系数，这种方法可以减少周期类的波动，这种方法每次随机从列表中选出一个值，然后从列表中删掉该值（再进行下一次迭代）。此外，改进算法还增加了一个迭代次数作为第三个参数，如果该参数没有给定的话，算法将默认迭代150次。接下来我们测试新的算法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>reload(logRegres)</div><div class="line">&lt;module <span class="string">'logRegres'</span> <span class="keyword">from</span> <span class="string">'logRegres.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>weights = logRegres.stocGradAscent1(array(dataArr), labelMat)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>logRegres.plotBestFit(weights)</div></pre></td></tr></table></figure>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-9.png" alt=""></p>
+<p>我们发现，在默认150次情况下，结果已经接近于我们最初的准确度，如果我们将迭代次数改为500呢？</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ml-logistic-10.png" alt=""></p>
+<h4 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h4><p>Logistic回归的目的是寻找一个非线性函数Sigmoid的最佳拟合参数，求解过程可以由最优化算法来完成，在最优化算法中，最常见的就是梯度上升算法，而这个算法可以简化为随机梯度上升算法。随机梯度上升算法与梯度上升结果差异不大，但是确占用了更少的资源。此外，随机梯度上升是一个在线算法，它可以在新数据到来的时候就完成参数更新，而不需要重新读取进行批处理运算。</p>
+<p>下节我们将进入另一种分类算法：<strong>支持向量机</strong>，它被认为是现成的最好的算法之一。</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+    <a class="facebook" href="http://www.facebook.com/Dylanccccc" title="Facebook">Facebook</a>
+  
+  
+  
+    <a class="twitter" href="http://twitter.com/Dylanccccc" title="Twitter">Twitter</a>
+  
+  
+    <a class="github" href="https://github.com/WildDylan" title="GitHub">GitHub</a>
+  
+  <a class="rss" href="/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2017 dylan
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/ml/js/jquery.imagesloaded.min.js"></script>
+<script src="/ml/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/ml/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/ml/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/ml/js/phasebeam.js"></script>
+</body>
+</html>

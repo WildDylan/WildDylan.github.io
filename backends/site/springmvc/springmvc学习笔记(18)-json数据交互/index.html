@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Springmvc学习笔记(18) json数据交互 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../springmvc学习笔记(17)-上传图片/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../springmvc学习笔记(19)-RESTful支持/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#springmvcjson">springmvc进行json交互</a></li>
+        <li class="main "><a href="#_1">环境准备</a></li>
+            <li><a href="#json">添加json转换的依赖</a></li>
+            <li><a href="#json_1">配置json转换器</a></li>
+        <li class="main "><a href="#json_2">json交互测试</a></li>
+            <li><a href="#jsonjson">输入json串，输出是json串</a></li>
+            <li><a href="#keyvaluejson">输入key/value，输出是json串</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# springmvc学习笔记(18)-json数据交互</p>
+<p>标签： springmvc</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#springmvc进行json交互">springmvc进行json交互</a></li>
+<li><a href="#环境准备">环境准备</a><ul>
+<li><a href="#添加json转换的依赖">添加json转换的依赖</a></li>
+<li><a href="#配置json转换器">配置json转换器</a></li>
+</ul>
+</li>
+<li><a href="#json交互测试">json交互测试</a><ul>
+<li><a href="#输入json串，输出是json串">输入json串，输出是json串</a></li>
+<li><a href="#输入keyvalue，输出是json串">输入key/value，输出是json串</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>本文主要介绍如何在springmvc中进行json数据的交互，先是环境准备和配置，然后分别展示了“输入json串，输出是json串”和“输入key/value，输出是json串”两种情况下的交互</p>
+<h2 id="springmvcjson">springmvc进行json交互</h2>
+<p>json数据格式在接口调用中、html页面中较常用，json格式比较简单，解析还比较方便。</p>
+<p>比如：webservice接口，传输json数据.</p>
+<p><img alt="json交互" src="http://7xph6d.com1.z0.glb.clouddn.com/springmvc_json%E4%BA%A4%E4%BA%92.png" /></p>
+<ul>
+<li>请求json、输出json，要求请求的是json串，所以在前端页面中需要将请求的内容转成json，不太方便。</li>
+<li>请求key/value、输出json。此方法比较常用。</li>
+</ul>
+<h2 id="_1">环境准备</h2>
+<h3 id="json">添加json转换的依赖</h3>
+<p>最开始我少了<code>jackson-databind</code>依赖，程序各种报错。</p>
+<pre><code class="xml">
+&lt;!-- json 转换--&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+    &lt;version&gt;2.7.2&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.codehaus.jackson&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-mapper-asl&lt;/artifactId&gt;
+    &lt;version&gt;1.9.13&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre>
+
+<p>查看依赖树</p>
+<pre><code>[INFO] +- com.fasterxml.jackson.core:jackson-databind:jar:2.7.2:compile
+[INFO] |  +- com.fasterxml.jackson.core:jackson-annotations:jar:2.7.0:compile
+[INFO] |  \- com.fasterxml.jackson.core:jackson-core:jar:2.7.2:compile
+[INFO] \- org.codehaus.jackson:jackson-mapper-asl:jar:1.9.13:compile
+[INFO]    \- org.codehaus.jackson:jackson-core-asl:jar:1.9.13:compile
+</code></pre>
+
+<h3 id="json_1">配置json转换器</h3>
+<p>在注解适配器中加入<code>messageConverters</code></p>
+<pre><code class="xml">
+&lt;!--注解适配器 --&gt;
+&lt;bean class=&quot;org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter&quot;&gt;
+    &lt;property name=&quot;messageConverters&quot;&gt;
+    &lt;list&gt;
+    &lt;bean class=&quot;org.springframework.http.converter.json.MappingJacksonHttpMessageConverter&quot;&gt;&lt;/bean&gt;
+    &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+</code></pre>
+
+<p><strong>注意：如果使用<code>&lt;mvc:annotation-driven /&gt;</code>则不用定义上边的内容。</strong></p>
+<h2 id="json_2">json交互测试</h2>
+<p>显示两个按钮分别测试</p>
+<ul>
+<li>jsp页面</li>
+</ul>
+<pre><code class="jsp">&lt;%--
+  Created by IntelliJ IDEA.
+  User: brian
+  Date: 2016/3/7
+  Time: 20:49
+  To change this template use File | Settings | File Templates.
+--%&gt;
+&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=UTF-8&quot;&gt;
+    &lt;title&gt;json交互测试&lt;/title&gt;
+    &lt;script type=&quot;text/javascript&quot; src=&quot;${pageContext.request.contextPath }/js/jquery-1.4.4.min.js&quot;&gt;&lt;/script&gt;
+    &lt;script type=&quot;text/javascript&quot;&gt;
+        //请求json，输出是json
+        function requestJson(){     省略    }
+        //请求key/value，输出是json
+        function responseJson(){    省略    }
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;input type=&quot;button&quot; onclick=&quot;requestJson()&quot; value=&quot;请求json，输出是json&quot;/&gt;
+&lt;input type=&quot;button&quot; onclick=&quot;responseJson()&quot; value=&quot;请求key/value，输出是json&quot;/&gt;
+&lt;/body&gt;
+
+</code></pre>
+
+<ul>
+<li>controller</li>
+</ul>
+<pre><code class="java">@Controller
+public class JsonTest {
+    省略
+}
+</code></pre>
+
+<ul>
+<li>测试结果</li>
+</ul>
+<h3 id="jsonjson">输入json串，输出是json串</h3>
+<p>使用jquery的ajax提交json串，对输出的json结果进行解析。</p>
+<ul>
+<li>jsp页面</li>
+</ul>
+<pre><code class="jsp">//请求json，输出是json
+function requestJson(){
+
+    $.ajax({
+        type:'post',
+        url:'${pageContext.request.contextPath }/requestJson.action',
+        contentType:'application/json;charset=utf-8',
+        //数据格式是json串，商品信息
+        data:'{&quot;name&quot;:&quot;手机&quot;,&quot;price&quot;:999}',
+        success:function(data){//返回json结果
+            alert(data);
+        }
+
+    });
+
+}
+</code></pre>
+
+<ul>
+<li>controller</li>
+</ul>
+<pre><code class="java"> //请求json串(商品信息)，输出json(商品信息)
+//@RequestBody将请求的商品信息的json串转成itemsCustom对象
+//@ResponseBody将itemsCustom转成json输出
+@RequestMapping(&quot;/requestJson&quot;)
+public @ResponseBody ItemsCustom requestJson(@RequestBody ItemsCustom itemsCustom){
+
+    //@ResponseBody将itemsCustom转成json输出
+    return itemsCustom;
+}
+</code></pre>
+
+<ul>
+<li>测试结果</li>
+</ul>
+<p><img alt="请求json，返回json" src="http://7xph6d.com1.z0.glb.clouddn.com/springmvc_json-request-json-1.png" /></p>
+<p>可以看到，request和response的HTTP头的Content-Type都是<code>application/json;charset=utf-8</code></p>
+<p><img alt="请求json，返回json,response的body" src="http://7xph6d.com1.z0.glb.clouddn.com/springmvc_json-request-json-2.png" /></p>
+<h3 id="keyvaluejson">输入key/value，输出是json串</h3>
+<p>使用jquery的ajax提交key/value串，对输出的json结果进行解析</p>
+<ul>
+<li>jsp页面</li>
+</ul>
+<pre><code class="jsp">//请求key/value，输出是json
+function responseJson(){
+
+    $.ajax({
+        type:'post',
+        url:'${pageContext.request.contextPath }/responseJson.action',
+        //请求是key/value这里不需要指定contentType，因为默认就 是key/value类型
+        //contentType:'application/json;charset=utf-8',
+        //数据格式是json串，商品信息
+        data:'name=手机&amp;price=999',
+        success:function(data){//返回json结果
+            alert(data.name);
+        }
+
+    });
+
+}
+</code></pre>
+
+<ul>
+<li>controller</li>
+</ul>
+<pre><code class="java"> //请求key/value，输出json
+@RequestMapping(&quot;/responseJson&quot;)
+public @ResponseBody ItemsCustom responseJson(ItemsCustom itemsCustom){
+
+    //@ResponseBody将itemsCustom转成json输出
+    return itemsCustom;
+}
+</code></pre>
+
+<ul>
+<li>测试结果</li>
+</ul>
+<p><img alt="请求key/value,返回json" src="http://7xph6d.com1.z0.glb.clouddn.com/springmvc_json-request-keyvalue-1.png" /></p>
+<p>可以看到，key/value键值对的默认Content-Type是<code>application/x-www-form-urlencoded</code>,同时，我们收到了响应“手机”</p>
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> <code>|</code> <a href="http://blog.csdn.net/h3243212/">CSDN</a> <code>|</code> <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

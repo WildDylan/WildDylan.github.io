@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>算法第三课 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="枚举枚举算法又被称为穷举算法，字面看很暴力，先来看一个例子：
+1口口口+口口口=口口口？
+3位数与3位数相加等于一个3位数（使用1~9，不能重复），用穷举来说，就是列举所有的可能。这样写for循环的话，我们要写9个循环嵌套（9个数字，每个都要循环），然后通过一大串的判断语句之后，才能得到我们的答案（答案还需要除以2，173+286与286+173是一样的），有兴趣或者有时间的同学可以用穷举的思想试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法第三课">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/15/算法第三课/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="枚举枚举算法又被称为穷举算法，字面看很暴力，先来看一个例子：
+1口口口+口口口=口口口？
+3位数与3位数相加等于一个3位数（使用1~9，不能重复），用穷举来说，就是列举所有的可能。这样写for循环的话，我们要写9个循环嵌套（9个数字，每个都要循环），然后通过一大串的判断语句之后，才能得到我们的答案（答案还需要除以2，173+286与286+173是一样的），有兴趣或者有时间的同学可以用穷举的思想试">
+<meta property="og:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:31.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法第三课">
+<meta name="twitter:description" content="枚举枚举算法又被称为穷举算法，字面看很暴力，先来看一个例子：
+1口口口+口口口=口口口？
+3位数与3位数相加等于一个3位数（使用1~9，不能重复），用穷举来说，就是列举所有的可能。这样写for循环的话，我们要写9个循环嵌套（9个数字，每个都要循环），然后通过一大串的判断语句之后，才能得到我们的答案（答案还需要除以2，173+286与286+173是一样的），有兴趣或者有时间的同学可以用穷举的思想试">
+<meta name="twitter:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-算法第三课" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法第三课
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/15/算法第三课/">
+            <time datetime="2016-10-15T08:47:57.000Z" itemprop="datePublished">2016-10-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h4><p>枚举算法又被称为穷举算法，字面看很暴力，先来看一个例子：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">口口口+口口口=口口口？</div></pre></td></tr></table></figure>
+<p>3位数与3位数相加等于一个3位数（使用1~9，不能重复），用穷举来说，就是列举所有的可能。这样写for循环的话，我们要写9个循环嵌套（9个数字，每个都要循环），然后通过一大串的判断语句之后，才能得到我们的答案（答案还需要除以2，173+286与286+173是一样的），有兴趣或者有时间的同学可以用穷举的思想试一下。</p>
+<a id="more"></a>
+<p>接下来，我们再看另外一个例子：123，3个数字全排列，可能是123，132，213，231，321，312；那么1234全排列呢？123456789全排列呢？1~n的全排列呢？使用穷举，我们的想法是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=<span class="number">3</span>; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;=<span class="number">3</span>; j ++) &#123;</div><div class="line">      <span class="keyword">for</span> (<span class="keyword">int</span> k = <span class="number">1</span>; k &lt;= <span class="number">3</span>; k++) &#123;</div><div class="line">        <span class="keyword">if</span> ( i != k &amp;&amp; i != j &amp;&amp; j != k ) &#123;</div><div class="line">          <span class="built_in">printf</span>(<span class="string">"%d%d%d\n"</span>, i, j, k);</div><div class="line">        &#125;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>那1234，就是4个for，1~9就是9个for…. 显然，比较傻，我们接着往下想（先剧透一下，本文其实不叫枚举，叫深度搜索）：如果现在有3张扑克牌，3个盒子，把牌放入盒子，其实我们发现，每次的操作都是相同的，只不过是把手上剩余的排放入当前的盒子中。所以我们大致的伪代码描述一下这样的思维：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">void nextStep(int step) &#123;</div><div class="line">  for (int i = 0; i &lt;= n; i ++) &#123;</div><div class="line">    if 手上有牌 &#123;</div><div class="line">      放入当前的step</div><div class="line">      nextStep(step + 1)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>按照这样的思维，我们来解决上边的问题：首先准备book数组用来标记所有的扑克牌是否已经使用，然后使用numbox表示盒子，</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> numbox[<span class="number">10</span>], book[<span class="number">10</span>], count; <span class="comment">// 我们假定，输入的范围就是1~9, numbox为盒子, book标记这张扑克还在不在手上</span></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">stepTo</span><span class="params">(<span class="keyword">int</span> step)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;count);</div><div class="line">  stepTo(<span class="number">1</span>); <span class="comment">// 从第一步开始</span></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">stepTo</span><span class="params">(<span class="keyword">int</span> step)</span> </span>&#123; <span class="comment">// Step表示当前是第几个小盒子的面前，或者说第几步</span></div><div class="line">  <span class="keyword">if</span> ( step == count + <span class="number">1</span> ) &#123; <span class="comment">// count为盒子数，如果step==count+1意味着count个盒子全部放好了扑克</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i ++) &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d"</span>, numbox[i]); <span class="comment">// 依次打印盒子中的数字</span></div><div class="line">    &#125;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    <span class="keyword">return</span> ; <span class="comment">// 结束本次流程</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 此时，我们需要往盒子中放入扑克牌</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i ++) &#123; <span class="comment">// 循环扑克牌</span></div><div class="line">    <span class="comment">// 判断扑克牌是否在手中（book数组标记位是否为0, 1表示已经用了）</span></div><div class="line">    <span class="keyword">if</span> ( book[i] == <span class="number">0</span> ) &#123;</div><div class="line">      numbox[step] = i; <span class="comment">// 当前的盒子放入该扑克牌</span></div><div class="line">      book[i] = <span class="number">1</span>; <span class="comment">// 标记为使用</span></div><div class="line">      </div><div class="line">      stepTo(step + <span class="number">1</span>); <span class="comment">// 下一步</span></div><div class="line">      book[i] = <span class="number">0</span>; <span class="comment">// 将试过的扑克牌置为未使用</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其中的核心代码，其实是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i ++) &#123; <span class="comment">// 循环扑克牌</span></div><div class="line">    <span class="keyword">if</span> ( book[i] == <span class="number">0</span> ) &#123;</div><div class="line">      numbox[step] = i; <span class="comment">// 当前的盒子放入该扑克牌</span></div><div class="line">      book[i] = <span class="number">1</span>; <span class="comment">// 标记为使用</span></div><div class="line">      stepTo(step + <span class="number">1</span>); <span class="comment">// 下一步</span></div><div class="line">      book[i] = <span class="number">0</span>; <span class="comment">// 将试过的扑克牌置为未使用</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>基本类似于我们刚才的想法，现在我们来逐行解释一下：</p>
+<ol>
+<li>从1开始，循环每张扑克牌</li>
+<li>book数组是我们用来标记扑克牌是否使用的，这里 ==0意味这这张牌没有使用</li>
+<li>将这张牌，放入当前的盒子</li>
+<li>本次循环中，将这张牌标记为已经使用</li>
+<li>在这张牌已经使用的情况下，进行下一步的寻找</li>
+<li>将本次循环使用的牌标记为0，因为后边还需要使用这张牌。</li>
+</ol>
+<p>3，4，5，6行代码，可能大家理解起来会很吃力，一定要慢慢的想：</p>
+<blockquote>
+<p>当前的扑克，已经放入了当前的盒子，那么在寻找下一个盒子放什么扑克之前，当前使用了的扑克需要 <code>book[i] = 1</code>。<br>调用了下一步之后，由于这张牌在以后的情况中还会被继续使用，所以我们把book位置为未使用<br>(这里因为我们是先进入下一步，然后置扑克为未使用，所以对第5行的下一步寻找没有影响，但是如果不置为1，下次循环这张牌就不能使用了。<br>这是一个链式的思维，一点点在调用下一步的时候减少扑克，<code>递归的思维就不说了哈</code>，如果没想明白，希望大家使用笔模拟一下for的数据变动)</p>
+</blockquote>
+<p>以上的代码，被称为深度搜索（Depth First Search，DFS），关键的思想就是<code>当下该如何做，以后的做法和当下是一样的</code>。深度搜索的基本模型是：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> step)</span> </span>&#123;</div><div class="line">  判断边界</div><div class="line">  尝试每一种可能</div><div class="line">      继续下一步</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>现在我们利用这种思维来解决开篇那个使用穷举需要9个循环嵌套的问题：首先是9个盒子，然后9张牌：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> book[<span class="number">10</span>], numbox[<span class="number">10</span>];</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> box)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> ( box == <span class="number">10</span> ) &#123; <span class="comment">// box == 9 + 1, 意味着走过了9个放数字的步骤</span></div><div class="line">    <span class="comment">// 口口口 + 口口口 = 口口口</span></div><div class="line">    <span class="keyword">int</span> numberA = numbox[<span class="number">1</span>] * <span class="number">100</span> + numbox[<span class="number">2</span>] * <span class="number">10</span> + numbox[<span class="number">3</span>];</div><div class="line">    <span class="keyword">int</span> numberB = numbox[<span class="number">4</span>] * <span class="number">100</span> + numbox[<span class="number">5</span>] * <span class="number">10</span> + numbox[<span class="number">6</span>];</div><div class="line">    <span class="keyword">int</span> results = numbox[<span class="number">7</span>] * <span class="number">100</span> + numbox[<span class="number">8</span>] * <span class="number">10</span> + numbox[<span class="number">9</span>];</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ( numberA + numberB == results ) &#123;</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"%d%d%d + %d%d%d = %d%d%d"</span>, numbox[<span class="number">1</span>], numbox[<span class="number">2</span>], numbox[<span class="number">3</span>], numbox[<span class="number">4</span>], numbox[<span class="number">5</span>], numbox[<span class="number">6</span>], numbox[<span class="number">7</span>], numbox[<span class="number">8</span>], numbox[<span class="number">9</span>]);</div><div class="line">      <span class="built_in">printf</span>(<span class="string">"\n"</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>; <span class="comment">// 结束本次流程</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">9</span>; i ++) &#123;<span class="comment">// 循环数字</span></div><div class="line">    <span class="keyword">if</span> ( book[i] == <span class="number">0</span> ) &#123; <span class="comment">// 未使用的数字</span></div><div class="line">      numbox[box] = i;</div><div class="line">      book[i] = <span class="number">1</span>;</div><div class="line">      dfs(box + <span class="number">1</span>); <span class="comment">// 下一步</span></div><div class="line">      book[i] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  dfs(<span class="number">1</span>); <span class="comment">// 从第一个盒子开始放入</span></div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>是不是相当的简单，接下来的去重，就大家自己做吧，我们接着往下看：<strong>最短路径问题</strong>（其实也不算，最短路径后边有自己的算法…，这里起名阻塞了）。</p>
+<p>我们来看迷宫问题，假如有一个迷宫，迷宫中存在障碍物，我们如何能从起点找到到达目标点的最短步数呢？解决这个问题，首先我们要用一个二维数组来表示迷宫，默认全为0，迷宫中的障碍物用1表示，然后开始写代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> book[<span class="number">51</span>][<span class="number">51</span>]; <span class="comment">// 标记走过的点</span></div><div class="line"><span class="keyword">int</span> minStep = <span class="number">9999999</span>;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> Maze &#123;</div><div class="line">  <span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">51</span>][<span class="number">51</span>];</div><div class="line">  <span class="keyword">int</span> n; <span class="comment">// 行</span></div><div class="line">  <span class="keyword">int</span> m; <span class="comment">// 列</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> StartPoint &#123;</div><div class="line">  <span class="keyword">int</span> x;</div><div class="line">  <span class="keyword">int</span> y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> EndPoint &#123;</div><div class="line">  <span class="keyword">int</span> x;</div><div class="line">  <span class="keyword">int</span> y;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="keyword">struct</span> Maze maze;</div><div class="line"><span class="keyword">struct</span> StartPoint sPoint;</div><div class="line"><span class="keyword">struct</span> EndPoint ePoint;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> step)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;maze.n, &amp;maze.m);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;=maze.n ; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= maze.m; j ++) &#123;</div><div class="line">      <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;maze.<span class="built_in">map</span>[i][j]);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  sPoint.x = <span class="number">1</span>, sPoint.y = <span class="number">1</span>; <span class="comment">// 设置起点</span></div><div class="line">  book[sPoint.x][sPoint.y] = <span class="number">1</span>; <span class="comment">// 防止后边重复走起点</span></div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"输入结束地址: "</span>);</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;ePoint.x, &amp;ePoint.y);</div><div class="line">  </div><div class="line">  dfs(<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>); <span class="comment">// 初始步是0</span></div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"%d\n"</span>, minStep);</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> step)</span> </span>&#123;</div><div class="line">  <span class="comment">// 4个方向，右、下、左、上</span></div><div class="line">  <span class="keyword">int</span> next[<span class="number">4</span>][<span class="number">2</span>] = &#123;</div><div class="line">    &#123;<span class="number">1</span>, <span class="number">0</span>&#125;,</div><div class="line">    &#123;<span class="number">0</span>, <span class="number">1</span>&#125;,</div><div class="line">    &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">    &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;</div><div class="line">  &#125;;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> tx, ty;</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> ( x == ePoint.x &amp;&amp; y == ePoint.y ) &#123; <span class="comment">// 到了目标点</span></div><div class="line">    <span class="keyword">if</span> (step &lt; minStep) &#123;</div><div class="line">      minStep = step; <span class="comment">// 更新最小的步数</span></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 思考下一步可能的位置点</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++) &#123; <span class="comment">// 4中方向可能走</span></div><div class="line">    tx = x + next[i][<span class="number">0</span>];</div><div class="line">    ty = y + next[i][<span class="number">1</span>];</div><div class="line">    </div><div class="line">    <span class="comment">// 判断是否越界</span></div><div class="line">    <span class="keyword">if</span> ( tx &lt; <span class="number">1</span> || tx &gt; maze.n || ty &lt; <span class="number">1</span> || ty &gt; maze.m ) &#123;</div><div class="line">      <span class="keyword">continue</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 判断是否为障碍物或者是已经走过的点</span></div><div class="line">    <span class="keyword">if</span> ( maze.<span class="built_in">map</span>[tx][ty] == <span class="number">0</span> &amp;&amp; book[tx][ty] == <span class="number">0</span> ) &#123;</div><div class="line">      book[tx][ty] = <span class="number">1</span>;</div><div class="line">      dfs(tx, ty, step + <span class="number">1</span>);</div><div class="line">      book[tx][ty] = <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单的，解决了迷宫最短路径问题。但是仅仅是这样么，并不是，接下来介绍一种叫做<strong>广度优先搜索</strong>的方法，简称BFS（Breadth First Search）。用言语描述，2个方法的区别就是，深度搜索是每次都走到极致，然后在下一次，而广度则是每次都往外同时扩张一层：我们继续使用迷宫的例子去寻找到达目的地的最短距离：</p>
+<ol>
+<li>从1，1开始，我们可以到达的点是 1，2与2， 1两个点，接下来2，2这个点都可以到达，所以我们依旧需要标记位来标记点已经被走过避免重复，因为步数是一样的，所以无关紧要了（2个点一步都可以到达另一个点，岂不是步数一样么）。</li>
+</ol>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">迷宫：</div><div class="line"><span class="number">0</span>→<span class="number">0</span> <span class="number">1</span> <span class="number">0</span></div><div class="line">↓ ↓</div><div class="line"><span class="number">0</span> <span class="number">0</span>→<span class="number">0</span> <span class="number">0</span> </div><div class="line">↓ ↓</div><div class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">1</span> <span class="number">0</span> </div><div class="line"><span class="number">0</span> <span class="number">1</span> <span class="number">0</span> <span class="number">0</span> </div><div class="line"><span class="number">0</span> <span class="number">0</span> <span class="number">0</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>使用这种扩散的思想，我们很容易想到，既然是一层一层，而且有顺序链式的关系，我们可以使用队列来完成（队列忘了可以去看算法二中的代码），我们来写代码研究一下：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">struct</span> node &#123;</div><div class="line">  <span class="keyword">int</span> x; <span class="comment">// 横坐标</span></div><div class="line">  <span class="keyword">int</span> y; <span class="comment">// 纵坐标</span></div><div class="line">  <span class="keyword">int</span> prev; <span class="comment">// 如果需要输出路径的话，可以用来标记父节点在队列中的编号</span></div><div class="line">  <span class="keyword">int</span> step; <span class="comment">// 步数</span></div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">51</span>][<span class="number">51</span>] = &#123;<span class="number">0</span>&#125;; <span class="comment">// 地图</span></div><div class="line">  <span class="keyword">int</span> book[<span class="number">51</span>][<span class="number">51</span>] = &#123;<span class="number">0</span>&#125;;<span class="comment">// 标记</span></div><div class="line">  <span class="keyword">int</span> next[<span class="number">4</span>][<span class="number">2</span>] = &#123;</div><div class="line">    &#123;<span class="number">1</span>, <span class="number">0</span>&#125;,</div><div class="line">    &#123;<span class="number">0</span>, <span class="number">1</span>&#125;,</div><div class="line">    &#123;<span class="number">-1</span>, <span class="number">0</span>&#125;,</div><div class="line">    &#123;<span class="number">0</span>, <span class="number">-1</span>&#125;</div><div class="line">  &#125;; <span class="comment">// 4个方向，右、下、左、上</span></div><div class="line">  <span class="keyword">struct</span> node <span class="built_in">queue</span>[<span class="number">2501</span>]; <span class="comment">// 50 * 50的地图范围</span></div><div class="line">  </div><div class="line">  <span class="keyword">int</span> head, tail; <span class="comment">// 队列的使用方式</span></div><div class="line">  <span class="keyword">int</span> n, m; <span class="comment">// 分别表示地图的行列</span></div><div class="line">  <span class="keyword">int</span> ex, ey; <span class="comment">// 目标点</span></div><div class="line">  </div><div class="line">  <span class="comment">// 初始化地图与目标点</span></div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m); </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) &#123;</div><div class="line">      <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;<span class="built_in">map</span>[i][j]);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"输入目标点: "</span>);</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;ex, &amp;ey);</div><div class="line">  </div><div class="line">  <span class="comment">// 初始化队列</span></div><div class="line">  head = <span class="number">1</span>;</div><div class="line">  tail = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="comment">// 插入起点</span></div><div class="line">  <span class="built_in">queue</span>[tail].x = <span class="number">1</span>;</div><div class="line">  <span class="built_in">queue</span>[tail].y = <span class="number">1</span>;</div><div class="line">  <span class="built_in">queue</span>[tail].prev = <span class="number">0</span>;</div><div class="line">  <span class="built_in">queue</span>[tail].step = <span class="number">0</span>;</div><div class="line">  tail ++;</div><div class="line">  </div><div class="line">  <span class="comment">// 标记起点1, 1为走过的点</span></div><div class="line">  book[<span class="number">1</span>][<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> flag = <span class="number">0</span>; <span class="comment">// 标记是否到达目标点, 0表示没有到达，1表示到达</span></div><div class="line">  <span class="keyword">int</span> tx, ty; <span class="comment">// 临时变量</span></div><div class="line">  </div><div class="line">  <span class="keyword">while</span> (head &lt; tail) &#123; <span class="comment">// 对队列进行遍历操作</span></div><div class="line">    </div><div class="line">    <span class="comment">// 4个方向的操作</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">4</span>; i ++) &#123;</div><div class="line">      tx = <span class="built_in">queue</span>[head].x + next[i][<span class="number">0</span>];</div><div class="line">      ty = <span class="built_in">queue</span>[head].y + next[i][<span class="number">1</span>];</div><div class="line">      </div><div class="line">      <span class="comment">// 是否越界</span></div><div class="line">      <span class="keyword">if</span> ( tx &lt; <span class="number">1</span> || tx &gt; n || ty &lt; <span class="number">1</span> || ty &gt; m ) &#123;</div><div class="line">        <span class="keyword">continue</span>;</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="comment">// 是否障碍物或者走过的点</span></div><div class="line">      <span class="keyword">if</span> ( <span class="built_in">map</span>[tx][ty] == <span class="number">0</span> &amp;&amp; book[tx][ty] == <span class="number">0</span> ) &#123;</div><div class="line">        book[tx][ty] = <span class="number">1</span>;</div><div class="line">        <span class="comment">// 插入新的点到队列中, 这里由于我们是扩展，所以用过的点就不会在用了，也就不需要把标记位清0</span></div><div class="line">        <span class="built_in">queue</span>[tail].x = tx;</div><div class="line">        <span class="built_in">queue</span>[tail].y = ty;</div><div class="line">        <span class="built_in">queue</span>[tail].prev = head; <span class="comment">// 每一个点都是从head扩展出来的，所以上一个就是head的位置</span></div><div class="line">        <span class="built_in">queue</span>[tail].step = <span class="built_in">queue</span>[head].step + <span class="number">1</span>;<span class="comment">// 步数等于head的步数加1</span></div><div class="line">        tail ++;</div><div class="line">      &#125;</div><div class="line">      </div><div class="line">      <span class="keyword">if</span> ( tx == ex &amp;&amp; ty == ey ) &#123;</div><div class="line">        <span class="comment">// 如果是目标点，标记一下，结束</span></div><div class="line">        flag = <span class="number">1</span>;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (flag == <span class="number">1</span>) &#123;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    head ++; <span class="comment">// 当前点已经寻找完了，继续从头部扩散</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Step: %d"</span>, <span class="built_in">queue</span>[tail - <span class="number">1</span>].step);</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> prev = <span class="built_in">queue</span>[tail - <span class="number">1</span>].prev;</div><div class="line">  <span class="keyword">while</span> (prev) &#123;</div><div class="line">    <span class="comment">// prev node</span></div><div class="line">    <span class="keyword">struct</span> node prevNode = <span class="built_in">queue</span>[prev];</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"&#123;%d, %d&#125; "</span>, prevNode.x, prevNode.y);</div><div class="line">    prev = prevNode.prev;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们大致的模拟一下，从(1，1)点开始，先尝试往右找到了(1，2)，此时的队列：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">head == tail == <span class="number">1</span></div><div class="line">x:    <span class="number">1</span></div><div class="line">y:    <span class="number">1</span></div><div class="line">step: <span class="number">0</span></div><div class="line">prev: <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>尝试走到1，2：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">tx = <span class="built_in">queue</span>[head].x;</div><div class="line">ty = <span class="built_in">queue</span>[head].y + <span class="number">1</span>;</div><div class="line"><span class="comment">// 判断越界、标记省略了 ...</span></div><div class="line">book[tx][ty] = <span class="number">1</span>;</div><div class="line"><span class="comment">// 插入新的点到队列中</span></div><div class="line"><span class="built_in">queue</span>[tail].x = tx;</div><div class="line"><span class="built_in">queue</span>[tail].y = ty;</div><div class="line"><span class="built_in">queue</span>[tail].prev = head;</div><div class="line"><span class="built_in">queue</span>[tail].step = <span class="built_in">queue</span>[head].step + <span class="number">1</span>;</div><div class="line">tail ++;</div></pre></td></tr></table></figure>
+<p>此时的队列是：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">head == <span class="number">1</span>, tail == <span class="number">2</span></div><div class="line">x:    <span class="number">1</span> <span class="number">1</span></div><div class="line">y:    <span class="number">1</span> <span class="number">2</span></div><div class="line">step: <span class="number">0</span> <span class="number">1</span></div><div class="line">prev: <span class="number">0</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>接着还要尝试往其他方向走，我们发现从（1，1）一步还可以走到（2，1），所以也加入队列</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">head == <span class="number">1</span>, tail == <span class="number">3</span></div><div class="line">x:    <span class="number">1</span> <span class="number">1</span> <span class="number">2</span></div><div class="line">y:    <span class="number">1</span> <span class="number">2</span> <span class="number">1</span></div><div class="line">step: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></div><div class="line">prev: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>扩展完（1，1）后，这个点就没用了，所以while中的head++让（1，1）出栈后</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">head == <span class="number">2</span>, tail == <span class="number">3</span></div><div class="line">x:    <span class="number">1</span> <span class="number">1</span> <span class="number">2</span></div><div class="line">y:    <span class="number">1</span> <span class="number">2</span> <span class="number">1</span></div><div class="line">step: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></div><div class="line">prev: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>变成了这样，head变为了2，所以接下来要从点（1，2）开始扩展。我们发现（1，2）这个点可以到达（2，2），所以将2，2加入队列中：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">head == <span class="number">2</span>, tail == <span class="number">4</span></div><div class="line">x:    <span class="number">1</span> <span class="number">1</span> <span class="number">2</span> <span class="number">2</span></div><div class="line">y:    <span class="number">1</span> <span class="number">2</span> <span class="number">1</span> <span class="number">2</span></div><div class="line">step: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">2</span></div><div class="line">prev: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>这样，（1，2）这个这个点已经扩展结束了，所以移除队列</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">head == <span class="number">3</span>, tail == <span class="number">4</span></div><div class="line">x:    <span class="number">1</span> <span class="number">1</span> <span class="number">2</span> <span class="number">2</span> </div><div class="line">y:    <span class="number">1</span> <span class="number">2</span> <span class="number">1</span> <span class="number">2</span></div><div class="line">step: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">2</span></div><div class="line">prev: <span class="number">0</span> <span class="number">1</span> <span class="number">1</span> <span class="number">2</span></div></pre></td></tr></table></figure>
+<p>现在head变为了（2，1）点，我们继续扩展下去。接下来的模拟过程，大家自己来思考一下。</p>
+<p>你们先看，我去拉屎~</p>
+<p>回来了，接着写，拉了屎后轻松了许多，放空了思维，我们来解一道叫做水管工的题，先看个彩色的图：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/1083748_3.jpg" alt=""></p>
+<p>想必读者都玩过这个游戏。水管分为直的水管，弯的水管，把他们连起来，形成一条通道，如果有通道的话，输出链接的点（使用广度搜索或者深度搜索）。我们先来分析一下组成的部件：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/modules-water.png" alt=""></p>
+<p>这是水管的全部状态，直管2种状态，弯管4种状态。当然，我们还可以在地图中加入障碍物，用0代替，水管的状态分别用数字指定：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span> = 弯管，右上角</div><div class="line"><span class="number">2</span> = 弯管，右下角</div><div class="line"><span class="number">3</span> = 弯管，左下角</div><div class="line"><span class="number">4</span> = 弯管，左上角</div><div class="line">分别对应了上图的部件<span class="number">5</span>，部件<span class="number">4</span>，部件<span class="number">6</span>，部件<span class="number">3</span></div><div class="line"><span class="number">5</span> = 直管，水平</div><div class="line"><span class="number">6</span> = 直管，竖直</div><div class="line">分别对应了上图的部件<span class="number">2</span>，部件<span class="number">1</span></div><div class="line"><span class="number">0</span> = 障碍物</div></pre></td></tr></table></figure>
+<p>这里我们给出的测试地图是，（1，1）从左边进水，（5，4）从右边出水为成功：</p>
+<blockquote>
+<p>对数组我喜欢从下标1开始叫，这样不用思考</p>
+</blockquote>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">5</span> <span class="number">3</span> <span class="number">5</span> <span class="number">3</span></div><div class="line"><span class="number">1</span> <span class="number">5</span> <span class="number">3</span> <span class="number">0</span></div><div class="line"><span class="number">2</span> <span class="number">3</span> <span class="number">5</span> <span class="number">1</span></div><div class="line"><span class="number">6</span> <span class="number">1</span> <span class="number">1</span> <span class="number">5</span></div><div class="line"><span class="number">1</span> <span class="number">5</span> <span class="number">5</span> <span class="number">4</span></div></pre></td></tr></table></figure>
+<p>并且我们注意到，每个管子进水的方向也可能是不同的，所以我们规定</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="number">1</span> = 左边进水</div><div class="line"><span class="number">2</span> = 上边进水</div><div class="line"><span class="number">3</span> = 右边进水</div><div class="line"><span class="number">4</span> = 下边进水</div></pre></td></tr></table></figure>
+<p>所以我们写实现代码，分别用深度与广度实现（建议自己先想一下再看）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> <span class="built_in">map</span>[<span class="number">6</span>][<span class="number">6</span>]; <span class="comment">// 地图</span></div><div class="line"><span class="keyword">int</span> book[<span class="number">50</span>][<span class="number">50</span>]; <span class="comment">// 标记</span></div><div class="line"><span class="keyword">int</span> n, m; <span class="comment">// 行 列</span></div><div class="line"><span class="keyword">int</span> flag; <span class="comment">// 结果标记</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> front)</span></span>;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d %d"</span>, &amp;n, &amp;m);</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= n; i ++) &#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= m; j ++) &#123;</div><div class="line">      <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;<span class="built_in">map</span>[i][j]);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  dfs(<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>);</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> ( flag == <span class="number">1</span> ) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"成功了!"</span>);</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"不能连通"</span>);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">dfs</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> front)</span> </span>&#123;</div><div class="line">  <span class="keyword">if</span> (x == n+<span class="number">1</span> &amp;&amp; y == m &amp;&amp; front == <span class="number">1</span>) &#123;<span class="comment">// 为什么n+1，因为水流出去才行，而不是到了（n，m）结束，动脑子想想，我们的题目要求从右下角的右边出水</span></div><div class="line">    flag = <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> ;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 越界处理</span></div><div class="line">  <span class="keyword">if</span> ( x &lt; <span class="number">1</span> || x &gt; n || y &lt; <span class="number">1</span> || y &gt; m ) &#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> ( book[x][y] == <span class="number">1</span> ) &#123;</div><div class="line">    <span class="keyword">return</span>;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  book[x][y] = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="comment">// 当水管是直管的时候</span></div><div class="line">  <span class="keyword">if</span> ( <span class="built_in">map</span>[x][y] == <span class="number">5</span> || <span class="built_in">map</span>[x][y] == <span class="number">6</span> ) &#123;</div><div class="line">    <span class="comment">// 左边进水</span></div><div class="line">    <span class="keyword">if</span> ( front == <span class="number">1</span> ) &#123;</div><div class="line">      dfs(x + <span class="number">1</span>, y, <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 上边进水</span></div><div class="line">    <span class="keyword">if</span> ( front == <span class="number">2</span> ) &#123;</div><div class="line">      dfs(x, y + <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 右边进水</span></div><div class="line">    <span class="keyword">if</span> ( front == <span class="number">3</span> ) &#123;</div><div class="line">      dfs(x - <span class="number">1</span>, y, <span class="number">3</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 下边进水</span></div><div class="line">    <span class="keyword">if</span> ( front == <span class="number">4</span> ) &#123;</div><div class="line">      dfs(x, y - <span class="number">1</span>, <span class="number">4</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">// 当水管是弯管的时候</span></div><div class="line">  <span class="keyword">if</span> ( <span class="built_in">map</span>[x][y] &gt;= <span class="number">1</span> &amp;&amp; <span class="built_in">map</span>[x][y] &lt;= <span class="number">4</span> ) &#123;</div><div class="line">    <span class="keyword">if</span> ( front == <span class="number">1</span> || front == <span class="number">3</span>) &#123;</div><div class="line">      dfs(x, y+<span class="number">1</span>, <span class="number">2</span>);</div><div class="line">      dfs(x, y<span class="number">-1</span>, <span class="number">4</span>);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 上、下</span></div><div class="line">    <span class="keyword">if</span> ( front == <span class="number">2</span> || front == <span class="number">4</span>) &#123;</div><div class="line">      dfs(x<span class="number">-1</span>, y, <span class="number">3</span>);</div><div class="line">      dfs(x+<span class="number">1</span>, y, <span class="number">1</span>);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  book[x][y] = <span class="number">0</span>;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后我们用广度的思想也想一下，首先我们需要一个队列</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> node &#123;</div><div class="line">  <span class="keyword">int</span> x;</div><div class="line">  <span class="keyword">int</span> y;</div><div class="line">  <span class="keyword">int</span> prev;</div><div class="line">  <span class="keyword">int</span> front;</div><div class="line">&#125; s[<span class="number">2501</span>];</div><div class="line"><span class="keyword">int</span> head, tail;</div></pre></td></tr></table></figure>
+<p>初始化队列之后，然后我们需要一个while循环：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 初始化队列</span></div><div class="line">head = <span class="number">1</span>;</div><div class="line">tail = <span class="number">1</span>;</div><div class="line">  </div><div class="line"><span class="comment">// 加入第一个点</span></div><div class="line">s[tail].x = <span class="number">1</span>;</div><div class="line">s[tail].y = <span class="number">1</span>;</div><div class="line">s[tail].prev = <span class="number">0</span>;</div><div class="line">s[tail].front = <span class="number">1</span>; <span class="comment">// 左边进水</span></div><div class="line">tail ++;</div></pre></td></tr></table></figure>
+<p>然后</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">while</span> (head &lt; tail) &#123;</div><div class="line">    <span class="comment">// 结果判断</span></div><div class="line">    <span class="comment">// 越界判断</span></div><div class="line">    <span class="comment">// 是否为已经走过的管道</span></div><div class="line">    <span class="comment">// 标记</span></div><div class="line">  </div><div class="line">    <span class="keyword">int</span> pipes = <span class="built_in">map</span>[s[head].x][s[head].y];  </div><div class="line">    <span class="keyword">if</span> (pipes == <span class="number">5</span> || pipes == <span class="number">6</span>) &#123;</div><div class="line">      <span class="keyword">struct</span> node tNode;</div><div class="line">      <span class="comment">// 加入队列</span></div><div class="line">      <span class="keyword">if</span> (s[head].front == <span class="number">1</span>) &#123;</div><div class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[head].front == <span class="number">2</span>) &#123;</div><div class="line">      &#125; <span class="keyword">else</span> <span class="keyword">if</span> (s[head].front == <span class="number">3</span>) &#123;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">      &#125;</div><div class="line">      s[tail] = tNode;</div><div class="line">      tail ++;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">struct</span> node rNode, lNode;</div><div class="line">      <span class="comment">// 加入队列</span></div><div class="line">      <span class="keyword">if</span> (s[head].front == <span class="number">1</span> || s[head].front == <span class="number">3</span>) &#123;</div><div class="line">      &#125; <span class="keyword">else</span> &#123;</div><div class="line">      &#125;</div><div class="line">      s[tail] = rNode;</div><div class="line">      tail ++;</div><div class="line">      s[tail] = lNode;</div><div class="line">      tail ++;</div><div class="line">    &#125;    </div><div class="line">    head ++;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>兄弟，自己写吧~ 我也看的头晕。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/15/算法第三课/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/15/算法第三课/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/18/算法第四课/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    算法第四课
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/15/算法第二课/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">算法第二课</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/15/算法第三课/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

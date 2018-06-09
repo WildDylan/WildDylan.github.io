@@ -1,0 +1,44 @@
+<h1 class="title">登录、注册</h1>
+<h2 class="subtitle">
+  如何抓住用户？
+</h2>
+<hr>
+
+<div class="content">
+  <p>首先回答上述提到的问题，如何抓住用户，这里有一篇很不错的文章，<a href="http://www.yixieshi.com/33454.html">抓住用户痛点，大家看看能不能读到一些什么。</a></p>
+  <article class="message is-info">
+    <div class="message-header">
+      登录注册功能功能点
+    </div>
+    <div class="message-body">
+      <ul>
+        <li>注册表单</li>
+        <li>一点点小细节</li>
+      </ul>
+    </div>
+  </article>
+  <p>我们先来看一下设计稿，并分析结构，很简单的上下结构，标题，详情，输入框，输入框标识，注册按钮，记住我，一些其他信息，接下来我们来制作注册页面。</p>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/Design_signin-1.png" />
+  </p>
+  <p>在 <code>Sign up</code>文件夹下打开.html文件，先将title改为`Sign Up`，然后编写内容，首先是一个内容居中的Flex布局。</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/24/embedded/html,css/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p>然后我们得到了这样的效果：</p>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/signup-1.png" />
+  </p>
+  <p>接下来，我们开始写输入框以及登录按钮等组件，用于让用户输入电子邮件以及密码。</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/25/embedded/js,html,css/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p>我们最后得到了这样的效果：</p>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/signup-2.png" />
+  </p>
+  <p>至此，我们完成了注册表单的开发，当然在提交数据的时候我们可以使用<code>Ajax</code>，这部分内容大家百度学学？包括今天留一个作业，自己完成登录界面，并提交一个<code>Pull request</code>到我们代码的仓库。</p>
+  <p>下节的内容比较简单，详情界面的编写，也就是写一篇文章。</p>
+</div>
+
+<div class="column is-fullwidth has-text-right">
+  <a class="next-article" hlink="p-detail.html">
+    <i class="fa fa-arrow-right">详情界面</i>
+  </a>
+</div>

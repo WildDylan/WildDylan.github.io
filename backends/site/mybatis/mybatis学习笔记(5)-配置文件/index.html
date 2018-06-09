@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Mybatis学习笔记(5) 配置文件 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../mybatis学习笔记(4)-开发dao方法/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../mybatis学习笔记(6)-输入映射/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#properties">properties(属性)</a></li>
+        <li class="main "><a href="#settings">settings(全局参数配置)</a></li>
+        <li class="main "><a href="#typealiases">typeAliases(类型别名)</a></li>
+        <li class="main "><a href="#typehandlers">typeHandlers(类型处理器)</a></li>
+        <li class="main "><a href="#mappers">mappers(映射配置)</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# mybatis学习笔记(5)-配置文件</p>
+<p>标签： mybatis</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#properties属性">properties(属性)</a></li>
+<li><a href="#settings全局参数配置">settings(全局参数配置)</a></li>
+<li><a href="#typealiases类型别名">typeAliases(类型别名)</a></li>
+<li><a href="#typehandlers类型处理器">typeHandlers(类型处理器)</a></li>
+<li><a href="#mappers映射配置">mappers(映射配置)</a></li>
+</ul>
+<hr />
+<p>本文主要讲解SqlMapConfig配置文件</p>
+<blockquote>
+<p>参考<a href="http://www.mybatis.org/mybatis-3/configuration.html">mybatis – MyBatis 3 <code>|</code> Configuration</a></p>
+</blockquote>
+<p>SqlMapConfig.xml中配置的内容和顺序如下</p>
+<ul>
+<li>properties（属性）</li>
+<li>settings（全局配置参数）</li>
+<li><strong>typeAliases（类型别名）</strong></li>
+<li>typeHandlers（类型处理器）</li>
+<li><em>objectFactory（对象工厂）</em></li>
+<li><em>plugins（插件）</em></li>
+<li>environments（环境集合属性对象）</li>
+<li>environment（环境子属性对象）<ul>
+<li>transactionManager（事务管理）</li>
+<li>dataSource（数据源）</li>
+</ul>
+</li>
+<li><strong>mappers（映射器）</strong></li>
+</ul>
+<p>(注：粗体是重点，斜体不常用)</p>
+<h2 id="properties">properties(属性)</h2>
+<p>将数据库连接参数单独配置在db.properties中，只需要在SqlMapConfig.xml中加载db.properties的属性值。在SqlMapConfig.xml中就不需要对数据库连接参数硬编码。</p>
+<p>将数据库连接参数只配置在db.properties中。原因：方便对参数进行统一管理，其它xml可以引用该db.properties。</p>
+<pre><code>jdbc.driver=com.mysql.jdbc.Driver
+jdbc.url=jdbc:mysql://120.25.162.238:3306/mybatis001?characterEncoding=utf-8
+jdbc.username=root
+jdbc.password=123
+</code></pre>
+
+<p>在sqlMapConfig.xml加载属性文件：</p>
+<pre><code class="xml">&lt;properties resource=&quot;db.properties&quot;&gt;
+        &lt;!--properties中还可以配置一些属性名和属性值  --&gt;
+        &lt;!-- &lt;property name=&quot;jdbc.driver&quot; value=&quot;&quot;/&gt; --&gt;
+&lt;/properties&gt;
+
+&lt;!-- 和spring整合后 environments配置将废除--&gt;
+&lt;environments default=&quot;development&quot;&gt;
+    &lt;environment id=&quot;development&quot;&gt;
+        &lt;!-- 使用jdbc事务管理，事务控制由mybatis--&gt;
+        &lt;transactionManager type=&quot;JDBC&quot; /&gt;
+        &lt;!-- 数据库连接池,由mybatis管理--&gt;
+        &lt;dataSource type=&quot;POOLED&quot;&gt;
+            &lt;property name=&quot;driver&quot; value=&quot;${jdbc.driver}&quot; /&gt;
+            &lt;property name=&quot;url&quot; value=&quot;${jdbc.url}&quot; /&gt;
+            &lt;property name=&quot;username&quot; value=&quot;${jdbc.username}&quot; /&gt;
+            &lt;property name=&quot;password&quot; value=&quot;${jdbc.password}&quot; /&gt;
+        &lt;/dataSource&gt;
+    &lt;/environment&gt;
+&lt;/environments&gt;
+</code></pre>
+
+<p>注意： MyBatis 将按照下面的顺序(优先级)来加载属性：</p>
+<ul>
+<li>在<code>properties</code>元素体内定义的属性首先被读取。 </li>
+<li>然后会读取<code>properties</code>元素中resource或url加载的属性，它会覆盖已读取的同名属性。 </li>
+<li>最后读取<code>parameterType</code>传递的属性，它会覆盖已读取的同名属性。</li>
+</ul>
+<p>建议：</p>
+<ul>
+<li>不要在<code>properties</code>元素体内添加任何属性值，只将属性值定义在properties文件中。</li>
+<li>在properties文件中定义属性名要有一定的特殊性，如：XXXXX.XXXXX.XXXX</li>
+</ul>
+<h2 id="settings">settings(全局参数配置)</h2>
+<p>mybatis框架在运行时可以调整一些运行参数,比如：开启二级缓存、开启延迟加载...</p>
+<p>全局参数将会影响mybatis的运行行为。具体参考官网：</p>
+<blockquote>
+<p><a href="http://www.mybatis.org/mybatis-3/configuration.html#settings">mybatis-settings</a></p>
+</blockquote>
+<h2 id="typealiases">typeAliases(类型别名)</h2>
+<p>在mapper.xml中，定义很多的statement，statement需要<code>parameterType</code>指定输入参数的类型、需要<code>resultType</code>指定输出结果的映射类型。</p>
+<p>如果在指定类型时输入类型全路径，不方便进行开发，可以针对<code>parameterType</code>或<code>resultType</code>指定的类型定义一些别名，在mapper.xml中通过别名定义，方便开发。</p>
+<ul>
+<li>mybatis默认支持别名</li>
+</ul>
+<blockquote>
+<p>参考 <a href="http://www.mybatis.org/mybatis-3/configuration.html#typeAliases">typeAliases</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">别名</th>
+<th align="left">映射的类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">_byte</td>
+<td align="left">byte</td>
+</tr>
+<tr>
+<td align="left">_long</td>
+<td align="left">long</td>
+</tr>
+<tr>
+<td align="left">_short</td>
+<td align="left">short</td>
+</tr>
+<tr>
+<td align="left">_int</td>
+<td align="left">int</td>
+</tr>
+<tr>
+<td align="left">_integer</td>
+<td align="left">int</td>
+</tr>
+<tr>
+<td align="left">_double</td>
+<td align="left">double</td>
+</tr>
+<tr>
+<td align="left">_float</td>
+<td align="left">float</td>
+</tr>
+<tr>
+<td align="left">_boolean</td>
+<td align="left">boolean</td>
+</tr>
+<tr>
+<td align="left">string</td>
+<td align="left">String</td>
+</tr>
+<tr>
+<td align="left">byte</td>
+<td align="left">Byte</td>
+</tr>
+<tr>
+<td align="left">long</td>
+<td align="left">Long</td>
+</tr>
+<tr>
+<td align="left">short</td>
+<td align="left">Short</td>
+</tr>
+<tr>
+<td align="left">int</td>
+<td align="left">Integer</td>
+</tr>
+<tr>
+<td align="left">integer</td>
+<td align="left">Integer</td>
+</tr>
+<tr>
+<td align="left">double</td>
+<td align="left">Double</td>
+</tr>
+<tr>
+<td align="left">float</td>
+<td align="left">Float</td>
+</tr>
+<tr>
+<td align="left">boolean</td>
+<td align="left">Boolean</td>
+</tr>
+<tr>
+<td align="left">date</td>
+<td align="left">Date</td>
+</tr>
+<tr>
+<td align="left">decimal</td>
+<td align="left">BigDecimal</td>
+</tr>
+<tr>
+<td align="left">bigdecimal</td>
+<td align="left">BigDecimal</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>自定义别名</li>
+<li>单个别名定义 </li>
+<li>批量定义别名（常用）</li>
+</ul>
+<pre><code class="xml">&lt;!-- 别名定义 --&gt;
+&lt;typeAliases&gt;
+
+    &lt;!-- 针对单个别名定义
+    type：类型的路径
+    alias：别名
+     --&gt;
+    &lt;!-- &lt;typeAlias type=&quot;cn.itcast.mybatis.po.User&quot; alias=&quot;user&quot;/&gt; --&gt;
+    &lt;!-- 批量别名定义
+    指定包名，mybatis自动扫描包中的po类，自动定义别名，别名就是类名（首字母大写或小写都可以）
+    --&gt;
+    &lt;package name=&quot;com.iot.mybatis.po&quot;/&gt;
+
+&lt;/typeAliases&gt;
+</code></pre>
+
+<h2 id="typehandlers">typeHandlers(类型处理器)</h2>
+<p>mybatis中通过typeHandlers完成jdbc类型和java类型的转换。例如：</p>
+<pre><code class="xml">&lt;select id=&quot;findUserById&quot; parameterType=&quot;int&quot; resultType=&quot;user&quot;&gt;
+        select * from user where id = #{id}
+&lt;/select&gt;
+</code></pre>
+
+<p>mybatis自带的类型处理器基本上满足日常需求，不需要单独定义。</p>
+<p>mybatis支持类型处理器</p>
+<blockquote>
+<p>参考 <a href="http://www.mybatis.org/mybatis-3/configuration.html#typeHandlers">typeHandlers</a></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th align="left">类型处理器</th>
+<th align="left">Java类型</th>
+<th align="left">JDBC类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">BooleanTypeHandler</td>
+<td align="left">Boolean，boolean</td>
+<td align="left">任何兼容的布尔值</td>
+</tr>
+<tr>
+<td align="left">ByteTypeHandler</td>
+<td align="left">Byte，byte</td>
+<td align="left">任何兼容的数字或字节类型</td>
+</tr>
+<tr>
+<td align="left">ShortTypeHandler</td>
+<td align="left">Short，short</td>
+<td align="left">任何兼容的数字或短整型</td>
+</tr>
+<tr>
+<td align="left">IntegerTypeHandler</td>
+<td align="left">Integer，int</td>
+<td align="left">任何兼容的数字和整型</td>
+</tr>
+<tr>
+<td align="left">LongTypeHandler</td>
+<td align="left">Long，long</td>
+<td align="left">任何兼容的数字或长整型</td>
+</tr>
+<tr>
+<td align="left">FloatTypeHandler</td>
+<td align="left">Float，float</td>
+<td align="left">任何兼容的数字或单精度浮点型</td>
+</tr>
+<tr>
+<td align="left">DoubleTypeHandler</td>
+<td align="left">Double，double</td>
+<td align="left">任何兼容的数字或双精度浮点型</td>
+</tr>
+<tr>
+<td align="left">BigDecimalTypeHandler</td>
+<td align="left">BigDecimal</td>
+<td align="left">任何兼容的数字或十进制小数类型</td>
+</tr>
+<tr>
+<td align="left">StringTypeHandler</td>
+<td align="left">String</td>
+<td align="left">CHAR和VARCHAR类型</td>
+</tr>
+<tr>
+<td align="left">ClobTypeHandler</td>
+<td align="left">String</td>
+<td align="left">CLOB和LONGVARCHAR类型</td>
+</tr>
+<tr>
+<td align="left">NStringTypeHandler</td>
+<td align="left">String</td>
+<td align="left">NVARCHAR和NCHAR类型</td>
+</tr>
+<tr>
+<td align="left">NClobTypeHandler</td>
+<td align="left">String</td>
+<td align="left">NCLOB类型</td>
+</tr>
+<tr>
+<td align="left">ByteArrayTypeHandler</td>
+<td align="left">byte[]</td>
+<td align="left">任何兼容的字节流类型</td>
+</tr>
+<tr>
+<td align="left">BlobTypeHandler</td>
+<td align="left">byte[]</td>
+<td align="left">BLOB和LONGVARBINARY类型</td>
+</tr>
+<tr>
+<td align="left">DateTypeHandler</td>
+<td align="left">Date（java.util）</td>
+<td align="left">TIMESTAMP类型</td>
+</tr>
+<tr>
+<td align="left">DateOnlyTypeHandler</td>
+<td align="left">Date（java.util）</td>
+<td align="left">DATE类型</td>
+</tr>
+<tr>
+<td align="left">TimeOnlyTypeHandler</td>
+<td align="left">Date（java.util）</td>
+<td align="left">TIME类型</td>
+</tr>
+<tr>
+<td align="left">SqlTimestampTypeHandler</td>
+<td align="left">Timestamp（java.sql）</td>
+<td align="left">TIMESTAMP类型</td>
+</tr>
+<tr>
+<td align="left">SqlDateTypeHandler</td>
+<td align="left">Date（java.sql）</td>
+<td align="left">DATE类型</td>
+</tr>
+<tr>
+<td align="left">SqlTimeTypeHandler</td>
+<td align="left">Time（java.sql）</td>
+<td align="left">TIME类型</td>
+</tr>
+<tr>
+<td align="left">ObjectTypeHandler</td>
+<td align="left">任意</td>
+<td align="left">其他或未指定类型</td>
+</tr>
+<tr>
+<td align="left">EnumTypeHandler</td>
+<td align="left">Enumeration类型</td>
+<td align="left">VARCHAR-任何兼容的字符串类型，作为代码存储（而不是索引）</td>
+</tr>
+</tbody>
+</table>
+<h2 id="mappers">mappers(映射配置)</h2>
+<ul>
+<li>通过resource加载单个映射文件</li>
+</ul>
+<pre><code class="xml">&lt;!--通过resource方法一次加载一个映射文件 --&gt;
+&lt;mapper resource=&quot;mapper/UserMapper.xml&quot;/&gt;
+</code></pre>
+
+<ul>
+<li>通过mapper接口加载单个mapper</li>
+</ul>
+<pre><code class="xml"> &lt;!-- 通过mapper接口加载单个 映射文件
+        遵循一些规范：需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录中
+        上边规范的前提是：使用的是mapper代理方法
+         --&gt;
+&lt;mapper class=&quot;com.iot.mybatis.mapper.UserMapper&quot;/&gt; 
+</code></pre>
+
+<p>目录示例</p>
+<pre><code>com.iot.mybatis.mapper------------------package包
+           |----UserMapper.java
+           |----UserMapper.xml
+
+</code></pre>
+
+<ul>
+<li>批量加载mapper(推荐使用)</li>
+</ul>
+<pre><code class="xml">&lt;!-- 批量加载mapper
+        指定mapper接口的包名，mybatis自动扫描包下边所有mapper接口进行加载
+        遵循一些规范：需要将mapper接口类名和mapper.xml映射文件名称保持一致，且在一个目录 中
+        上边规范的前提是：使用的是mapper代理方法
+         --&gt;
+&lt;package name=&quot;com.iot.mybatis.mapper&quot;/&gt;
+</code></pre>
+
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> | <a href="http://blog.csdn.net/h3243212/">CSDN</a> | <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>机器学习（朴素贝叶斯，基于概率论的分类方法） | Machine-Learning</title>
+  <meta name="author" content="dylan">
+
+  
+  <meta name="description" content="A place of Machine-Learning">
+  
+  
+
+  <link rel="alternate" href="/atom.xml" title="Machine-Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/ml/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="">Machine-Learning</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner"><article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title">机器学习（朴素贝叶斯，基于概率论的分类方法）</h1>
+  
+
+    <time datetime="2017-01-17T13:41:56.000Z">
+  <span class="day">17</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="朴素贝叶斯-基于概率论的分类方法"><a href="#朴素贝叶斯-基于概率论的分类方法" class="headerlink" title="朴素贝叶斯-基于概率论的分类方法"></a>朴素贝叶斯-基于概率论的分类方法</h2><p>===</p>
+<h4 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h4><p>之前我们分别使用<code>k-近邻算法</code>、<code>决策树</code>来做出类别区分，给出<code>该数据具体属于哪一类</code>这类问题的明确答案，不过，分类器有时候会产生错误的结果，这时候可以要求分类器给出一个最优的类别猜测结果，同时给出这个猜测的概率估计值。</p>
+<p><code>概率论</code>是许多机器学习算法的基础，在学习<code>决策树</code>算法的时候，我们简单的接触了一下特征值的概率，先得到特征值的频次，然后除以数据集的实例总数。接下来我们会先学习一个简单的概率分类器，然后给出一些假设来学习文题<code>朴素贝叶斯</code>分类器。</p>
+<h6 id="基于贝叶斯决策理论的分类方法"><a href="#基于贝叶斯决策理论的分类方法" class="headerlink" title="基于贝叶斯决策理论的分类方法"></a>基于贝叶斯决策理论的分类方法</h6><blockquote>
+<p>优点：在数据少的情况下仍然有效，可以处理多类别问题<br>缺点：对于输入数据的准备方式较为敏感<br>适用数据类型：标称型</p>
+</blockquote>
+<a id="more"></a>
+<p>朴素贝叶斯，是贝叶斯决策理论的一部分，所以讲述朴素贝叶斯之前，有必要简单的了解一下贝叶斯决策理论。假设我们现在有一个数据集，它由两类数据组成：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/mlbayes_1.JPG" alt=""></p>
+<p>假设有位读者找到了描述图中的两类数据的统计参数，我们现在用p1(x, y)标识数据点(x, y)属于类别1（上图中用圆点表示）的概率，用p2(x, y)表示点(x, y)属于类别2的概率，那么对于一个新的数据点(x, y)，可以用以下规则来判断它的类别：</p>
+<ul>
+<li>如果 p1(x, y) &gt; p2(x, y)，那么为类别1</li>
+<li>如果 p2(x, y) &gt; p1(x, y)，那么为类别2</li>
+</ul>
+<p>也就是说，我们会选择概率高对应的类别，这就是贝叶斯决策论的核心思想，即选择具有最高概率的决策，而且话说回来，就用上图来说，如果使用该图中的整个数据使用6个浮点数来表示（整个数据由2类不同分布的数据构成，有可能只需要6个统计参数来描述），并且按照上面的公式计算只有2行代码，你会更倾向于哪种方法呢？</p>
+<ul>
+<li>使用k-近邻算法，进行1000次距离计算</li>
+<li>使用决策树算法，分别沿x轴，y轴划分数据</li>
+<li>计算数据点属于每个类别的概率，并进行比较</li>
+</ul>
+<p>使用决策树不会非常成功，而和简单的概率计算相比，k-近邻算法的计算量又太大，所以最佳选择还是其三。接下来，我们必须要了解p1以及p1的计算方法，为了能够计算p1与p2，有必要讨论一下条件概率。</p>
+<h6 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a>条件概率</h6><p>如果不了解概率与条件概率，那么看这小节可以帮助大家稍有理解，如果对条件概率很熟悉，那么直接跳过到下一个6号小标题吧。</p>
+<p>假设，现在有一个装了7块儿石头的罐子，3块儿是灰色的，4块儿是黑色的，如果我们随机取出来一块儿，是灰色的概率是3/7，是黑色的概率是4/7.我们使用 p(gray) 来表示取到灰色石头的概率，其概率可以通过 灰色石头的数量/总数 来获得。那么，如果这7块儿石头放到2个桶里，概率又是多少呢？</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/mlbayes_2.JPG" alt=""></p>
+<p>要计算 p(gray) 或者 p(black) ，事先得知道石头所在桶的信息会不会改变结果，你有可能已经想到计算从B桶中取到灰色石头的概率的办法，这就是所谓的<code>条件概率</code>。假定计算的是从B桶取到灰色石头的概率，这个概率可以记作 p(gray|bucketB) ，我们称之为，<code>在已知石头出自B桶的条件下，取出灰色石头的概率</code>。不难得到，p(gray|bucketA) 的值为 2/4，p(gray|bucketB) 的值为 1/3。条件概率的计算公式如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p(gray | bucketB) = p(gray in bucketB) / p(bucketB)</div></pre></td></tr></table></figure>
+<p>解释一下：</p>
+<ul>
+<li>p(gray in bucketB)：用B桶中的灰色石头，除以两个桶的总石头数</li>
+<li>p(bucketB)：石头来自B桶的概率</li>
+</ul>
+<p>另一种有效计算条件概率的方法称为贝叶斯准则，贝叶斯准则告诉我们如何交换条件概率中的条件与结果，即如果已知 p(x|c) ，要求得 p(c|x) ，那么可以使用下面的算方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p( c | x ) = p( x | c ) * p ( c ) / p( x )</div></pre></td></tr></table></figure>
+<p>下面我们来说，如何结合贝叶斯决策理论使用条件概率。</p>
+<h6 id="使用条件概率来分类"><a href="#使用条件概率来分类" class="headerlink" title="使用条件概率来分类"></a>使用条件概率来分类</h6><p>之前我们提到了 p(x, y) 如何判断类别，但是其实这并不是我们要看的核心内容，我们真正要处理的是 p( c1|x, y ) 和 p( c2|x, y ) ，他们的具体意义是：</p>
+<ul>
+<li>给定某个由 x, y 表示的数据点，那么该数据来自类别 c1 的概率是多少。</li>
+</ul>
+<p>注意这些概率与刚才给出的概率 p(x, y|c1)并不一样，不过可以使用贝叶斯准则来交换概率中的条件与结果，具体的，应用贝叶斯准则得到：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p( ci | x, y ) = p( x, y | ci ) * p( ci ) / p( x, y )</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注：上述的i为下角标</p>
+</blockquote>
+<p>使用这些定义，可以定义贝叶斯分类准则为：</p>
+<ul>
+<li>如果 p( c1|x, y ) &gt; p( c2|x, y ) ，那么属于类别c1</li>
+<li>如果 p( c1|x, y ) &lt; p( c2|x, y ) ，那么属于类别c2</li>
+</ul>
+<p>使用贝叶斯准则，可以通过三个已知的概率值来计算未知的概率值，那么如何付诸实践呢？</p>
+<h4 id="使用朴素贝叶斯进行文档分类"><a href="#使用朴素贝叶斯进行文档分类" class="headerlink" title="使用朴素贝叶斯进行文档分类"></a>使用朴素贝叶斯进行文档分类</h4><p>机器学习的一个重要应用就是文档的自动分类，在分档分类中，整个文档是实例，比如说一封点子邮件，而电子邮件中的某些元素则构成特征。我们可以观察文档中出现的词，并把每个词的出现或者不出现作为一个特征，这样得到的特征数目就会跟词汇表中的词目一样多。朴素贝叶斯是上节介绍的贝叶斯分类器的一个扩展，是用于分档分类的常用算法。</p>
+<p>朴素贝叶斯的一般过程：</p>
+<ul>
+<li>收集数据：下面例子使用的是rss源</li>
+<li>准备数据：需要数值型或者bool型数据</li>
+<li>分析数据：有大量特征时，绘制特征的作用不大，此时使用直方图效果更好</li>
+<li>训练算法：计算不同的独立特征的条件概率</li>
+<li>测试算法：计算错误率</li>
+<li>使用算法：一个常见的朴素贝叶斯应用是文档分类，可以在任意的分类场景中使用朴素贝叶斯分类器，不一定非要是文本</li>
+</ul>
+<p>假设词汇表中有1000个单词，要得到好的分布概率，就需要足够的样本，假定样本数为N，前边我们有约会网站的数据，1000个样本，这就非常的好。有统计学知，如果每个特征需要N个样本，那么对于10个特征将需要N的10次方个样本，对于包含1000个特征的词汇表将需要N的1000次个样本，可以看到，所需要的样本数会随着特征数目的增大而迅速增长。<br>如果特征之间相互独立，那么样本数就可以从N的1000次减少到 <code>1000*N</code>，所谓独立，指的是统计意义上的独立，即一个特征或者单词出现的可能性与他和其他单词相邻都没有关系。朴素贝叶斯分类器中的另一个假设是，每个特征同等重要。但是我们宏观的看，这些假设貌似有一些小的下次，但是朴素贝叶斯的实际效果却很好。到目前为止，我们了解了一堆理论性的东西，接下来我们开始编代码了。</p>
+<h5 id="使用Python进行文本分类"><a href="#使用Python进行文本分类" class="headerlink" title="使用Python进行文本分类"></a>使用Python进行文本分类</h5><p>要从文本中获取特征，需要先拆分文本，这里的特征是来自于文本的词条，一个词条可能是字符的任意组合。可以把词条想象为单词，也可以使用非单词词条，如URL，IP地址或者任意其他的字串。然后将每一个文本片段表示为一个词条向量，其中值为1表示词条出现在文本中，为0表示词条未出现。</p>
+<p>我们把文本看成单词向量或者词条向量，也就是说要将桔子转换为向量，考虑出现在所有文档中的所有单词，再决定将哪些词汇录入词汇表或者说所要的词汇集合，然后必须要将每一篇文档转换为词汇表上的向量。</p>
+<h6 id="准备数据，从文本中构建词向量"><a href="#准备数据，从文本中构建词向量" class="headerlink" title="准备数据，从文本中构建词向量"></a>准备数据，从文本中构建词向量</h6><p>新建一个bayes.py的文件，在其中加入如下方法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"></div><div class="line"><span class="comment"># 创建一些实验样本，该函数返回的第一个变量是进行词条切分后的文档集合，这里的标点符号暂时去掉了，后边我们会讨论文本处理的细节</span></div><div class="line"><span class="comment"># 返回的第二个值是一个类别标签的集合，这里有2类，侮辱性和非侮辱性。这些文本的类别由人工标注，这些标注信息用于训练程序以便自动检测侮辱性的语言</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">loadDataSet</span><span class="params">()</span>:</span></div><div class="line">    postingList=[[<span class="string">'my'</span>, <span class="string">'dog'</span>, <span class="string">'has'</span>, <span class="string">'flea'</span>, <span class="string">'problems'</span>, <span class="string">'help'</span>, <span class="string">'please'</span>],</div><div class="line">                 [<span class="string">'maybe'</span>, <span class="string">'not'</span>, <span class="string">'take'</span>, <span class="string">'him'</span>, <span class="string">'to'</span>, <span class="string">'dog'</span>, <span class="string">'park'</span>, <span class="string">'stupid'</span>],</div><div class="line">                 [<span class="string">'my'</span>, <span class="string">'dalmation'</span>, <span class="string">'is'</span>, <span class="string">'so'</span>, <span class="string">'cute'</span>, <span class="string">'I'</span>, <span class="string">'love'</span>, <span class="string">'him'</span>],</div><div class="line">                 [<span class="string">'stop'</span>, <span class="string">'posting'</span>, <span class="string">'stupid'</span>, <span class="string">'worthless'</span>, <span class="string">'garbage'</span>],</div><div class="line">                 [<span class="string">'mr'</span>, <span class="string">'licks'</span>, <span class="string">'ate'</span>, <span class="string">'my'</span>, <span class="string">'steak'</span>, <span class="string">'how'</span>, <span class="string">'to'</span>, <span class="string">'stop'</span>, <span class="string">'him'</span>],</div><div class="line">                 [<span class="string">'quit'</span>, <span class="string">'buying'</span>, <span class="string">'worthless'</span>, <span class="string">'dog'</span>, <span class="string">'food'</span>, <span class="string">'stupid'</span>]]</div><div class="line">    classVec = [<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">1</span>]    <span class="comment">#1 is abusive, 0 not</span></div><div class="line">    <span class="keyword">return</span> postingList,classVec</div><div class="line"></div><div class="line"><span class="comment"># 创建一个包含在所有文档中出现的不重复词的列表，为此使用了set数据类型。</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">createVocablist</span><span class="params">(dataSet)</span>:</span> </div><div class="line">    vocabSet = set([])</div><div class="line"></div><div class="line">    <span class="keyword">for</span> document <span class="keyword">in</span> dataSet :</div><div class="line">        vocabSet = vocabSet | set(document)</div><div class="line"></div><div class="line">    <span class="keyword">return</span> list(vocabSet)</div><div class="line"></div><div class="line"><span class="comment"># 输入参数为：1. 词汇表 2. 某个文档</span></div><div class="line"><span class="comment"># 输出： 文档向量，向量的每一元素为0或者1，分别标识词汇表中的单词在输入文档中是否出现</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">setOfWords2Vec</span><span class="params">(vocablist, inputSet)</span> :</span></div><div class="line">    returnVec = [<span class="number">0</span>] * len(vocablist) <span class="comment"># 创建一个与词汇表等长的向量，将其元素都设置为0</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet : <span class="comment"># 遍历文档中所有的单词，如果出现了词汇表中的单词，则将输出的文档向量的对应值设置为1</span></div><div class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocablist :</div><div class="line">            returnVec[vocablist.index(word)] = <span class="number">1</span></div><div class="line">        <span class="keyword">else</span> : </div><div class="line">            <span class="keyword">print</span> <span class="string">"the word %s is not in my vocabulary"</span> % word</div><div class="line"></div><div class="line">    <span class="keyword">return</span> returnVec</div></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">import</span> bayes</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>listOPosts, listClasses = bayes.loadDataSet()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>myVocabList = bayes.createVocablist(listOPosts)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>myVocabList</div><div class="line">[<span class="string">'cute'</span>, <span class="string">'love'</span>, <span class="string">'help'</span>, <span class="string">'garbage'</span>, <span class="string">'quit'</span>, <span class="string">'I'</span>, <span class="string">'problems'</span>, <span class="string">'is'</span>, <span class="string">'park'</span>, <span class="string">'stop'</span>, <span class="string">'flea'</span>, <span class="string">'dalmation'</span>, <span class="string">'licks'</span>, <span class="string">'food'</span>, <span class="string">'not'</span>, <span class="string">'him'</span>, <span class="string">'buying'</span>, <span class="string">'posting'</span>,</div><div class="line"><span class="string">'has'</span>, <span class="string">'worthless'</span>, <span class="string">'ate'</span>, <span class="string">'to'</span>, <span class="string">'maybe'</span>, <span class="string">'please'</span>, <span class="string">'dog'</span>, <span class="string">'how'</span>, <span class="string">'stupid'</span>, <span class="string">'so'</span>, <span class="string">'take'</span>, <span class="string">'mr'</span>, <span class="string">'steak'</span>, <span class="string">'my'</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.setOfWords2Vec(myVocabList, listOPosts[<span class="number">0</span>])</div><div class="line">[<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>]</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.setOfWords2Vec(myVocabList, listOPosts[<span class="number">3</span>])</div><div class="line">[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>]</div></pre></td></tr></table></figure>
+<h6 id="训练算法，从词向量计算概率"><a href="#训练算法，从词向量计算概率" class="headerlink" title="训练算法，从词向量计算概率"></a>训练算法，从词向量计算概率</h6><p>接下来，我们看看如何使用这些数字计算概率。现在已经知道一个词是否出现在一篇文档中，也知道该文档的所属类别，我们重写贝叶斯准则，将我们之前所说的公式中 x, y 替换为w，w表示一个向量，它有多个数值组成，在这个例子中，数值个数与词汇表中的词个数相同。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">p( ci | w ) = p ( w | ci ) * p ( ci ) / p ( w )</div></pre></td></tr></table></figure>
+<blockquote>
+<p>注：这里的i是下标</p>
+</blockquote>
+<p>我们将使用上述的公式，对每个类计算该值，然后比较这两个概率的大小。如何计算呢？</p>
+<ul>
+<li>通过类别i（侮辱性或者非侮辱性）中文档数除以总的文档数来计算概率 p( ci )</li>
+<li>计算 p( w | ci )，这里就要使用朴素贝叶斯假设</li>
+</ul>
+<p>如果w展开为一个个独立的特征，那么就可以将上述概率写作 p( w0, w1, … wn | ci )，这里假设所有的词都相互独立，该假设也称为条件独立性假设，它意味着可以使用 p( w0 | ci ) p( w1 | ci ) … p( wn | ci )来计算上述概率，这就极大的简化了计算的过程。</p>
+<p>该函数的伪代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">计算每个类别中的文档数目</div><div class="line">对每篇训练文档：</div><div class="line">    对每个类别：</div><div class="line">        如果词条出现在文档中 -&gt; 增加该词条的计数值</div><div class="line">        增加所有词条的计数值</div><div class="line"></div><div class="line">对每个类别：</div><div class="line">    对每个词条：</div><div class="line">        将该词条的数目除以总词条数据得到条件概率</div><div class="line"></div><div class="line">返回每个类别的条件概率</div></pre></td></tr></table></figure>
+<p>我们来实现上述的功能，继续在bayes中书写代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 输入参数：文档举证以及由每篇文档类别标签所构成的向量</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">trainNBO</span><span class="params">(trainMatrix, trainCategory)</span> :</span></div><div class="line">    numTrainDocs = len(trainMatrix) <span class="comment"># 维度</span></div><div class="line">    numWords = len(trainMatrix[<span class="number">0</span>]) <span class="comment"># 每行多少个词</span></div><div class="line">    pAbusive = sum(trainCategory) / float(numTrainDocs) <span class="comment"># 侮辱性文档的概率，由于侮辱性为1，所以直接加起来然后除就好了</span></div><div class="line"></div><div class="line">    <span class="comment"># 初始化概率计算</span></div><div class="line"></div><div class="line">    p0Num = zeros(numWords) <span class="comment"># 初始化一个元素全为0的向量，如果出现该词对应的数量+1</span></div><div class="line">    p1Num = zeros(numWords)</div><div class="line"></div><div class="line">    p0Denom = <span class="number">0.0</span> </div><div class="line">    p1Denom = <span class="number">0.0</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(numTrainDocs) : </div><div class="line">        <span class="keyword">if</span> trainCategory[i] == <span class="number">1</span> :</div><div class="line">            p1Num += trainMatrix[i] <span class="comment"># 向量相加</span></div><div class="line">            p1Denom += sum(trainMatrix[i])</div><div class="line">        <span class="keyword">else</span> :</div><div class="line">            p0Num += trainMatrix[i]</div><div class="line">            p0Denom += sum(trainMatrix[i])</div><div class="line"></div><div class="line">    <span class="comment"># 用一个数组除以浮点数，计算每个单词出现的概率</span></div><div class="line">    p1Vect = p1Num / p1Denom</div><div class="line">    p0Vect = p0Num / p0Denom</div><div class="line"></div><div class="line">    <span class="keyword">return</span> p0Vect, p1Vect, pAbusive</div></pre></td></tr></table></figure>
+<p>最后我们看一下实际的效果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">from</span> numpy <span class="keyword">import</span> *</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>reload(bayes)</div><div class="line">&lt;module <span class="string">'bayes'</span> <span class="keyword">from</span> <span class="string">'bayes.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>listOPosts, listClasses = bayes.loadDataSet()</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>myVocabList = bayes.createVocablist(listOPosts)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>trainMat = []</div><div class="line"><span class="meta">&gt;&gt;&gt; </span><span class="keyword">for</span> postinDoc <span class="keyword">in</span> listOPosts:</div><div class="line"><span class="meta">... </span>    trainMat.append(bayes.setOfWords2Vec(myVocabList, postinDoc)) <span class="comment"># 使用词向量来填充trainMat列表</span></div><div class="line">...</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p0V, p1V, pAb = bayes.trainNBO(trainMat, listClasses)</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>pAb</div><div class="line"><span class="number">0.5</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p0V</div><div class="line">array([ <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.</span>        ,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.</span>        ,</div><div class="line">        <span class="number">0.08333333</span>,  <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.125</span>     ])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p1V</div><div class="line"></div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,  <span class="number">0.04166667</span>,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,  <span class="number">0.</span>        ,  <span class="number">0.04166667</span>,</div><div class="line">        <span class="number">0.04166667</span>,  <span class="number">0.125</span>     ])</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>p1V</div><div class="line">array([ <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.05263158</span>,  <span class="number">0.05263158</span>,</div><div class="line">        <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.05263158</span>,  <span class="number">0.05263158</span>,</div><div class="line">        <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.</span>        ,  <span class="number">0.05263158</span>,  <span class="number">0.05263158</span>,</div><div class="line">        <span class="number">0.05263158</span>,  <span class="number">0.05263158</span>,  <span class="number">0.05263158</span>,  <span class="number">0.</span>        ,  <span class="number">0.10526316</span>,</div><div class="line">        <span class="number">0.</span>        ,  <span class="number">0.05263158</span>,  <span class="number">0.05263158</span>,  <span class="number">0.</span>        ,  <span class="number">0.10526316</span>,</div><div class="line">        <span class="number">0.</span>        ,  <span class="number">0.15789474</span>,  <span class="number">0.</span>        ,  <span class="number">0.05263158</span>,  <span class="number">0.</span>        ,</div><div class="line">        <span class="number">0.</span>        ,  <span class="number">0.</span>        ])</div></pre></td></tr></table></figure>
+<p>实际使用该函数进行分类时，还需要解决一些函数中的缺陷。</p>
+<h6 id="测试算法，根据现实情况修改分类器"><a href="#测试算法，根据现实情况修改分类器" class="headerlink" title="测试算法，根据现实情况修改分类器"></a>测试算法，根据现实情况修改分类器</h6><p>利用贝叶斯文档分类器对文档进行分类，要计算多个概率的乘积以获得文档属于某个类别的概率，即计算 p( w0|1 )p( w1|1 )p( w2|1 )。如果其中一个概率值为0，那么最后的乘积也为0，为了降低这种影响，我们对上边的代码稍作修改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 修改 trainNBO 方法中如下代码，将所有词的出现次数初始化为1，将分母初始化为2</span></div><div class="line">p0Num = ones(numWords)</div><div class="line">p1Num = ones(numWords)</div><div class="line"></div><div class="line">p0Denom = <span class="number">2.0</span></div><div class="line">p1Denom = <span class="number">2.0</span></div></pre></td></tr></table></figure>
+<p>另一个问题是下溢出，这是由于太多很小的数字相乘造成的。当计算p的乘积的时候，由于大多数因子都很小，所以程序会下溢出或者得不到正确答案（使用python相乘许多很小的数，最后四舍五入后会得到0）。一种解决的办法就是对乘积取自然对数。在代数中有 ln(a *b) = ln(a) + ln(b) ，于是通过求对数可以避免下溢出或者浮点数舍入导致的错误。所以我们修改如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 修改 trainNBO 方法中如下代码</span></div><div class="line">p1Vect = log(p1Num / p1Denom)</div><div class="line">p0Vect = log(p0Num / p0Denom)</div></pre></td></tr></table></figure>
+<p>这样我们已经准备好构造完整的分类器了，继续想bayes.py中添加如下代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 参数1：要分类的向量 余下的参数为 trainNBO 方法返回的3个概率</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">classifyNB</span><span class="params">(vec2Classify, p0Vec, p1Vec, pClass1)</span> :</span></div><div class="line">    p1 = sum(vec2Classify * p1Vec) + log(pClass1) <span class="comment"># 计算两个向量相乘的结果，这里的相乘是指对应元素相乘，即将2个向量中的第一个元素相乘，然后第二个元素相乘... 然后相加，将结果加到类别的对数概率上</span></div><div class="line">    p0 = sum(vec2Classify * p0Vec) + log(<span class="number">1.0</span> - pClass1)</div><div class="line"></div><div class="line">    <span class="keyword">if</span> p1 &gt; p0 :</div><div class="line">        <span class="keyword">return</span> <span class="number">1</span></div><div class="line">    <span class="keyword">else</span> :</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span></div><div class="line"></div><div class="line"><span class="comment"># 测试函数，包含了上边所有的逻辑操作</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">testingNB</span><span class="params">()</span> :</span></div><div class="line">    listOPosts, listClasses = loadDataSet()</div><div class="line">    myVocabList = createVocablist(listOPosts)</div><div class="line"></div><div class="line">    trainMat = []</div><div class="line">    <span class="keyword">for</span> postinDoc <span class="keyword">in</span> listOPosts :</div><div class="line">        trainMat.append(setOfWords2Vec(myVocabList, postinDoc))</div><div class="line">    </div><div class="line">    p0V, p1V, pAb = trainNBO(array(trainMat), array(listClasses))</div><div class="line"></div><div class="line">    testEntry = [<span class="string">'love'</span>, <span class="string">'my'</span>, <span class="string">'dalmation'</span>]</div><div class="line">    thisDoc = array(setOfWords2Vec(myVocabList, testEntry))</div><div class="line">    <span class="keyword">print</span> testEntry, <span class="string">'classified as: '</span>, classifyNB(thisDoc, p0V, p1V, pAb)</div><div class="line"></div><div class="line">    testEntry = [<span class="string">'stupid'</span>, <span class="string">'garbage'</span>]</div><div class="line">    thisDoc = array(setOfWords2Vec(myVocabList, testEntry))</div><div class="line">    <span class="keyword">print</span> testEntry, <span class="string">'classified as: '</span>, classifyNB(thisDoc, p0V, p1V, pAb)</div></pre></td></tr></table></figure>
+<p>接下来我们运行看下结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>reload(bayes)</div><div class="line">&lt;module <span class="string">'bayes'</span> <span class="keyword">from</span> <span class="string">'bayes.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.testingNB()</div><div class="line">[<span class="string">'love'</span>, <span class="string">'my'</span>, <span class="string">'dalmation'</span>] classified <span class="keyword">as</span>:  <span class="number">0</span></div><div class="line">[<span class="string">'stupid'</span>, <span class="string">'garbage'</span>] classified <span class="keyword">as</span>:  <span class="number">1</span></div></pre></td></tr></table></figure>
+<p>对文本做一些操作，看看分类器会输出什么结果。但是目前为止，我们将每个词的出现与否作为一个特征，这可以被描述为<code>词集模型</code>。如果一个词在文档中出现不止一次，这可能意味着包含该词是否出现在文档中所不能表达的某种意思，这种方法被称为<code>词袋模型</code>，在词袋中，每个单词可以出现多次，而在词集中只能出现一次。为了适应词袋模型，需要对函数<code>setOfWords2Vec</code>稍作修改：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">bagOfWords2VecMN</span><span class="params">(vocabList, inputSet)</span> :</span></div><div class="line">    returnVec = [<span class="number">0</span>] * len(vocabList)</div><div class="line"></div><div class="line">    <span class="keyword">for</span> word <span class="keyword">in</span> inputSet :</div><div class="line">        <span class="keyword">if</span> word <span class="keyword">in</span> vocabList :</div><div class="line">            returnVec[vocabList.index(word)] += <span class="number">1</span></div><div class="line">        </div><div class="line">    <span class="keyword">return</span> returnVec</div></pre></td></tr></table></figure>
+<h4 id="示例，使用朴素贝叶斯过滤垃圾邮件"><a href="#示例，使用朴素贝叶斯过滤垃圾邮件" class="headerlink" title="示例，使用朴素贝叶斯过滤垃圾邮件"></a>示例，使用朴素贝叶斯过滤垃圾邮件</h4><p>接下来，我们来了解一个著名的应用：电子邮件垃圾过滤。首先看一下如何使用通用框架来处理问题。</p>
+<ul>
+<li>收集数据：提供文本文件</li>
+<li>准备数据：将文本文件解析成词条向量</li>
+<li>分析数据：检查词条确保解析的正确性</li>
+<li>训练算法：使用我们之前简历的tainNB0函数</li>
+<li>测试算法：使用calssifyNB，并构建一个新的测试函数来计算文档集的错误率</li>
+<li>使用算法：构建一个完整的程序对一组文档进行分类，将分类错误的文档输出到屏幕上</li>
+</ul>
+<p>我在email文件夹下放了一些用于测试的邮件，下面我们来进行文件解析以及完整的垃圾邮件测试函数的编写：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 接受一个大字符串并将其解析为字符串列表，该函数去掉小于2个字符的字符串，并将所有的字符转换为小写，这里我们可以自定义解析以及处理的操作</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">textParser</span><span class="params">(bigString)</span> :</span></div><div class="line">    <span class="keyword">import</span> re</div><div class="line">    listOfTokens = re.split(<span class="string">r'\W*'</span>, bigString)</div><div class="line">    <span class="keyword">return</span> [tok.lower() <span class="keyword">for</span> tok <span class="keyword">in</span> listOfTokens <span class="keyword">if</span> len(tok) &gt; <span class="number">2</span>]</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">spamTest</span><span class="params">()</span> :</span></div><div class="line">    docList = []</div><div class="line">    classList = []</div><div class="line">    fullText = []</div><div class="line"></div><div class="line">    <span class="comment"># 文件夹下分别有spam与ham文件夹，构建一个测试集与一个训练集，两个集合中的邮件都是随机选择的</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">1</span>, <span class="number">26</span>) :</div><div class="line">        wordList = textParser(open(<span class="string">'email/spam/%d.txt'</span> % i).read())</div><div class="line">        docList.append(wordList)</div><div class="line">        fullText.extend(wordList)</div><div class="line">        classList.append(<span class="number">1</span>)</div><div class="line">        </div><div class="line">        wordList = textParser(open(<span class="string">'email/ham/%d.txt'</span> % i).read())</div><div class="line">        docList.append(wordList)</div><div class="line">        fullText.extend(wordList)</div><div class="line">        classList.append(<span class="number">0</span>)</div><div class="line">    </div><div class="line">    vocabList = createVocablist(docList)</div><div class="line">    trainingSet = range(<span class="number">50</span>)</div><div class="line">    testSet = []</div><div class="line"></div><div class="line">    <span class="comment"># 随机构建训练集</span></div><div class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">10</span>) :</div><div class="line">        randIndex = int(random.uniform(<span class="number">0</span>, len(trainingSet)))</div><div class="line">        testSet.append(trainingSet[randIndex])</div><div class="line">        <span class="keyword">del</span>(trainingSet[randIndex])</div><div class="line"></div><div class="line">    trainMat = []</div><div class="line">    trainClasses = []</div><div class="line"></div><div class="line">    <span class="keyword">for</span> docIndex <span class="keyword">in</span> trainingSet :</div><div class="line">        trainMat.append(bagOfWords2VecMN(vocabList, docList[docIndex]))</div><div class="line">        trainClasses.append(classList[docIndex])</div><div class="line"></div><div class="line">    p0V, p1V, pSpam = trainNBO(array(trainMat), array(trainClasses))</div><div class="line">    errorCount = <span class="number">0</span></div><div class="line"></div><div class="line">    <span class="keyword">for</span> docIndex <span class="keyword">in</span> testSet :</div><div class="line">        wordVector = bagOfWords2VecMN(vocabList, docList[docIndex])</div><div class="line">        <span class="keyword">if</span> classifyNB(array(wordVector), p0V, p1V, pSpam) != classList[docIndex] :</div><div class="line">            errorCount += <span class="number">1</span></div><div class="line"></div><div class="line">    <span class="keyword">print</span> <span class="string">'the error rate is: '</span>, float(errorCount) / len(testSet)</div></pre></td></tr></table></figure>
+<p>得到如下结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">&gt;&gt;&gt; </span>reload(bayes)</div><div class="line">&lt;module <span class="string">'bayes'</span> <span class="keyword">from</span> <span class="string">'bayes.py'</span>&gt;</div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.spamTest()</div><div class="line">the error rate <span class="keyword">is</span>:  <span class="number">0.0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.spamTest()</div><div class="line">the error rate <span class="keyword">is</span>:  <span class="number">0.0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.spamTest()</div><div class="line">the error rate <span class="keyword">is</span>:  <span class="number">0.0</span></div><div class="line"><span class="meta">&gt;&gt;&gt; </span>bayes.spamTest()</div><div class="line">the error rate <span class="keyword">is</span>:  <span class="number">0.1</span></div></pre></td></tr></table></figure>
+<p>我们可以将上述过程重复多次，比如说10次，然后求平均值，我这么尝试了一下，最终得到的平均错误率为 6%。当出现错误的时候，若我们把正常邮件也归为垃圾邮件，那会有很大的问题，以后我们抽一小节来修正分类器。</p>
+<p>下篇我们将开始了解<code>Logistic回归</code>。</p>
+
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+    <a class="facebook" href="http://www.facebook.com/Dylanccccc" title="Facebook">Facebook</a>
+  
+  
+  
+    <a class="twitter" href="http://twitter.com/Dylanccccc" title="Twitter">Twitter</a>
+  
+  
+    <a class="github" href="https://github.com/WildDylan" title="GitHub">GitHub</a>
+  
+  <a class="rss" href="/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2017 dylan
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/ml/js/jquery.imagesloaded.min.js"></script>
+<script src="/ml/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/ml/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/ml/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/ml/js/phasebeam.js"></script>
+</body>
+</html>

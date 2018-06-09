@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>算法第五课 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="树什么是树，没有回路的就是树，有回路的就是图。树有很多特性：
+
+树中的任意两个点有且仅有唯一的一条路
+树中如果有n个点，那么它一定恰好有n-1条边
+在树中任意两点之间加一条，就会构成回路
+
+常见的树，有家谱、操作系统的文件夹，目录等。并且我们规定，只要是没有回路的连通无向图就是树。为了确定每一棵树的形态，我们在对一棵树进行讨论的时候，将树中每个点称为结点或者节点，在树中，我们可以指定一个特殊的节点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法第五课">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/19/算法第五课/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="树什么是树，没有回路的就是树，有回路的就是图。树有很多特性：
+
+树中的任意两个点有且仅有唯一的一条路
+树中如果有n个点，那么它一定恰好有n-1条边
+在树中任意两点之间加一条，就会构成回路
+
+常见的树，有家谱、操作系统的文件夹，目录等。并且我们规定，只要是没有回路的连通无向图就是树。为了确定每一棵树的形态，我们在对一棵树进行讨论的时候，将树中每个点称为结点或者节点，在树中，我们可以指定一个特殊的节点">
+<meta property="og:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:26.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法第五课">
+<meta name="twitter:description" content="树什么是树，没有回路的就是树，有回路的就是图。树有很多特性：
+
+树中的任意两个点有且仅有唯一的一条路
+树中如果有n个点，那么它一定恰好有n-1条边
+在树中任意两点之间加一条，就会构成回路
+
+常见的树，有家谱、操作系统的文件夹，目录等。并且我们规定，只要是没有回路的连通无向图就是树。为了确定每一棵树的形态，我们在对一棵树进行讨论的时候，将树中每个点称为结点或者节点，在树中，我们可以指定一个特殊的节点">
+<meta name="twitter:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-算法第五课" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法第五课
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/19/算法第五课/">
+            <time datetime="2016-10-19T04:55:39.000Z" itemprop="datePublished">2016-10-19</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="树"><a href="#树" class="headerlink" title="树"></a>树</h4><p>什么是树，没有回路的就是树，有回路的就是图。树有很多特性：</p>
+<ol>
+<li>树中的任意两个点有且仅有唯一的一条路</li>
+<li>树中如果有n个点，那么它一定恰好有<code>n-1</code>条边</li>
+<li>在树中任意两点之间加一条，就会构成回路</li>
+</ol>
+<p>常见的树，有家谱、操作系统的文件夹，目录等。并且我们规定，只要是没有回路的连通无向图就是树。为了确定每一棵树的形态，我们在对一棵树进行讨论的时候，将树中每个点称为<code>结点</code>或者<code>节点</code>，在树中，我们可以指定一个特殊的节点-<strong>根</strong>。有一个根的树叫做有根树。根又叫做根节点，一棵树有且仅有一个根节点。根节点又可以被称为<strong>祖先</strong>，接下来就是<strong>父节点</strong>（没有父节点的节点就是根），<strong>子节点</strong>。如果一个节点没有子节点，这个节点被称为<strong>叶节点</strong>。如果一个节点既不是根节点也不是叶节点，也可以被称为<strong>内部节点</strong>，每个节点有<strong>深度</strong>，深度指的是从根到这个节点的层数（根为第一层）。</p>
+<a id="more"></a>
+<h4 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h4><p>二叉树是一种特殊的数，二叉树的特点是，每个节点最多有2个子节点，左边的叫做左节点，右边的叫做右节点。或者说，每个节点最多有2个子树，更加严格的递归定义是：二叉树要么为空，要么由根节点、左子树、右子树构成，而左子树，右子树分别又是一棵二叉树。</p>
+<p>二叉树还有两种特殊定义的二叉树，叫做<strong>满二叉树</strong>（二叉树中每个内部节点都有2个子节点，严格的定义是深度为h且有2^h-1个节点的树）和<strong>完全二叉树</strong>（一棵树除了最右边的位置上有一个或是几个节点缺少外，其他是丰满的，则是完全二叉树，严格的定义是：若设二叉树的高度为h，除第h层外，其他各层的节点树都达到最大个数，第h层从右向左连续缺若干节点，一个树，有右节点必有左节点）。可以将满二叉树理解为极其完美的完全二叉树。</p>
+<p>先想一想，一棵完全二叉树如何做存储呢？其实二叉树种，父节点与子节点有着很不错的规律，只需用一个一维数组就可以存储完全二叉树：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0060.JPG" alt=""></p>
+<p>通过上图我们发现，如果完全二叉树的一个编号为<code>K</code>，那么他左子节点的编号是<code>2*K</code>，右子节点的编号是<code>2*K + 1</code>，如果已知子节点的编号为<code>X</code>，那么父节点的编号就是<code>X/2</code>。如果一个完全二叉树有N个节点，那么这个完全二叉树的高度为</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">logN</div></pre></td></tr></table></figure>
+<p>即最多有logN层节点。完全二叉树最典型的应用就是<strong>堆</strong>。</p>
+<h4 id="堆，神奇的优先队列"><a href="#堆，神奇的优先队列" class="headerlink" title="堆，神奇的优先队列"></a>堆，神奇的优先队列</h4><p>什么是堆，堆就是一种特殊的完全二叉树</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0061.JPG" alt=""></p>
+<p>如上图，有没有发现这棵二叉树有一个特点，就是所有的父节点都比子节点要小（圆圈里边的是值，上面的树是编号），符合这样特点的完全二叉树被我们称为<strong>最小堆</strong>，反之，如果父节点都比子节点要大，称为<strong>最大堆</strong>。</p>
+<p>假如有14个数：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">99</span>, <span class="number">5</span>, <span class="number">36</span>, <span class="number">7</span>, <span class="number">22</span>, <span class="number">17</span>, <span class="number">46</span>, <span class="number">12</span>, <span class="number">2</span>, <span class="number">19</span>, <span class="number">25</span>, <span class="number">28</span>, <span class="number">1</span>, <span class="number">92</span></div></pre></td></tr></table></figure>
+<p>请找出这14个数中最小的数，你可能直接想到了，一个循环不就好了么</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">14</span>; i ++) &#123;</div><div class="line">    <span class="keyword">if</span> (a[i] &lt; min) &#123;</div><div class="line">      min = a[i];</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这种方法的时间复杂度是<code>O(14)</code>，也就是<code>O(N)</code>。假如有14次这样的操作，就是<code>O(14^2)</code>，有没有更好的方法呢？堆这个特殊的结构恰好能够很好的解决这个问题。首先我们把14个数字按照最小堆的要求放入一棵完全二叉树，就像下边这棵树一样：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0061.JPG" alt=""></p>
+<p>很显然，最小的树就在堆顶，假设存储这个堆的数组叫做h的话，最小数就是<code>h[1]</code>。如果我们要删除最小值并增加一个数字23呢？我们将堆顶的数字移除，然后将23放入堆顶。显然加了新的数值后，已经不符合最小堆的特性了，我们需要将新加入树的节点调整到合理的位置。</p>
+<p>当然是向下调整了，最小堆种的大数都在下边的。所以我们只需要不停的与当前节点的子节中较小的节点进行比较并且互换。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0062.JPG" alt=""></p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0063.JPG" alt=""></p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0064.JPG" alt=""></p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0065.JPG" alt=""></p>
+<p>我们发现，在堆23进行调整的时候，只进行了3次比较，就恢复了最小堆的特性。现在每次删除一个最小的数的同时增加一个新的数，需要的时间复杂度是<code>O(3)</code>，恰好是<br>$$<br>O(log_214) 也就是 O(log_2N)，简写为 O(logN)<br>$$<br>如果只想新增一个值呢？只需要把这个值插入到末尾，然后根据情况判断新元素是否需要上移，加入我们现在需要新增一个数字3：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0066.JPG" alt=""></p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/IMG_0067.JPG" alt=""></p>
+<p>先将3与它的父节点比较，如果比父节点小，则更换位置，继续向上比较即可。说了这么半天，我们忽略了一个很大的问题，怎么创建一个堆呢？可以从空的堆开始，依次的读入元素。还有一种方法，那就是直接把这14个数放入一个完全二叉树中（这里依旧用一个一维数组存储完全二叉树）：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">position:  <span class="number">1</span>  <span class="number">2</span>  <span class="number">3</span>  <span class="number">4</span>  <span class="number">5</span>  <span class="number">6</span>  <span class="number">7</span>  <span class="number">8</span>  <span class="number">9</span>  <span class="number">10</span>  <span class="number">11</span>  <span class="number">12</span>  <span class="number">13</span>  <span class="number">14</span></div><div class="line">data    : <span class="number">99</span>  <span class="number">5</span> <span class="number">36</span>  <span class="number">7</span> <span class="number">22</span> <span class="number">17</span> <span class="number">92</span> <span class="number">12</span>  <span class="number">2</span>  <span class="number">19</span>  <span class="number">25</span>  <span class="number">28</span>   <span class="number">1</span>  <span class="number">46</span></div></pre></td></tr></table></figure>
+<p>我们从叶节点开始，因为叶节点没有子节点，所以所有的叶节点都符合最小堆特性，所以我们开始处理叶节点之外的点。不符合最小堆特性的都需要向下调整。说白了就2行代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span>; i &gt;= <span class="number">1</span>; i --) &#123;</div><div class="line">    siftDown(i); <span class="comment">// 向下调整</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>二叉树还有一个特点：第<code>n/2</code>一定是这棵树的最后一个非叶节点。用这种方法创建堆的时间复杂度为<code>O(N)</code>。堆还有一个作用是排序，排序的时间复杂度也是<code>O(NlogN)</code>，根据我们上边的思维，堆排序就很简单了，比如我们要从小到大排序，我们先建立一个最小堆，然后堆顶的就是最小的，每次删除顶部元素并输出，直到堆空为止。</p>
+<p>说了这么多，我们通过代码来看一下建立堆与堆排序的完整过程：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> h[<span class="number">101</span>]; <span class="comment">// 用来存放堆的数组</span></div><div class="line"><span class="keyword">int</span> n; <span class="comment">// 用来存储堆中元素的个数，也就是堆的大小</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> temp = h[x];</div><div class="line">  h[x] = h[y];</div><div class="line">  h[y] = temp;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">siftdown</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; <span class="comment">// 传入一个需要向下调整的节点编号i</span></div><div class="line">  <span class="keyword">int</span> position, flag = <span class="number">0</span>; <span class="comment">// 使用flag来标记是否还需要继续向下调整</span></div><div class="line">  </div><div class="line">  <span class="comment">// 当i节点有左子节点并且需要继续调整的时候</span></div><div class="line">  <span class="keyword">while</span> ( i * <span class="number">2</span> &lt;= n &amp;&amp; flag == <span class="number">0</span> ) &#123;</div><div class="line">    <span class="comment">// 首先判断与左子节点的关系，用position记录比较小的结点编号</span></div><div class="line">    <span class="keyword">if</span> ( h[i] &gt; h[i * <span class="number">2</span>] ) &#123;</div><div class="line">      position = i * <span class="number">2</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      position = i;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ( i * <span class="number">2</span> + <span class="number">1</span> &lt;= n ) &#123;</div><div class="line">      <span class="keyword">if</span> ( h[position] &gt; h[i * <span class="number">2</span> + <span class="number">1</span>] ) &#123; <span class="comment">// 注意这里是 h[position]，说白了也就是3个值中的最小值</span></div><div class="line">        position = i * <span class="number">2</span> + <span class="number">1</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 如果最小的编号不是当前编号，说明子节点小于父节点</span></div><div class="line">    <span class="keyword">if</span> ( position != i ) &#123;</div><div class="line">      <span class="comment">// 交换 position 与 i 位置的数字</span></div><div class="line">      swap(position, i);</div><div class="line">      i = position; <span class="comment">// 更新i为交换的子节点的位置，便于继续向下交换</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      flag = <span class="number">1</span>; <span class="comment">// 意味着父节点是最小，不需要调整了</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span>; i &gt;= <span class="number">1</span>; i --) &#123;</div><div class="line">    siftdown(i);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">deleteMax</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> temp = h[<span class="number">1</span>]; <span class="comment">// 新建一个变量来存储堆顶的值</span></div><div class="line">  h[<span class="number">1</span>] = h[n]; <span class="comment">// 将堆的最后一个元素赋值给堆顶</span></div><div class="line">  n --; <span class="comment">// 堆的元素减少1</span></div><div class="line">  siftdown(<span class="number">1</span>); <span class="comment">// 将堆顶向下排序</span></div><div class="line">  <span class="keyword">return</span> temp;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> num; <span class="comment">// 要排序数字的个数</span></div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;h[i]); <span class="comment">// 将输入的数字顺序初始化到一维数中</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  n = num; <span class="comment">// 表示堆中元素的个数</span></div><div class="line">  </div><div class="line">  <span class="comment">// 创建堆</span></div><div class="line">  create();</div><div class="line">  </div><div class="line">  <span class="comment">// 删除顶部元素</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, deleteMax());</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有人说了，不是还有最大堆么？哈哈，你真聪明，接着改代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> h[<span class="number">101</span>]; <span class="comment">// 用来存放堆的数组</span></div><div class="line"><span class="keyword">int</span> n; <span class="comment">// 用来存储堆中元素的个数，也就是堆的大小</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">swap</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">  <span class="keyword">int</span> temp = h[x];</div><div class="line">  h[x] = h[y];</div><div class="line">  h[y] = temp;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">siftdown</span><span class="params">(<span class="keyword">int</span> i)</span> </span>&#123; <span class="comment">// 传入一个需要向下调整的节点编号i</span></div><div class="line">  <span class="keyword">int</span> position, flag = <span class="number">0</span>; <span class="comment">// 使用flag来标记是否还需要继续向下调整</span></div><div class="line">  </div><div class="line">  <span class="comment">// 当i节点有左子节点并且需要继续调整的时候</span></div><div class="line">  <span class="keyword">while</span> ( i * <span class="number">2</span> &lt;= n &amp;&amp; flag == <span class="number">0</span> ) &#123;</div><div class="line">    <span class="comment">// 首先判断与左子节点的关系，用position记录比较大的结点编号</span></div><div class="line">    <span class="keyword">if</span> ( h[i] &lt; h[i * <span class="number">2</span>] ) &#123;</div><div class="line">      position = i * <span class="number">2</span>;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      position = i;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> ( i * <span class="number">2</span> + <span class="number">1</span> &lt;= n ) &#123;</div><div class="line">      <span class="keyword">if</span> ( h[position] &lt; h[i * <span class="number">2</span> + <span class="number">1</span>] ) &#123; <span class="comment">// 注意这里是 h[position]，说白了也就是3个值中的最大值</span></div><div class="line">        position = i * <span class="number">2</span> + <span class="number">1</span>;</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="comment">// 如果最小的编号不是当前编号，说明子节点大于父节点</span></div><div class="line">    <span class="keyword">if</span> ( position != i ) &#123;</div><div class="line">      <span class="comment">// 交换 position 与 i 位置的数字</span></div><div class="line">      swap(position, i);</div><div class="line">      i = position; <span class="comment">// 更新i为交换的子节点的位置，便于继续向下交换</span></div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      flag = <span class="number">1</span>; <span class="comment">// 意味着父节点是最大，不需要调整了</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">create</span><span class="params">()</span> </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = n / <span class="number">2</span>; i &gt;= <span class="number">1</span>; i --) &#123;</div><div class="line">    siftdown(i);</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span>;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> num; <span class="comment">// 要排序数字的个数</span></div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;num);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;h[i]); <span class="comment">// 将输入的数字顺序初始化到一维数中</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  n = num; <span class="comment">// 表示堆中元素的个数</span></div><div class="line">  </div><div class="line">  <span class="comment">// 创建堆</span></div><div class="line">  create();</div><div class="line">  </div><div class="line">  <span class="keyword">while</span> (n &gt; <span class="number">1</span>) &#123;</div><div class="line">    swap(<span class="number">1</span>, n);</div><div class="line">    n --;</div><div class="line">    siftdown(<span class="number">1</span>);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 删除顶部元素</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num; i ++) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, h[i]);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>并且，堆排序的时间复杂度为<br>$$<br>O(NlogN)<br>$$<br>另外，如果求一个数列中第K小的数，只需要建立一个大小为K的最大堆，堆顶就是第K小的数字，时间复杂度为<br>$$<br>O(NlogK)<br>$$<br>树还有很多神奇的用法，比如线段树、树状数组、Trie树、二叉搜索树、红黑树等，这些结构比较复杂，大家可以多多探索。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/19/算法第五课/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/19/算法第五课/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/20/如何迈出第一步/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    如何迈出第一步
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/18/算法第四课/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">算法第四课</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/19/算法第五课/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

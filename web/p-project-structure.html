@@ -1,0 +1,50 @@
+<h1 class="title">项目目录结构</h1>
+<h2 class="subtitle">
+  规律与整齐的生活是否会让你感到厌烦
+</h2>
+<hr>
+
+<div class="content">
+  <p>有条不紊的做事情，我们先建立一个简单的目录结构，打开<code>WebStorm</code>：</p>
+  <ul>
+    <li>1. 点击<code>Create New Project</code></li>
+    <li>2. 左侧选择<code>Empty Project, 并在右侧输入你想将项目创建的位置</code></li>
+    <li>3. 点击创建</li>
+  </ul>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/wb_create_success.png" />
+  </p>
+  <p class="has-text-centered">创建成功后截图</p>
+  <hr>
+  <p>接下来，我们创建我们自己的工作目录，结合我们的功能，我们先宏观考虑一下怎么划分我们的项目结构（说的易懂一些）：</p>
+  <ul>
+    <li>1. 登录、注册、主页、详情共4个界面，这些界面的数据来源与操作都独立，划分为4个模块，每个模块拥有自己的资源文件，工具文件，数据等。</li>
+    <li>2. 项目分为共享服务层（提供所有模块公共的服务），界面拥有相同内容。</li>
+  </ul>
+  <p>显然，第2个貌似更好一点，第一种更适合于多个项目依赖的结构，互不影响。第二种更适合于平时我们的开发，所有公用的css、js、html文件扔到一起，然后每个模块再独立出去：</p>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/wb_create_workspace.png" />
+  </p>
+  <p>目录结构介绍：</p>
+  <ul>
+    <li>1. css 公用样式库的css文件夹</li>
+    <li>2. js  公用js库的文件夹，比如说jQuery等等</li>
+    <li>3. utils 公用的自定义的一些js工具类</li>
+    <li>
+      4. views 每一个视图我们称为一个模块
+      <ul>
+        <li>1. components 公用组件，比如说我们会吧header, footer写到这里</li>
+        <li>2. detail 详情模块</li>
+        <li>3. signin, signup 登录注册模块</li>
+      </ul>
+    </li>
+    <li>5. index.html 入口界面</li>
+  </ul>
+  <p>每种思想下的文件夹结构都不同，我们从最简单的入手，接下来制定项目计划。</p>
+</div>
+
+<div class="column is-fullwidth has-text-right">
+  <a class="next-article" hlink="p-milestone.html">
+    <i class="fa fa-arrow-right">项目计划</i>
+  </a>
+</div>

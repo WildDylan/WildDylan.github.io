@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Mybatis学习笔记(13) 延迟加载 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../mybatis学习笔记(12)-多对多查询/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../mybatis学习笔记(14)-查询缓存之一级缓存/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#association">使用association实现延迟加载</a></li>
+        <li class="main "><a href="#_1">延迟加载思考</a></li>
+        <li class="main "><a href="#ideadebug">IDEA的debug小现象</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# mybatis学习笔记(13)-延迟加载</p>
+<p>标签： mybatis</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#使用association实现延迟加载">使用association实现延迟加载</a></li>
+<li><a href="#延迟加载思考">延迟加载思考</a></li>
+<li><a href="#idea的debug小现象">IDEA的debug小现象</a></li>
+</ul>
+<hr />
+<p>resultMap可以实现高级映射（使用<code>association</code>、<code>collection</code>实现一对一及一对多映射），<code>association</code>、<code>collection</code>具备延迟加载功能。</p>
+<p>延迟加载：先从单表查询、需要时再从关联表去关联查询，大大提高数据库性能，因为查询单表要比关联查询多张表速度要快。</p>
+<p>需求：</p>
+<p>如果查询订单并且关联查询用户信息。如果先查询订单信息即可满足要求，当我们需要查询用户信息时再查询用户信息。把对用户信息的按需去查询就是延迟加载。</p>
+<h2 id="association">使用association实现延迟加载</h2>
+<ul>
+<li>mapper.xml</li>
+</ul>
+<p>需要定义两个mapper的方法对应的statement。</p>
+<p>1.只查询订单信息</p>
+<p><code>SELECT * FROM orders</code></p>
+<p>在查询订单的statement中使用association去延迟加载（执行）下边的satatement(关联查询用户信息)</p>
+<pre><code class="xml">&lt;!-- 查询订单关联查询用户，用户信息需要延迟加载 --&gt;
+&lt;select id=&quot;findOrdersUserLazyLoading&quot; resultMap=&quot;OrdersUserLazyLoadingResultMap&quot;&gt;
+    SELECT * FROM orders
+&lt;/select&gt;
+</code></pre>
+
+<p>2.关联查询用户信息</p>
+<p>通过上边查询到的订单信息中user_id去关联查询用户信息,使用UserMapper.xml中的findUserById</p>
+<pre><code class="xml">&lt;select id=&quot;findUserById&quot; parameterType=&quot;int&quot; resultType=&quot;com.iot.mybatis.po.User&quot;&gt;
+    SELECT * FROM  user  WHERE id=#{value}
+&lt;/select&gt;
+</code></pre>
+
+<p>上边先去执行findOrdersUserLazyLoading，当需要去查询用户的时候再去执行findUserById，通过resultMap的定义将延迟加载执行配置起来。</p>
+<ul>
+<li>延迟加载resultMap</li>
+</ul>
+<pre><code class="xml">&lt;!-- 延迟加载的resultMap --&gt;
+&lt;resultMap type=&quot;com.iot.mybatis.po.Orders&quot; id=&quot;OrdersUserLazyLoadingResultMap&quot;&gt;
+    &lt;!--对订单信息进行映射配置  --&gt;
+    &lt;id column=&quot;id&quot; property=&quot;id&quot;/&gt;
+    &lt;result column=&quot;user_id&quot; property=&quot;userId&quot;/&gt;
+    &lt;result column=&quot;number&quot; property=&quot;number&quot;/&gt;
+    &lt;result column=&quot;createtime&quot; property=&quot;createtime&quot;/&gt;
+    &lt;result column=&quot;note&quot; property=&quot;note&quot;/&gt;
+    &lt;!-- 实现对用户信息进行延迟加载
+    select：指定延迟加载需要执行的statement的id（是根据user_id查询用户信息的statement）
+    要使用userMapper.xml中findUserById完成根据用户id(user_id)用户信息的查询，如果findUserById不在本mapper中需要前边加namespace
+    column：订单信息中关联用户信息查询的列，是user_id
+    关联查询的sql理解为：
+    SELECT orders.*,
+    (SELECT username FROM USER WHERE orders.user_id = user.id)username,
+    (SELECT sex FROM USER WHERE orders.user_id = user.id)sex
+     FROM orders
+     --&gt;
+    &lt;association property=&quot;user&quot;  javaType=&quot;com.iot.mybatis.po.User&quot;
+                 select=&quot;com.iot.mybatis.mapper.UserMapper.findUserById&quot;
+                 column=&quot;user_id&quot;&gt;
+     &lt;!-- 实现对用户信息进行延迟加载 --&gt;
+
+    &lt;/association&gt;
+
+&lt;/resultMap&gt;
+</code></pre>
+
+<p><strong>与非延迟加载的主要区别就在<code>association</code>标签属性多了<code>select</code>和<code>column</code></strong></p>
+<pre><code class="xml">&lt;association property=&quot;user&quot;  javaType=&quot;com.iot.mybatis.po.User&quot;
+             select=&quot;com.iot.mybatis.mapper.UserMapper.findUserById&quot;
+             column=&quot;user_id&quot;&gt;
+</code></pre>
+
+<ul>
+<li>mapper.java</li>
+</ul>
+<pre><code class="java">//查询订单关联查询用户，用户信息是延迟加载
+public List&lt;Orders&gt; findOrdersUserLazyLoading()throws Exception;
+</code></pre>
+
+<ul>
+<li>测试思路</li>
+<li>执行上边mapper方法(<code>findOrdersUserLazyLoading</code>)，内部去调用<code>com.iot.mybatis.mapper.OrdersMapperCustom</code>中的<code>findOrdersUserLazyLoading</code>只查询orders信息（单表）。</li>
+<li>在程序中去遍历上一步骤查询出的List<Orders>，当我们调用Orders中的getUser方法时，开始进行延迟加载。</li>
+<li>
+<p>延迟加载，去调用UserMapper.xml中findUserbyId这个方法获取用户信息。</p>
+</li>
+<li>
+<p>延迟加载配置</p>
+</li>
+</ul>
+<p>mybatis默认没有开启延迟加载，需要在SqlMapConfig.xml中setting配置。</p>
+<p>在mybatis核心配置文件中配置：lazyLoadingEnabled、aggressiveLazyLoading</p>
+<table>
+<thead>
+<tr>
+<th align="left">设置项</th>
+<th align="left">描述</th>
+<th align="left">允许值</th>
+<th align="left">默认值</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">lazyLoadingEnabled</td>
+<td align="left">全局性设置懒加载。如果设为‘false’，则所有相关联的都会被初始化加载</td>
+<td align="left">true/false</td>
+<td align="left">false</td>
+</tr>
+<tr>
+<td align="left">aggressiveLazyLoading</td>
+<td align="left">当设置为‘true’的时候，懒加载的对象可能被任何懒属性全部加载。否则，每个属性都按需加载。</td>
+<td align="left">true/false</td>
+<td align="left">true</td>
+</tr>
+</tbody>
+</table>
+<p>在SqlMapConfig.xml中配置：</p>
+<pre><code class="xml">&lt;settings&gt;
+    &lt;!-- 打开延迟加载 的开关 --&gt;
+    &lt;setting name=&quot;lazyLoadingEnabled&quot; value=&quot;true&quot;/&gt;
+    &lt;!-- 将积极加载改为消极加载即按需要加载 --&gt;
+    &lt;setting name=&quot;aggressiveLazyLoading&quot; value=&quot;false&quot;/&gt;
+    &lt;!-- 开启二级缓存 --&gt;
+   &lt;!-- &lt;setting name=&quot;cacheEnabled&quot; value=&quot;true&quot;/&gt;--&gt;
+&lt;/settings&gt;
+</code></pre>
+
+<ul>
+<li>测试代码</li>
+</ul>
+<pre><code class="java">// 查询订单关联查询用户，用户信息使用延迟加载
+@Test
+public void testFindOrdersUserLazyLoading() throws Exception {
+    SqlSession sqlSession = sqlSessionFactory.openSession();// 创建代理对象
+    OrdersMapperCustom ordersMapperCustom = sqlSession
+            .getMapper(OrdersMapperCustom.class);
+    // 查询订单信息（单表）
+    List&lt;Orders&gt; list = ordersMapperCustom.findOrdersUserLazyLoading();
+
+    // 遍历上边的订单列表
+    for (Orders orders : list) {
+        // 执行getUser()去查询用户信息，这里实现按需加载
+        User user = orders.getUser();
+        System.out.println(user);
+    }
+}
+</code></pre>
+
+<h2 id="_1">延迟加载思考</h2>
+<p>不使用mybatis提供的association及collection中的延迟加载功能，如何实现延迟加载？？</p>
+<p>实现方法如下：</p>
+<p>定义两个mapper方法：</p>
+<ul>
+<li>查询订单列表</li>
+<li>根据用户id查询用户信息</li>
+</ul>
+<p>实现思路：</p>
+<p>先去查询第一个mapper方法，获取订单信息列表；在程序中（service），按需去调用第二个mapper方法去查询用户信息。</p>
+<p>总之，使用延迟加载方法，先去查询简单的sql（最好单表，也可以关联查询），再去按需要加载关联查询的其它信息。</p>
+<h2 id="ideadebug">IDEA的debug小现象</h2>
+<p>使用的是intellij IDEA 15.0.2</p>
+<p>先说一下结果吧，IDEA在debug和run条件下，打印结果不同</p>
+<p>我为了验证延迟加载前的user是否为空，在Orders类中加入了</p>
+<pre><code class="java">public void print(){
+    System.out.println(&quot;----test-print-----&quot;+user+&quot;   user==null: &quot;+(user==null));
+}
+</code></pre>
+
+<p>测试代码如下：</p>
+<pre><code class="java">// 查询订单关联查询用户，用户信息使用延迟加载
+@Test
+public void testFindOrdersUserLazyLoading() throws Exception {
+    SqlSession sqlSession = sqlSessionFactory.openSession();// 创建代理对象
+    OrdersMapperCustom ordersMapperCustom = sqlSession
+            .getMapper(OrdersMapperCustom.class);
+    // 查询订单信息（单表）
+    List&lt;Orders&gt; list = ordersMapperCustom.findOrdersUserLazyLoading();
+
+    // 遍历上边的订单列表
+    for (Orders orders : list) {
+        // 执行getUser()去查询用户信息，这里实现按需加载
+        //User user = orders.getUser();
+        //System.out.println(user);
+        orders.print();
+    }
+
+}
+</code></pre>
+
+<p>然后分别run和debug</p>
+<ul>
+<li>run输出</li>
+</ul>
+<pre><code>DEBUG [main] - Opening JDBC Connection
+DEBUG [main] - Created connection 110771485.
+DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@69a3d1d]
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM orders 
+DEBUG [main] - ==&gt; Parameters: 
+DEBUG [main] - &lt;==      Total: 3
+----test-print-----null   user==null: true
+----test-print-----null   user==null: true
+----test-print-----null   user==null: true
+</code></pre>
+
+<ul>
+<li>debug输出</li>
+</ul>
+<p>在<code>List&lt;Orders&gt; list = ordersMapperCustom.findOrdersUserLazyLoading();</code>打断点，运行完这句,日志输出为：</p>
+<pre><code>DEBUG [main] - Opening JDBC Connection
+DEBUG [main] - Created connection 1219273867.
+DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@48aca48b]
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM orders 
+DEBUG [main] - ==&gt; Parameters: 
+DEBUG [main] - &lt;==      Total: 3
+</code></pre>
+
+<p>但是当你点开<code>list</code>属性时，控制台又输出了，而且可以看到list里的user是有内容的</p>
+<pre><code>DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user WHERE id=? 
+DEBUG [main] - ==&gt; Parameters: 1(Integer)
+DEBUG [main] - &lt;==      Total: 1
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user WHERE id=? 
+DEBUG [main] - ==&gt; Parameters: 10(Integer)
+DEBUG [main] - &lt;==      Total: 1
+</code></pre>
+
+<p>运行完所有程序，控制台输出为：</p>
+<pre><code>DEBUG [main] - Opening JDBC Connection
+DEBUG [main] - Created connection 1219273867.
+DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@48aca48b]
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM orders 
+DEBUG [main] - ==&gt; Parameters: 
+DEBUG [main] - &lt;==      Total: 3
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user WHERE id=? 
+DEBUG [main] - ==&gt; Parameters: 1(Integer)
+DEBUG [main] - &lt;==      Total: 1
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user WHERE id=? 
+DEBUG [main] - ==&gt; Parameters: 10(Integer)
+DEBUG [main] - &lt;==      Total: 1
+----test-print-----User [id=1, username=王五, sex=2, birthday=null, address=null]   user==null: false
+----test-print-----User [id=1, username=王五, sex=2, birthday=null, address=null]   user==null: false
+----test-print-----User [id=10, username=张三, sex=1, birthday=Thu Jul 10 00:00:00 CST 2014, address=北京市]   user==null: false
+</code></pre>
+
+<p>所以，我觉得应该是在debug时，查看属性的话，IDEA会自动调用get相应的方法，从而触发user的查询。延迟加载的源码实现以后我会阅读，把这个问题弄清楚。</p>
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> | <a href="http://blog.csdn.net/h3243212/">CSDN</a> | <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

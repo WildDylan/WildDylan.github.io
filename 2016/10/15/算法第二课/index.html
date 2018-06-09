@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>算法第二课 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="栈、队列、链表队列先进先出，前面出，后面进。队列分列表头，列表尾。使用2个位置标记量分别代表首、尾，当首=尾，标识队列为空队列。每当入数据，尾++，出数据，头++：
+123456789101112131415161718192021222324252627282930struct list &amp;#123;  int data[1000];  int head;  int tail;&amp;#125;;in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法第二课">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/15/算法第二课/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="栈、队列、链表队列先进先出，前面出，后面进。队列分列表头，列表尾。使用2个位置标记量分别代表首、尾，当首=尾，标识队列为空队列。每当入数据，尾++，出数据，头++：
+123456789101112131415161718192021222324252627282930struct list &amp;#123;  int data[1000];  int head;  int tail;&amp;#125;;in">
+<meta property="og:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="算法第二课">
+<meta name="twitter:description" content="栈、队列、链表队列先进先出，前面出，后面进。队列分列表头，列表尾。使用2个位置标记量分别代表首、尾，当首=尾，标识队列为空队列。每当入数据，尾++，出数据，头++：
+123456789101112131415161718192021222324252627282930struct list &amp;#123;  int data[1000];  int head;  int tail;&amp;#125;;in">
+<meta name="twitter:image" content="http://img2.imgtn.bdimg.com/it/u=4054526222,762120886&fm=21&gp=0.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-算法第二课" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            算法第二课
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/15/算法第二课/">
+            <time datetime="2016-10-15T06:48:36.000Z" itemprop="datePublished">2016-10-15</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/算法/">算法</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="栈、队列、链表"><a href="#栈、队列、链表" class="headerlink" title="栈、队列、链表"></a>栈、队列、链表</h4><h6 id="队列"><a href="#队列" class="headerlink" title="队列"></a>队列</h6><p><code>先进先出</code>，前面出，后面进。队列分列表头，列表尾。使用2个位置标记量分别代表首、尾，当首=尾，标识队列为空队列。每当入数据，尾++，出数据，头++：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> <span class="built_in">list</span> &#123;</div><div class="line">  <span class="keyword">int</span> data[<span class="number">1000</span>];</div><div class="line">  <span class="keyword">int</span> head;</div><div class="line">  <span class="keyword">int</span> tail;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">struct</span> <span class="built_in">list</span> <span class="built_in">list</span>;</div><div class="line">  <span class="comment">// 初始化列表首、尾</span></div><div class="line">  <span class="built_in">list</span>.head = <span class="number">1</span>;</div><div class="line">  <span class="built_in">list</span>.tail = <span class="number">1</span>;</div><div class="line">  <span class="comment">// 读入数据</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;<span class="built_in">list</span>.data[i]);</div><div class="line">    <span class="built_in">list</span>.tail ++;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"list headNum: %d, tailNum: %d\n"</span>, <span class="built_in">list</span>.data[<span class="built_in">list</span>.head], <span class="built_in">list</span>.data[<span class="built_in">list</span>.tail - <span class="number">1</span>]);</div><div class="line">  </div><div class="line">  <span class="comment">// 模拟出一个值</span></div><div class="line">  <span class="built_in">list</span>.head ++;</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"list headNum: %d, tailNum: %d\n"</span>, <span class="built_in">list</span>.data[<span class="built_in">list</span>.head], <span class="built_in">list</span>.data[<span class="built_in">list</span>.tail - <span class="number">1</span>]);</div><div class="line">  </div><div class="line">  <span class="comment">// 模拟入一个值</span></div><div class="line">  <span class="built_in">list</span>.data[<span class="built_in">list</span>.tail] = <span class="number">10</span>;</div><div class="line">  <span class="built_in">list</span>.tail ++;</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"list headNum: %d, tailNum: %d\n"</span>, <span class="built_in">list</span>.data[<span class="built_in">list</span>.head], <span class="built_in">list</span>.data[<span class="built_in">list</span>.tail - <span class="number">1</span>]);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="栈"><a href="#栈" class="headerlink" title="栈"></a>栈</h6><p><code>先进后出</code>，只能后边进，从后边出。栈只有栈顶。使用一个数字标记栈顶，入栈，栈顶++，出栈，栈顶—：</p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> <span class="built_in">stack</span> &#123;</div><div class="line">  <span class="keyword">int</span> data[<span class="number">10</span>];</div><div class="line">  <span class="keyword">int</span> top;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  <span class="keyword">struct</span> <span class="built_in">stack</span> <span class="built_in">stack</span>;</div><div class="line">  <span class="comment">// 没有对象</span></div><div class="line">  <span class="built_in">stack</span>.top = <span class="number">1</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">5</span>; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;<span class="built_in">stack</span>.data[i]);</div><div class="line">    <span class="built_in">stack</span>.top = i;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 模拟入栈</span></div><div class="line">  <span class="built_in">stack</span>.data[<span class="built_in">stack</span>.top + <span class="number">1</span>] = <span class="number">7</span>;</div><div class="line">  <span class="built_in">stack</span>.top ++;</div><div class="line">  </div><div class="line">  <span class="comment">// 模拟出栈</span></div><div class="line">  <span class="built_in">stack</span>.data[<span class="built_in">stack</span>.top] = <span class="number">0</span>;</div><div class="line">  <span class="built_in">stack</span>.top --;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>至此，大家可以模拟一个打扑克的游戏，俗称列火车，假设2个小朋友每个人都有10张排，你一张我一张放到桌子上，如果我出的这张之前也出过，那么2张牌中间的所有的排都是我赢的，谁先出光谁输（简单分析：2个列表存放2个人的扑克，先进后出，1个栈，从顶往底拿牌，赢的牌插入到每个人列表的后边）。</p>
+<h6 id="链表"><a href="#链表" class="headerlink" title="链表"></a>链表</h6><p>一个链着一个，前一个数中知道下一个链着谁~。基本的形式：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> node &#123;</div><div class="line">  <span class="keyword">int</span> data;</div><div class="line">  <span class="keyword">struct</span> node *next;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>如何建立一个链表呢？首先我们需要一个链表头，就像是火车头一样，然后链着一节一节的车厢。当链表还没有建立的时候，头部暂时置为空。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> node *head = <span class="literal">NULL</span>; <span class="comment">// 初始化;</span></div></pre></td></tr></table></figure>
+<p>紧接着，创建第一个结点，并用临时指针p指向这个节点，然后链接到头部：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">struct</span> node *head = <span class="literal">NULL</span>; <span class="comment">// 初始化;</span></div><div class="line">  </div><div class="line">  <span class="keyword">struct</span> node *p;</div><div class="line">  p = (<span class="keyword">struct</span> node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node));</div><div class="line">  </div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;p-&gt;data);</div><div class="line">  p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">if</span> (head == <span class="literal">NULL</span>) &#123;</div><div class="line">    head = p;</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    head-&gt;next = p;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>所以我们来看完整的链表构建代码（并往其中插入一个数字）：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">struct</span> node &#123;</div><div class="line">  <span class="keyword">int</span> data;</div><div class="line">  <span class="keyword">struct</span> node *next;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">const</span> <span class="keyword">char</span> * argv[])</span> </span>&#123;</div><div class="line">  </div><div class="line">  <span class="keyword">struct</span> node *head = <span class="literal">NULL</span>, *p = <span class="literal">NULL</span>, *q = <span class="literal">NULL</span>, *t = <span class="literal">NULL</span>;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> count, inputData;</div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Enter Number: "</span>);</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;count);</div><div class="line">  </div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= count; i ++) &#123;</div><div class="line">    <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;inputData);</div><div class="line">    </div><div class="line">    p = (<span class="keyword">struct</span> node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node));</div><div class="line">    p-&gt;data = inputData;</div><div class="line">    p-&gt;next = <span class="literal">NULL</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (head == <span class="literal">NULL</span>) &#123;</div><div class="line">      head = p;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      q-&gt;next = p;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    q = p;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  t = head;</div><div class="line">  </div><div class="line">  <span class="keyword">int</span> insert;</div><div class="line">  </div><div class="line">  <span class="built_in">printf</span>(<span class="string">"Enter insertNumber: "</span>);</div><div class="line">  <span class="built_in">scanf</span>(<span class="string">"%d"</span>, &amp;insert);</div><div class="line">  </div><div class="line">  <span class="keyword">while</span> (t != <span class="literal">NULL</span>) &#123;</div><div class="line">    </div><div class="line">    <span class="keyword">if</span> (t-&gt;next == <span class="literal">NULL</span> || t-&gt;next-&gt;data &gt; insert) &#123;</div><div class="line">      p = (<span class="keyword">struct</span> node *)<span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">struct</span> node));</div><div class="line">      p-&gt;data = insert;</div><div class="line">      p-&gt;next = t-&gt;next;</div><div class="line">      t-&gt;next = p;</div><div class="line">      <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    t = t-&gt;next;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  t = head;</div><div class="line">  <span class="keyword">while</span> (t != <span class="literal">NULL</span>) &#123;</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"%d "</span>, t-&gt;data);</div><div class="line">    t = t-&gt;next;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里有<code>malloc</code>确没有<code>free</code>，留个问题给大家吧。上边所说的是使用指针的方式来制作链表，但是有些人的指针学的并不好，别急，还有另一种方法，我们使用数组来实现，叫做模拟链表。</p>
+<h4 id="模拟链表"><a href="#模拟链表" class="headerlink" title="模拟链表"></a>模拟链表</h4><p>如何实现呢，其实原理很简单，我们使用2个数组，第一个数组存放数据，第二个数组同样的位置上存放着该数据右边数据的位置：</p>
+<figure class="highlight mathematica"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;position&gt;:  <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span></div><div class="line">data array:  <span class="number">9</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">3</span>, <span class="number">2</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">3</span>, <span class="number">4</span></div><div class="line"></div><div class="line">&lt;position&gt; : <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">10</span></div><div class="line">right array: <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">0</span></div></pre></td></tr></table></figure>
+<p>不难理解，如果这个时候我们希望插入一个6到第三个位置该怎么办呢，只需要将数据6放入data array[10]的位置，然后将right array[3] 的值改为10，并且将right array[10]的值改为4就好了。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/15/算法第二课/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/15/算法第二课/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/15/算法第三课/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    算法第三课
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/14/使用yarn制作npm包/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">使用yarn制作npm包</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/15/算法第二课/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

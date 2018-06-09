@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>如何构造Swift框架（一） | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="知识储备就像从零搭建OC项目Service支撑一样，要在一定量知识储备的情况下才可以让框架质量得到保证。 Service：项目支撑服务。每个公司的项目都会依赖一定量的组件，每一个组件作为项目的独立模块提供本身的功能供使用。一般来讲，大公司的项目均为组件化项目，一方面为了方便安排开发，另一方面方面集成管理与扩展。小公司的项目则是依赖某一个私有库作为项目的支撑。建议每一个项目都按照组件化项目的思想来从">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何构造Swift框架（一）">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/09/如何构造Swift框架（一）/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="知识储备就像从零搭建OC项目Service支撑一样，要在一定量知识储备的情况下才可以让框架质量得到保证。 Service：项目支撑服务。每个公司的项目都会依赖一定量的组件，每一个组件作为项目的独立模块提供本身的功能供使用。一般来讲，大公司的项目均为组件化项目，一方面为了方便安排开发，另一方面方面集成管理与扩展。小公司的项目则是依赖某一个私有库作为项目的支撑。建议每一个项目都按照组件化项目的思想来从">
+<meta property="og:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+<meta property="og:updated_time" content="2016-10-13T02:21:14.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何构造Swift框架（一）">
+<meta name="twitter:description" content="知识储备就像从零搭建OC项目Service支撑一样，要在一定量知识储备的情况下才可以让框架质量得到保证。 Service：项目支撑服务。每个公司的项目都会依赖一定量的组件，每一个组件作为项目的独立模块提供本身的功能供使用。一般来讲，大公司的项目均为组件化项目，一方面为了方便安排开发，另一方面方面集成管理与扩展。小公司的项目则是依赖某一个私有库作为项目的支撑。建议每一个项目都按照组件化项目的思想来从">
+<meta name="twitter:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?227e5d8d0caa5ecfb18870a04cf079c9";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">dylan</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App &amp; Web &amp; Server Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <a id="follow" target="_blank" href="https://github.com/WildDylan/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                6
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-如何构造Swift框架（一）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            如何构造Swift框架（一）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/09/如何构造Swift框架（一）/">
+            <time datetime="2016-10-09T10:56:43.000Z" itemprop="datePublished">2016-10-09</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="知识储备"><a href="#知识储备" class="headerlink" title="知识储备"></a>知识储备</h4><p>就像从零搭建OC项目<code>Service</code>支撑一样，要在一定量知识储备的情况下才可以让框架质量得到保证。 <code>Service</code>：项目支撑服务。每个公司的项目都会依赖一定量的组件，每一个组件作为项目的独立模块提供本身的功能供使用。一般来讲，大公司的项目均为组件化项目，一方面为了方便安排开发，另一方面方面集成管理与扩展。小公司的项目则是依赖某一个私有库作为项目的支撑。建议每一个项目都按照组件化项目的思想来从零构造，便于以后核心服务代码抽出进行组件化拆分。</p>
+<h6 id="Swift知识储备与框架需求"><a href="#Swift知识储备与框架需求" class="headerlink" title="Swift知识储备与框架需求"></a>Swift知识储备与框架需求</h6><p>知识储备即熟悉Swift编码思想，基础知识，进阶知识与细节知识，这里不做赘述。编码能力不能做衡量，即便知识储备不够，也可以慢慢的学习。给出的建议是：多阅读源码，不是大型开源项目的源码，而是小而精的功能性项目源码。</p>
+<a id="more"></a>
+<p>框架需求：按照开发步骤</p>
+<ul>
+<li>[ ] 环境管理 ModeSwitch</li>
+</ul>
+<p>控制当前环境，开发，预发，正式</p>
+<ul>
+<li>[ ] 日志模块-基础日志 Console </li>
+</ul>
+<p>完成基础日志模块，日志打印即可</p>
+<ul>
+<li>[ ] 功能扩展 Foundation</li>
+</ul>
+<p>Foundation常用的扩展</p>
+<ul>
+<li>[ ] 界面扩展 UIKit</li>
+</ul>
+<p>UIKit常用的扩展</p>
+<ul>
+<li>[ ] 权限服务 Permission</li>
+</ul>
+<p>获得应用程序权限</p>
+<ul>
+<li>[ ] 组件处理/链接模块 Plug-in</li>
+</ul>
+<p>组件化方案，组件加载，组件衔接（Router）</p>
+<ul>
+<li>[ ] 数据模块 DataBase</li>
+</ul>
+<p>数据持久层，暂定使用数据库</p>
+<ul>
+<li>[ ] 网络模块 Network</li>
+</ul>
+<p>网络层，网络请求，缓存控制，图片缓存等</p>
+<ul>
+<li>[ ] 日志模块-日志上报 Console </li>
+</ul>
+<p>完成日志上报功能（一般为奔溃上报）</p>
+<ul>
+<li>[ ] 推送服务 Push</li>
+</ul>
+<p>远程推送与本地推送服务</p>
+<ul>
+<li>[ ] 位置服务 Location</li>
+</ul>
+<p>位置获取服务</p>
+<ul>
+<li>[ ] 数据收集服务 Monitor</li>
+</ul>
+<p>数据打点与用户信息上报等</p>
+<h4 id="规范、知识-（仅了解基础的开发者阅读-lt-知识回顾-gt-）"><a href="#规范、知识-（仅了解基础的开发者阅读-lt-知识回顾-gt-）" class="headerlink" title="规范、知识 （仅了解基础的开发者阅读&lt;知识回顾&gt;）"></a>规范、知识 （仅了解基础的开发者阅读&lt;知识回顾&gt;）</h4><p>别急着入手写代码，先制定一系列的规范，了解一些知识。</p>
+<h6 id="规范"><a href="#规范" class="headerlink" title="规范"></a>规范</h6><p>Swift版本：3.0</p>
+<p>Xcode版本：8.0+</p>
+<p>支撑版本：iOS 8.0+</p>
+<p>缩进： 2</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/TabWith2" alt=""></p>
+<p>单例写法与命名规范：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/sharedinstance" alt=""></p>
+<p> 闭包预定义：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-09%20%E4%B8%8B%E5%8D%881.34.36.png" alt=""></p>
+<p>函数参数与规范：</p>
+<p>使用 <code>_</code>来忽略参数描述，使用<code>@discardableResult</code>来标记该函数可以忽略返回值，尽量不要使用关键字。尽量避免函数复杂程度（不要写内部函数等）。命名明确，可选参数要写默认值。</p>
+<p>注释规范：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// MARK: Initializing</span></div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// Returns a matched view controller from a specified URL.</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">/// - parameter url: The URL to find view controllers.</span></div><div class="line"><span class="comment">/// - returns: A match view controller or `nil` if not matched.</span></div></pre></td></tr></table></figure>
+<p>MARK、TODO等使用<code>//</code>开头，默认注释使用<code>///</code>开头。</p>
+<blockquote>
+<p>好的规范可以提高代码的可读性与统一性</p>
+</blockquote>
+<p>上边只是一些简单的规范。还有很多好的建议，我们慢慢聊。</p>
+<h6 id="知识"><a href="#知识" class="headerlink" title="知识"></a>知识</h6><ol>
+<li>空值合并</li>
+</ol>
+<p><code>a ?? b</code> 中的 <code>??</code> 就是是空值合并运算符，会对 <code>a</code> 进行判断，如果不为 <code>nil</code> 则解包，否则就返回 <code>b</code> 。使用的时候有以下两点要求：</p>
+<ul>
+<li>a 必须是 optional 的</li>
+<li>b 必须和 a 类型一致</li>
+</ul>
+<p>当然如果你觉得这样可读性不高，我们可以自定义运算符来实现</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">infix</span> <span class="keyword">operator</span> |-&gt;| &#123;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> |-&gt;|&lt;T&gt; <span class="params">(<span class="keyword">left</span>: T?, <span class="keyword">right</span>: T)</span></span> -&gt;<span class="type">T</span> &#123;</div><div class="line">  <span class="keyword">if</span> <span class="keyword">let</span> l = <span class="keyword">left</span> &#123;</div><div class="line">    <span class="keyword">return</span> l</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">return</span> <span class="keyword">right</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> a: <span class="type">String</span>?</div><div class="line"><span class="keyword">var</span> b = <span class="string">"Hello world!"</span></div><div class="line"><span class="keyword">var</span> <span class="built_in">c</span> = a |-&gt;| b</div></pre></td></tr></table></figure>
+<ol>
+<li>关于字符串</li>
+</ol>
+<p>String传递的时候会进行拷贝，NSString通常为引用，使用<code>countElements</code>计算String数量与同样NSString.length计算的结果可能不同，因为 <code>length</code> 利用的是 UTF-16 类型的值，而不是 Unicode 字符。比如 emoji 表情加进去之后，UTF-16 算的结果是2，而 Unicode 的计算结果是1。</p>
+<ol>
+<li>数组</li>
+</ol>
+<p>除了普通的初始化方法，我们可以通过 <code>init(count: Int, repeatedValue: T)</code> 来初始化一个数组并填充上重复的值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// [0.0, 0.0, 0.0]</span></div><div class="line"><span class="keyword">var</span> threeDoubles = [<span class="type">Double</span>](repeating:<span class="number">0.0</span>, <span class="built_in">count</span>:<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>按某种规则获得新数组，使用map方法</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oldArray = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>]</div><div class="line"><span class="keyword">var</span> newArray = oldArray.<span class="built_in">map</span> &#123; (money: <span class="type">Int</span>) <span class="keyword">in</span></div><div class="line">  <span class="string">"￥\(money)"</span></div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(newArray)</div></pre></td></tr></table></figure>
+<p>当然也可以简写</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> newArray = oldArray.<span class="built_in">map</span>(&#123; <span class="string">"￥\($0)"</span> &#125;)</div></pre></td></tr></table></figure>
+<p>数组过滤：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oldArray = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">45</span>, <span class="number">32</span>]</div><div class="line"><span class="keyword">var</span> filteredArray : <span class="type">Array</span>&lt;<span class="type">Int</span>&gt; = []</div><div class="line"><span class="keyword">for</span> money <span class="keyword">in</span> oldArray &#123;</div><div class="line">  <span class="keyword">if</span> (money &gt; <span class="number">30</span>) &#123;</div><div class="line">    filteredArray += [money]</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"><span class="built_in">print</span>(filteredArray)</div></pre></td></tr></table></figure>
+<p>不过这个方法看起来很笨重，我们使用新方法</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> filtered = oldArray.<span class="built_in">filter</span> &#123;</div><div class="line">  <span class="keyword">return</span> $<span class="number">0</span> &gt; <span class="number">30</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>计算数组的和</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> array: <span class="type">Array</span>&lt;<span class="type">Int</span>&gt; = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>]</div><div class="line"><span class="keyword">var</span> result = array.<span class="built_in">reduce</span>(<span class="number">0</span>, +)</div></pre></td></tr></table></figure>
+<ol>
+<li>解包技巧：</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(<span class="number">_</span> num: Int?)</span></span> -&gt;<span class="type">Int</span>? &#123;</div><div class="line">  <span class="keyword">if</span> <span class="keyword">let</span> n = num &#123;</div><div class="line">    <span class="keyword">return</span> n + <span class="number">1</span></div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">add(<span class="number">1</span>)</div><div class="line">add(<span class="literal">nil</span>)</div><div class="line"></div><div class="line"><span class="comment">// -&gt; Map</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">madd</span><span class="params">(<span class="number">_</span> num: Int?)</span></span> -&gt;<span class="type">Int</span>? &#123;</div><div class="line">  <span class="keyword">return</span> num.<span class="built_in">map</span> &#123;n <span class="keyword">in</span> n + <span class="number">1</span>&#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">madd(<span class="number">1</span>)</div><div class="line">madd(<span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<p>字符串也可以进行容错</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">madd</span><span class="params">(<span class="number">_</span> s: String?)</span></span> -&gt;<span class="type">String</span> &#123;</div><div class="line">  <span class="keyword">return</span> s.<span class="built_in">map</span>&#123;</div><div class="line">    sss <span class="keyword">in</span> <span class="string">"Hello \(sss)!"</span></div><div class="line">  &#125; ?? <span class="string">"default value"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line">madd(<span class="string">"c"</span>)</div><div class="line">madd(<span class="literal">nil</span>)</div></pre></td></tr></table></figure>
+<ol>
+<li>Switch中巧用where</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> point = (<span class="number">1</span>, -<span class="number">1</span>)</div><div class="line"></div><div class="line"><span class="keyword">switch</span> point &#123;</div><div class="line"><span class="keyword">case</span> <span class="keyword">let</span> (x, y) <span class="keyword">where</span> x == y:</div><div class="line">  <span class="built_in">print</span>(<span class="string">"1"</span>)</div><div class="line">  <span class="keyword">break</span></div><div class="line"><span class="keyword">case</span> <span class="keyword">let</span> (x, y) <span class="keyword">where</span> x == -y:</div><div class="line">  <span class="built_in">print</span>(<span class="string">"2"</span>)</div><div class="line">  <span class="keyword">break</span></div><div class="line"><span class="keyword">default</span>:</div><div class="line">  <span class="keyword">break</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>fallthrough - 在 switch 中，将代码引至下一个 case 而不是默认的跳出 switch。不过要注意的是，fallthrough不能用在定义了变量的case内，只能用在直接的判断中</p>
+</blockquote>
+<ol>
+<li>控制流语法大全</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// for loop (array)</span></div><div class="line"><span class="keyword">let</span> myArray = [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">5</span>]</div><div class="line"><span class="keyword">for</span> value <span class="keyword">in</span> myArray &#123;</div><div class="line">    <span class="keyword">if</span> value == <span class="number">1</span> &#123;</div><div class="line">        <span class="built_in">println</span>(<span class="string">"One!"</span>)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="built_in">println</span>(<span class="string">"Not one!"</span>)</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// for loop (dictionary)</span></div><div class="line"><span class="keyword">var</span> dict = [</div><div class="line">    <span class="string">"name"</span>: <span class="string">"Steve Jobs"</span>,</div><div class="line">    <span class="string">"title"</span>: <span class="string">"CEO"</span>,</div><div class="line">    <span class="string">"company"</span>: <span class="string">"Apple"</span></div><div class="line">]</div><div class="line"><span class="keyword">for</span> (key, value) <span class="keyword">in</span> dict &#123;</div><div class="line">    <span class="built_in">println</span>(<span class="string">"\(key): \(value)"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// for loop (range)</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> -<span class="number">1</span>...<span class="number">1</span> &#123; <span class="comment">// [-1, 0, 1]</span></div><div class="line">    <span class="built_in">println</span>(i)</div><div class="line">&#125;</div><div class="line"><span class="comment">// use .. to exclude the last number</span></div><div class="line"></div><div class="line"><span class="comment">// for loop (ignoring the current value of the range on each iteration of the loop)</span></div><div class="line"><span class="keyword">for</span> <span class="number">_</span> <span class="keyword">in</span> <span class="number">1</span>...<span class="number">3</span> &#123;</div><div class="line">    <span class="comment">// Do something three times.</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// while loop</span></div><div class="line"><span class="keyword">var</span> i = <span class="number">1</span></div><div class="line"><span class="keyword">while</span> i &lt; <span class="number">1000</span> &#123;</div><div class="line">    i *= <span class="number">2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// do-while loop</span></div><div class="line"><span class="keyword">do</span> &#123;</div><div class="line">    <span class="built_in">println</span>(<span class="string">"hello"</span>)</div><div class="line">&#125; <span class="keyword">while</span> <span class="number">1</span> == <span class="number">2</span></div><div class="line"></div><div class="line"><span class="comment">// Switch</span></div><div class="line"><span class="keyword">let</span> vegetable = <span class="string">"red pepper"</span></div><div class="line"><span class="keyword">switch</span> vegetable &#123;</div><div class="line"><span class="keyword">case</span> <span class="string">"celery"</span>:</div><div class="line">    <span class="keyword">let</span> vegetableComment = <span class="string">"Add some raisins and make ants on a log."</span></div><div class="line"><span class="keyword">case</span> <span class="string">"cucumber"</span>, <span class="string">"watercress"</span>:</div><div class="line">    <span class="keyword">let</span> vegetableComment = <span class="string">"That would make a good tea sandwich."</span></div><div class="line"><span class="keyword">case</span> <span class="keyword">let</span> x <span class="keyword">where</span> x.hasSuffix(<span class="string">"pepper"</span>):</div><div class="line">    <span class="keyword">let</span> vegetableComment = <span class="string">"Is it a spicy \(x)?"</span></div><div class="line"><span class="keyword">default</span>: <span class="comment">// required (in order to cover all possible input)</span></div><div class="line">    <span class="keyword">let</span> vegetableComment = <span class="string">"Everything tastes good in soup."</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Switch to validate plist content</span></div><div class="line"><span class="keyword">let</span> city:<span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">AnyObject</span>&gt; = [</div><div class="line">    <span class="string">"name"</span> : <span class="string">"Qingdao"</span>,</div><div class="line">    <span class="string">"population"</span> : <span class="number">2_721_000</span>,</div><div class="line">    <span class="string">"abbr"</span> : <span class="string">"QD"</span></div><div class="line">]</div><div class="line"><span class="keyword">switch</span> (city[<span class="string">"name"</span>], city[<span class="string">"population"</span>], city[<span class="string">"abbr"</span>]) &#123;</div><div class="line">    <span class="keyword">case</span> (.<span class="type">Some</span>(<span class="keyword">let</span> cityName <span class="keyword">as</span> <span class="type">NSString</span>),</div><div class="line">        .<span class="type">Some</span>(<span class="keyword">let</span> pop <span class="keyword">as</span> <span class="type">NSNumber</span>),</div><div class="line">        .<span class="type">Some</span>(<span class="keyword">let</span> abbr <span class="keyword">as</span> <span class="type">NSString</span>))</div><div class="line">    <span class="keyword">where</span> abbr.length == <span class="number">2</span>:</div><div class="line">        <span class="built_in">println</span>(<span class="string">"City Name: \(cityName) | Abbr.:\(abbr) Population: \(pop)"</span>)</div><div class="line">    <span class="keyword">default</span>:</div><div class="line">        <span class="built_in">println</span>(<span class="string">"Not a valid city"</span>)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>函数</li>
+</ol>
+<p>可选的参数请提供默认值</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(<span class="number">_</span> a: Int = <span class="number">1</span>, <span class="number">_</span> b: Int = <span class="number">2</span>)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> a + b</div><div class="line">&#125;</div><div class="line"></div><div class="line">add(<span class="number">3</span>) <span class="comment">// 3 + 2</span></div></pre></td></tr></table></figure>
+<p>可变参数</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(nums: Int ...)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> nums.<span class="built_in">reduce</span>(<span class="number">0</span>, +)</div><div class="line">&#125;</div><div class="line"></div><div class="line">add(nums: <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>) <span class="comment">// 15</span></div></pre></td></tr></table></figure>
+<p>如果不止一个参数，需要把可变参数放在最后，否则会报错。</p>
+<p>通过函数修改原始值需要 <code>inout</code> ：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">( v:<span class="keyword">inout</span> Int)</span></span> &#123;</div><div class="line">  v = v + <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="number">1</span></div><div class="line"></div><div class="line">add(v: &amp;a)</div></pre></td></tr></table></figure>
+<p>泛型函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">value</span>&lt;T&gt;<span class="params">( value1:<span class="keyword">inout</span> T, oldValue: <span class="keyword">inout</span> T)</span></span> &#123;</div><div class="line">  <span class="keyword">let</span> temp = value1</div><div class="line">  value1 = oldValue</div><div class="line">  oldValue = temp</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> n1 = <span class="string">"mr r"</span></div><div class="line"><span class="keyword">var</span> n2 = <span class="string">"ms s"</span></div><div class="line"></div><div class="line">value(value1: &amp;n1, oldValue: &amp;n2)</div><div class="line"></div><div class="line"><span class="built_in">print</span>(n1)</div><div class="line"><span class="built_in">print</span>(n2)</div><div class="line"></div><div class="line"><span class="keyword">var</span> i1 = <span class="number">1</span></div><div class="line"><span class="keyword">var</span> i2 = <span class="number">2</span></div><div class="line"></div><div class="line">value(value1: &amp;i1, oldValue: &amp;i2)</div><div class="line"></div><div class="line"><span class="built_in">print</span>(i1)</div><div class="line"><span class="built_in">print</span>(i2)</div></pre></td></tr></table></figure>
+<p>变量：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">functionAdd</span><span class="params">(<span class="number">_</span> a: Int)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> a + <span class="number">2</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> funcalias = functionAdd</div><div class="line"></div><div class="line">funcalias(<span class="number">2</span>)</div></pre></td></tr></table></figure>
+<p>函数既然是类型的一种，那么显然也是可以作为参数传递的：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">addFunc</span><span class="params">(<span class="number">_</span> a: Int)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> a + <span class="number">3</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">withFunc</span><span class="params">(addingFunc: <span class="params">(Int)</span></span></span> -&gt;<span class="type">Int</span>, a: <span class="type">Int</span>) &#123;</div><div class="line">  <span class="built_in">print</span>(<span class="string">"R: \(addingFunc(a))"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line">withFunc(addingFunc: addFunc, a: <span class="number">4</span>) <span class="comment">// 7</span></div></pre></td></tr></table></figure>
+<p>函数也是可以作为结果返回的。比如返回的值是一个参数为 Int 返回值为 Int 的函数，就是这样定义：<code>func foo() -&gt; (Int) -&gt; Int</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a: Int)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> a + <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">rev</span><span class="params">(a: Int)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> a - <span class="number">1</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">choose</span><span class="params">(a2r: Bool)</span></span> -&gt; (<span class="type">Int</span>) -&gt;<span class="type">Int</span> &#123;</div><div class="line">  <span class="keyword">return</span> a2r ? add: rev</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> functionForUse = choose(a2r: <span class="literal">false</span>)</div><div class="line">functionForUse(<span class="number">3</span>) <span class="comment">// rev   2</span></div></pre></td></tr></table></figure>
+<p>用多了会发现在一大串 <code>()-&gt;</code> 中又穿插各种 <code>()-&gt;</code> 是一个非常蛋疼的事情。我们可以用 <code>typealias</code> 定义函数别名，其功能和 OC 中的 typedef 以及 shell 中的 alias 的作用基本是一样的：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">typealias</span> handler = (<span class="type">Bool</span>, <span class="type">String</span>) -&gt;<span class="type">String</span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">requetsWithHandler</span> <span class="params">(<span class="number">_</span> completeHandler: handler)</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">  <span class="keyword">return</span> completeHandler(<span class="literal">false</span>, <span class="string">"Hello"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line">requetsWithHandler &#123; (a:<span class="type">Bool</span>, s:<span class="type">String</span>) -&gt; <span class="type">String</span> <span class="keyword">in</span></div><div class="line">  <span class="keyword">if</span> a &#123;</div><div class="line">    <span class="keyword">return</span> s</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"World!"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>函数嵌套：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">choose</span><span class="params">(a2r: Bool)</span></span> -&gt; (<span class="type">Int</span>) -&gt;<span class="type">Int</span> &#123;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(a: Int)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> a + <span class="number">1</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">rev</span><span class="params">(a: Int)</span></span> -&gt;<span class="type">Int</span> &#123;</div><div class="line">    <span class="keyword">return</span> a - <span class="number">1</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">return</span> a2r ? add: rev</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> functionForUse = choose(a2r: <span class="literal">true</span>)</div><div class="line">functionForUse(<span class="number">3</span>)</div></pre></td></tr></table></figure>
+<p>柯里化（简单提及）<a href="https://oleb.net/blog/2014/07/swift-instance-methods-curried-functions/" target="_blank" rel="external">文</a></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">add</span><span class="params">(b:Int)</span></span>(a:<span class="type">Int</span>) -&gt; <span class="type">Int</span>&#123;</div><div class="line">    <span class="keyword">return</span> a + b ;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> addOne = add(<span class="number">1</span>)</div><div class="line"><span class="keyword">let</span> addTwo = add(<span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="keyword">var</span> a = <span class="number">0</span></div><div class="line"></div><div class="line">a = addOne(a: a)    <span class="comment">// 1</span></div><div class="line">a = addTwo(a: a)    <span class="comment">// 3</span></div></pre></td></tr></table></figure>
+<ol>
+<li>闭包</li>
+</ol>
+<p>闭包的完整形态是这个样子的：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123;(parameters) -&gt; (returnType) <span class="keyword">in</span> statements&#125;</div></pre></td></tr></table></figure>
+<p>闭包有3种形态</p>
+<ol>
+<li>全局的函数都是闭包，它们有自己的名字，但是没有捕获任何值。</li>
+<li>内嵌的函数都是闭包，它们有自己的名字，而且从包含他们的函数里捕获值。</li>
+<li>闭包表达式都是闭包，它们没有自己的名字，通过轻量级的语法定义并且可以从上下文中捕获值。</li>
+</ol>
+<p>我们可以直接用 <code>$0 $1 $2</code> 这种来依次定义闭包的参数。比如 <code>sorted</code> 函数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> reversed = sorted([<span class="string">"c"</span>,<span class="string">"a"</span>,<span class="string">"d"</span>,<span class="string">"b"</span>], &#123; $<span class="number">0</span> &gt; $<span class="number">1</span> &#125;)   <span class="comment">// d c b a</span></div></pre></td></tr></table></figure>
+<p>如果闭包是函数的最后一个参数，Swift 提供了尾随闭包 (Trailing Closures) 解决这个审美问题：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 以下是不使用尾随闭包进行函数调用</span></div><div class="line">someFunc(<span class="number">0</span>, &#123;</div><div class="line">    <span class="comment">// 闭包主体部分</span></div><div class="line">&#125;)</div><div class="line"></div><div class="line"><span class="comment">// 以下是使用尾随闭包进行函数调用</span></div><div class="line">someFunc(<span class="number">0</span>) &#123;</div><div class="line">  <span class="comment">// 闭包主体部分</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用尾随，之前的函数改写为：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> reversed = sorted([<span class="string">"c"</span>,<span class="string">"a"</span>,<span class="string">"d"</span>,<span class="string">"b"</span>]) &#123; $<span class="number">0</span> &gt; $<span class="number">1</span> &#125; <span class="comment">// d c b a</span></div></pre></td></tr></table></figure>
+<p>如果除了闭包没有其他参数了，甚至可以把小括号也去掉。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> oldArray = [<span class="number">10</span>, <span class="number">20</span>, <span class="number">30</span>, <span class="number">40</span>]</div><div class="line"></div><div class="line"><span class="keyword">var</span> filteredArray = oldArray.<span class="built_in">filter</span>&#123;</div><div class="line">  <span class="keyword">return</span> $<span class="number">0</span> &gt; <span class="number">30</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> <code>closure</code> 的变形大致有以下几种形态：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="built_in">map</span>( &#123; (i: <span class="type">Int</span>) -&gt;<span class="type">Int</span> <span class="keyword">in</span> <span class="keyword">return</span> i * <span class="number">2</span> &#125; )</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="built_in">map</span>( &#123; i <span class="keyword">in</span> <span class="keyword">return</span> i * <span class="number">2</span> &#125; )</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="built_in">map</span>( &#123; i <span class="keyword">in</span> i * <span class="number">2</span> &#125; )</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="built_in">map</span>( &#123; $<span class="number">0</span> * <span class="number">2</span> &#125; )</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="built_in">map</span>() &#123; $<span class="number">0</span> * <span class="number">2</span> &#125;</div><div class="line">[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>].<span class="built_in">map</span> &#123; $<span class="number">0</span> * <span class="number">2</span> &#125;</div></pre></td></tr></table></figure>
+<p>一个活生生的例子：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> canvas = <span class="type">UIView</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: <span class="number">50</span>, height: <span class="number">50</span>))</div><div class="line">canvas.backgroundColor = <span class="type">UIColor</span>.red</div><div class="line"></div><div class="line"><span class="type">UIView</span>.animate(withDuration: <span class="number">4</span>, animations: &#123;</div><div class="line">  canvas.backgroundColor = <span class="type">UIColor</span>.blue</div><div class="line">&#125;) &#123;</div><div class="line">  <span class="built_in">print</span>(<span class="string">"Result \($0)"</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="type">PlaygroundPage</span>.current.liveView = canvas</div></pre></td></tr></table></figure>
+<p>常见形态</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 作为变量</span></div><div class="line"><span class="keyword">var</span> closureName: (parameterTypes) -&gt; (returnType)</div><div class="line"></div><div class="line"><span class="comment">// 作为可选类型的变量</span></div><div class="line"><span class="keyword">var</span> closureName: ((parameterTypes) -&gt; (returnType))?</div><div class="line"></div><div class="line"><span class="comment">// 做为一个别名</span></div><div class="line"><span class="keyword">typealias</span> closureType = (parameterTypes) -&gt; (returnType)</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数</span></div><div class="line"><span class="function"><span class="keyword">func</span><span class="params">(&#123;<span class="params">(parameterTypes)</span></span></span> -&gt; (returnType) <span class="keyword">in</span> statements&#125;)</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数</span></div><div class="line">array.<span class="built_in">sort</span>(&#123; (item1: <span class="type">Int</span>, item2: <span class="type">Int</span>) -&gt; <span class="type">Bool</span> <span class="keyword">in</span> <span class="keyword">return</span> item1 &lt; item2 &#125;)</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数 - 隐含参数类型</span></div><div class="line">array.<span class="built_in">sort</span>(&#123; (item1, item2) -&gt; <span class="type">Bool</span> <span class="keyword">in</span> <span class="keyword">return</span> item1 &lt; item2 &#125;)</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数 - 隐含返回类型</span></div><div class="line">array.<span class="built_in">sort</span>(&#123; (item1, item2) <span class="keyword">in</span> <span class="keyword">return</span> item1 &lt; item2 &#125;)</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数 - 尾随闭包</span></div><div class="line">array.<span class="built_in">sort</span> &#123; (item1, item2) <span class="keyword">in</span> <span class="keyword">return</span> item1 &lt; item2 &#125;</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数 - 通过数字表示参数</span></div><div class="line">array.<span class="built_in">sort</span> &#123; <span class="keyword">return</span> $<span class="number">0</span> &lt; $<span class="number">1</span> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数 - 尾随闭包且隐含返回类型</span></div><div class="line">array.<span class="built_in">sort</span> &#123; $<span class="number">0</span> &lt; $<span class="number">1</span> &#125;</div><div class="line"></div><div class="line"><span class="comment">// 作为函数的参数 - 引用已存在的函数</span></div><div class="line">array.<span class="built_in">sort</span>(&lt;)</div></pre></td></tr></table></figure>
+<ol>
+<li>枚举</li>
+</ol>
+<p>Swift 中的相关值有点像是 F# 中的 <a href="http://msdn.microsoft.com/en-us/library/dd233226.aspx" target="_blank" rel="external">Discriminated Unions</a>，它允许在枚举中存储额外的数据。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">BarCode</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> <span class="type">UPCA</span>(<span class="type">Int</span>, <span class="type">Int</span>)</div><div class="line">  <span class="keyword">case</span> <span class="type">QRCode</span>(<span class="type">String</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> productBar = <span class="type">BarCode</span>.<span class="type">QRCode</span>(<span class="string">"abc"</span>)</div><div class="line">productBar = .<span class="type">UPCA</span>(<span class="number">1</span>, <span class="number">2</span>)</div><div class="line"></div><div class="line"><span class="keyword">switch</span> productBar &#123;</div><div class="line"><span class="keyword">case</span> .<span class="type">UPCA</span>(<span class="keyword">let</span> a, <span class="keyword">let</span> b):</div><div class="line">  <span class="built_in">print</span>(<span class="string">"\(a) \(b)"</span>)</div><div class="line">  <span class="keyword">break</span></div><div class="line"><span class="keyword">default</span>:</div><div class="line">  <span class="keyword">break</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p><a href="http://brettbukowski.github.io/SwiftExamples/" target="_blank" rel="external">Swift代码块</a></p>
+</blockquote>
+<ol>
+<li>懒加载</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> name: <span class="type">String</span></div><div class="line">  <span class="built_in">lazy</span> <span class="keyword">var</span> greeting: <span class="type">String</span> = &#123;</div><div class="line">    [<span class="keyword">unowned</span> <span class="keyword">self</span>] <span class="keyword">in</span></div><div class="line">    <span class="keyword">return</span> <span class="string">"Hello, \(self.name)!"</span></div><div class="line">    &#125;()</div><div class="line">  </div><div class="line">  <span class="keyword">init</span>(name: <span class="type">String</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.name = name</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">var</span> p = <span class="type">Person</span>(name: <span class="string">"World!"</span>)</div><div class="line">p.greeting</div></pre></td></tr></table></figure>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">ViewController</span>: <span class="title">UIViewController</span> </span>&#123;</div><div class="line">  <span class="built_in">lazy</span> <span class="keyword">var</span> animator: <span class="type">UIDynamicAnimator</span> = &#123;</div><div class="line">    <span class="keyword">return</span> <span class="type">UIDynamicAnimator</span>(referenceView: <span class="keyword">self</span>.view)</div><div class="line">  &#125;()</div><div class="line">  </div><div class="line">  <span class="keyword">required</span> <span class="keyword">init</span>?(coder aDecoder: <span class="type">NSCoder</span>) &#123;</div><div class="line">    <span class="keyword">super</span>.<span class="keyword">init</span>(coder: aDecoder)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">viewDidLoad</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">super</span>.viewDidLoad()</div><div class="line">    </div><div class="line">    animator.addBehavior(<span class="type">UIGravityBehavior</span>())</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<ol>
+<li>其他类型</li>
+</ol>
+<ul>
+<li>Any 可以表示任何类型</li>
+<li>AnyObject 可以代表任何class类型的实例</li>
+</ul>
+<ol>
+<li>类型设计</li>
+</ol>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">enum</span> <span class="title">Github</span> </span>&#123;</div><div class="line">   <span class="keyword">case</span> <span class="type">Zen</span></div><div class="line">   <span class="keyword">case</span> <span class="type">UserProfile</span>(<span class="type">String</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">Path</span> </span>&#123;</div><div class="line">   <span class="keyword">var</span> path : <span class="type">String</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Github</span> : <span class="title">Path</span> </span>&#123;</div><div class="line">   <span class="keyword">var</span> path: <span class="type">String</span> &#123;</div><div class="line">       <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">       <span class="keyword">case</span> .<span class="type">Zen</span>: <span class="keyword">return</span> <span class="string">"/zen"</span></div><div class="line">       <span class="keyword">case</span> .<span class="type">UserProfile</span>(<span class="keyword">let</span> name): <span class="keyword">return</span> <span class="string">"/users/\(name)"</span></div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">let</span> sample = <span class="type">Github</span>.<span class="type">UserProfile</span>(<span class="string">"ashfurrow"</span>)</div><div class="line"></div><div class="line"><span class="built_in">println</span>(sample.path) <span class="comment">// Prints "/users/ashfurrow"</span></div><div class="line"></div><div class="line"><span class="comment">// So far, so good</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">protocol</span> <span class="title">Moya</span> : <span class="title">Path</span> </span>&#123;</div><div class="line">   <span class="keyword">var</span> baseURL: <span class="type">NSURL</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">   <span class="keyword">var</span> sampleData: <span class="type">String</span> &#123; <span class="keyword">get</span> &#125; <span class="comment">// Probably JSON would be better than AnyObject</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Github</span> : <span class="title">Moya</span> </span>&#123;</div><div class="line">   <span class="keyword">var</span> baseURL: <span class="type">NSURL</span> &#123; <span class="keyword">return</span> <span class="type">NSURL</span>(string: <span class="string">"https://api.github.com"</span>)! &#125;</div><div class="line">   <span class="keyword">var</span> sampleData: <span class="type">String</span> &#123;</div><div class="line">       <span class="keyword">switch</span> <span class="keyword">self</span> &#123;</div><div class="line">       <span class="keyword">case</span> .<span class="type">Zen</span>: <span class="keyword">return</span> <span class="string">"Half measures are as bad as nothing at all."</span></div><div class="line">       <span class="keyword">case</span> .<span class="type">UserProfile</span>(<span class="keyword">let</span> name): <span class="keyword">return</span> <span class="string">"&#123;login: \"\(name)\", id: 100&#125;"</span></div><div class="line">       &#125;</div><div class="line">   &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">func</span> <span class="title">url</span><span class="params">(route: Moya)</span></span> -&gt; <span class="type">NSURL</span> &#123;</div><div class="line">   <span class="keyword">return</span> route.baseURL.<span class="type">URLByAppendingPathComponent</span>(route.path)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">println</span>(url(sample)) <span class="comment">// prints https://api.github.com/users/ashfurrow</span></div></pre></td></tr></table></figure>
+<blockquote>
+<p>插曲：<a href="http://www.raywenderlich.com/94302/implement-circular-image-loader-animation-cashapelayer" target="_blank" rel="external">实践一下写个动画</a></p>
+</blockquote>
+<p>大部分知识块儿内容来自<a href="https://segmentfault.com/u/callmewhy" target="_blank" rel="external">这个粗心的开发者，不过我很喜欢</a></p>
+<p>熟悉并回顾了这些杂乱的东西之后，都跃跃欲试了吧？下篇文章开始正式的写代码。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/09/如何构造Swift框架（一）/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/11/如何构造Swift框架（二）/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    如何构造Swift框架（二）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/09/23/IAP/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">IAP</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/13/如何构造Swift框架（四）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（四）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/13/如何构造Swift框架（四）/" class="title">如何构造Swift框架（四）</a></p>
+                            <p class="item-date"><time datetime="2016-10-13T03:31:43.000Z" itemprop="datePublished">2016-10-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/11/如何构造Swift框架（三）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（三）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/11/如何构造Swift框架（三）/" class="title">如何构造Swift框架（三）</a></p>
+                            <p class="item-date"><time datetime="2016-10-11T04:16:46.000Z" itemprop="datePublished">2016-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/11/如何构造Swift框架（二）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（二）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/11/如何构造Swift框架（二）/" class="title">如何构造Swift框架（二）</a></p>
+                            <p class="item-date"><time datetime="2016-10-11T03:49:34.000Z" itemprop="datePublished">2016-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/09/如何构造Swift框架（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/09/如何构造Swift框架（一）/" class="title">如何构造Swift框架（一）</a></p>
+                            <p class="item-date"><time datetime="2016-10-09T10:56:43.000Z" itemprop="datePublished">2016-10-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/23/IAP/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.sy.kuaiyong.com/kuaiyong/iosnews/2016-01-25/16b5aedc1c332472d0c9d3b1a05ac8a5.jpg)" alt="IAP" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/23/IAP/" class="title">IAP</a></p>
+                            <p class="item-date"><time datetime="2016-09-23T02:08:53.000Z" itemprop="datePublished">2016-09-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2016 dylan
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2116265"></script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

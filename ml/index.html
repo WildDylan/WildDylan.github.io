@@ -1,0 +1,369 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Machine-Learning</title>
+  <meta name="author" content="dylan">
+
+  
+  <meta name="description" content="A place of Machine-Learning">
+  
+  
+
+  <link rel="alternate" href="/atom.xml" title="Machine-Learning" type="application/atom+xml">
+  <link rel="stylesheet" href="/ml/css/style.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8/jquery.min.js"></script>
+  
+</head>
+
+<body>
+  <header id="header" class="inner"><nav>
+  <ul>
+    
+      <li><a href="">Machine-Learning</a></li>
+    
+  </ul>
+</nav></header>
+  <div id="content" class="inner">
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"><a href="/ml/2017/02/08/机器学习（支持向量机）/">机器学习（支持向量机）</a></h1>
+  
+
+    <time datetime="2017-02-08T12:00:00.000Z">
+  <span class="day">8</span><span class="month">Feb</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="支持向量机"><a href="#支持向量机" class="headerlink" title="支持向量机"></a>支持向量机</h2><p>===</p>
+<p>支持向量机（<em>Support Vector Machines, SVM</em>）。在介绍SVM之前，先解释几个概念：</p>
+<ul>
+<li>线性可分：假设一个平面中有若凡个圆形与三角形，可以使用一条直线将两组数据点分开，那么叫做线性可分。</li>
+<li>分隔超平面：上面提到的将数据集分开的直线，称为分隔超平面。</li>
+<li>超平面：在上面的例子中，是一个平面，那如果是一个三维的，那么用来分割点的就是一个平面，如果是N维的的？这个玩意就被叫做超平面，也就是分类的决策边界。</li>
+<li>间隔：数据点到分隔面的距离被称为间隔。一般情况下，我们希望间隔尽可能的大，这是因为如果我们犯错或者在有限的数据集上训练分类器的话，我们希望分类器尽可能健壮。</li>
+<li>支持向量：离分隔超平面最近的那些点。</li>
+</ul>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"><a href="/ml/2017/01/18/机器学习（logistic回归）/">机器学习（logistic回归）</a></h1>
+  
+
+    <time datetime="2017-01-18T12:40:36.000Z">
+  <span class="day">18</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="Logistic回归"><a href="#Logistic回归" class="headerlink" title="Logistic回归"></a>Logistic回归</h2><p>===</p>
+<p>这会是激动人心的一章，因为我们将首次接触到最优化算法。假设现在有一些数据点，我们用一条直线对这些点进行拟合（该线称为最佳拟合直线），这个拟合过程就称作回归。利用Logistic回归进行分类的主要思想是：根据现有数据对分类边界线建立回归公式，以此进行分类。这里的『回归』一词源于最佳拟合，表示要找到最佳拟合参数集，其背后的数学分析将在下一部分介绍。训练分类器时的做法就是寻找最佳拟合参数，使用的是最优化算法。</p>
+<ul>
+<li>收集数据：采用任意方法收集数据</li>
+<li>准备数据：由于需要进行距离运算，因此要求数据类型为数值型，另外，结构化数据格式最佳</li>
+<li>分析数据：采用任意方法对数据进行分析</li>
+<li>训练算法：大部分时间将用于训练，训练的目的是为了找到最佳的分类回归系数</li>
+<li>测试算法：一旦训练步骤完成，分类将会很快</li>
+<li>使用算法：首先，我们需要输入一些数据，并将其转化为对应的结构化数值；接着，基于训练好的回归系数就可以对这些数值进行简单的回归计算，判定他们属于哪个类别；最后，我们就可以在输出的类别上做一些其他的分析工作</li>
+</ul>
+<h4 id="基于Logistic回归和Sigmoid函数的分类"><a href="#基于Logistic回归和Sigmoid函数的分类" class="headerlink" title="基于Logistic回归和Sigmoid函数的分类"></a>基于Logistic回归和Sigmoid函数的分类</h4><blockquote>
+<p>优点：计算代价不高，易于理解和实现<br>缺点：容易欠拟合，分类精度可能不高<br>适用数据类型：数值型和标称型</p>
+</blockquote>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"><a href="/ml/2017/01/17/机器学习（朴素贝叶斯，基于概率论的分类方法）/">机器学习（朴素贝叶斯，基于概率论的分类方法）</a></h1>
+  
+
+    <time datetime="2017-01-17T13:41:56.000Z">
+  <span class="day">17</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="朴素贝叶斯-基于概率论的分类方法"><a href="#朴素贝叶斯-基于概率论的分类方法" class="headerlink" title="朴素贝叶斯-基于概率论的分类方法"></a>朴素贝叶斯-基于概率论的分类方法</h2><p>===</p>
+<h4 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h4><p>之前我们分别使用<code>k-近邻算法</code>、<code>决策树</code>来做出类别区分，给出<code>该数据具体属于哪一类</code>这类问题的明确答案，不过，分类器有时候会产生错误的结果，这时候可以要求分类器给出一个最优的类别猜测结果，同时给出这个猜测的概率估计值。</p>
+<p><code>概率论</code>是许多机器学习算法的基础，在学习<code>决策树</code>算法的时候，我们简单的接触了一下特征值的概率，先得到特征值的频次，然后除以数据集的实例总数。接下来我们会先学习一个简单的概率分类器，然后给出一些假设来学习文题<code>朴素贝叶斯</code>分类器。</p>
+<h6 id="基于贝叶斯决策理论的分类方法"><a href="#基于贝叶斯决策理论的分类方法" class="headerlink" title="基于贝叶斯决策理论的分类方法"></a>基于贝叶斯决策理论的分类方法</h6><blockquote>
+<p>优点：在数据少的情况下仍然有效，可以处理多类别问题<br>缺点：对于输入数据的准备方式较为敏感<br>适用数据类型：标称型</p>
+</blockquote>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"><a href="/ml/2017/01/16/机器学习（决策树）/">机器学习（决策树）</a></h1>
+  
+
+    <time datetime="2017-01-16T13:48:50.000Z">
+  <span class="day">16</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h2><p>===</p>
+<p>决策树简介</p>
+<p>你是否玩过二十个问题的游戏，游戏的规则很简单：参与游戏的一方在脑海中想象某个事物，其他参与者者向他提问题，只允许提20个问题，问题的答案也只能用对或错回答。问问题的人通过推断分解，逐步缩小待猜测事物的范围。<br><code>决策树</code>的工作原理与20个问题类似，用户输入一系列的数据，然后给出游戏的答案。我们经常使用决策树处理分类问题，近来的调查表明，决策树也是最经常使用的数据挖掘算法。它之所以如此流行，一个很重要的原因就是不需要了解机器学习的知识，就能搞明白决策树是如何工作的。</p>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"><a href="/ml/2017/01/16/机器学习（k-近邻算法）/">机器学习（k-近邻算法）</a></h1>
+  
+
+    <time datetime="2017-01-16T13:48:29.000Z">
+  <span class="day">16</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h2 id="k-近邻算法"><a href="#k-近邻算法" class="headerlink" title="k-近邻算法"></a>k-近邻算法</h2><p>===</p>
+<p>先来一个简单的例子，我们如何来区分动作类电影与爱情类电影呢？动作片中存在很多的打斗镜头，爱情片中可能更多的是亲吻镜头，所以我们姑且通过这两种镜头的数量来预测这部电影的主题。简单的说，<code>k-近邻算法</code>采用了测量不同特征值之间的距离方法进行分类。</p>
+<blockquote>
+<p>优点：精度高、对异常值不敏感、无数据输入假定<br>缺点：计算复杂度高、控件复杂度高<br>适用数据范围：数值型和标称型</p>
+</blockquote>
+<p>首先我们来理解它的工作原理：</p>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+  <article class="post">
+  
+    <div class="gallery">
+  <div class="photoset">
+    
+      <img src="">
+    
+  </div>
+  <div class="control">
+    <div class="prev"></div>
+    <div class="next"></div>
+  </div>
+</div>
+  
+  <header>
+    
+  
+    <h1 class="title"><a href="/ml/2017/01/16/机器学习（简述）/">机器学习（简述）</a></h1>
+  
+
+    <time datetime="2017-01-16T13:48:01.000Z">
+  <span class="day">16</span><span class="month">Jan</span>
+</time>
+  </header>
+  <div class="entry-content">
+    
+      <h1 id="何谓机器学习"><a href="#何谓机器学习" class="headerlink" title="何谓机器学习"></a>何谓机器学习</h1><p>机器学习，就是把无序的数据，转换成有用的信息。</p>
+<hr>
+<h4 id="关键术语"><a href="#关键术语" class="headerlink" title="关键术语"></a>关键术语</h4><p>在入门机器学习之前，我们先了解一些简单的术语：</p>
+<ul>
+<li>特征：也称作<code>属性</code></li>
+<li>训练集：训练机器大脑的样本，包含特征与<code>目标变量</code></li>
+<li>测试数据：用于测试机器学习算法的效果，测试数据通常不包含<code>目标变量</code>，目标变量有机器学习算法得出</li>
+<li>精确度：比较预测结果与实际结果</li>
+</ul>
+    
+    
+    <footer class="meta">
+      
+      
+  <div class="tags">
+<a href="/ml/tags/机器学习/">机器学习</a></div>
+
+      
+    </footer>
+    
+  </div>
+  
+</article>
+
+
+<nav id="pagenavi">
+  
+  
+  <div class="clearfix"></div>
+</nav></div>
+  <footer id="footer" class="inner"><div class="social alignright">
+  
+    <a class="facebook" href="http://www.facebook.com/Dylanccccc" title="Facebook">Facebook</a>
+  
+  
+  
+    <a class="twitter" href="http://twitter.com/Dylanccccc" title="Twitter">Twitter</a>
+  
+  
+    <a class="github" href="https://github.com/WildDylan" title="GitHub">GitHub</a>
+  
+  <a class="rss" href="/atom.xml" title="RSS">RSS</a>
+</div>
+<p>
+  
+  &copy; 2017 dylan
+  
+</p>
+<div class="clearfix"></div></footer>
+  <script src="/ml/js/jquery.imagesloaded.min.js"></script>
+<script src="/ml/js/gallery.js"></script>
+
+
+
+
+<link rel="stylesheet" href="/ml/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/ml/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+<div id="phasebeam">
+  <canvas></canvas>
+  <canvas></canvas>
+  <canvas></canvas>
+</div>
+<script src="/ml/js/phasebeam.js"></script>
+</body>
+</html>

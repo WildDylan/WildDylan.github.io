@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Springmvc学习笔记(16) 异常处理器 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../springmvc学习笔记(15)-数据回显/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../springmvc学习笔记(17)-上传图片/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#_1">异常处理思路</a></li>
+        <li class="main "><a href="#_2">自定义异常类</a></li>
+        <li class="main "><a href="#_3">全局异常处理器</a></li>
+        <li class="main "><a href="#_4">错误页面</a></li>
+        <li class="main "><a href="#springmvcxml">在springmvc.xml配置全局异常处理器</a></li>
+        <li class="main "><a href="#_5">异常测试</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# springmvc学习笔记(16)-异常处理器</p>
+<p>标签： springmvc</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#异常处理思路">异常处理思路</a></li>
+<li><a href="#自定义异常类">自定义异常类</a></li>
+<li><a href="#全局异常处理器">全局异常处理器</a></li>
+<li><a href="#错误页面">错误页面</a></li>
+<li><a href="#在springmvcxml配置全局异常处理器">在springmvc.xml配置全局异常处理器</a></li>
+<li><a href="#异常测试">异常测试</a></li>
+</ul>
+<hr />
+<p>本文主要介绍springmvc中异常处理的思路，并展示如何自定义异常处理类以及全局异常处理器的配置</p>
+<h2 id="_1">异常处理思路</h2>
+<p>系统中异常包括两类：</p>
+<ul>
+<li>预期异常</li>
+<li>运行时异常RuntimeException</li>
+</ul>
+<p>前者通过捕获异常从而获取异常信息，后者主要通过规范代码开发、测试通过手段减少运行时异常的发生。</p>
+<p>系统的dao、service、controller出现都通过throws Exception向上抛出，最后由springmvc前端控制器交由异常处理器进行异常处理，如下图：</p>
+<p><img alt="springmvc异常处理" src="http://7xph6d.com1.z0.glb.clouddn.com/springmvc_%E5%BC%82%E5%B8%B8%E5%A4%84%E7%90%86.png" /></p>
+<p>springmvc提供全局异常处理器（一个系统只有一个异常处理器）进行统一异常处理。</p>
+<h2 id="_2">自定义异常类</h2>
+<p>对不同的异常类型定义异常类，继承Exception。</p>
+<pre><code class="java">package com.iot.learnssm.firstssm.exception;
+
+/**
+ * Created by brian on 2016/3/7.
+ *
+ * 系统 自定义异常类，针对预期的异常，需要在程序中抛出此类的异常
+ */
+public class CustomException  extends  Exception{
+    //异常信息
+    public String message;
+
+    public CustomException(String message){
+        super(message);
+        this.message = message;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+}
+</code></pre>
+
+<h2 id="_3">全局异常处理器</h2>
+<p>思路：</p>
+<p>系统遇到异常，在程序中手动抛出，dao抛给service、service给controller、controller抛给前端控制器，前端控制器调用全局异常处理器。</p>
+<p>全局异常处理器处理思路：</p>
+<p>解析出异常类型</p>
+<ul>
+<li>如果该异常类型是系统自定义的异常，直接取出异常信息，在错误页面展示</li>
+<li>如果该异常类型不是系统自定义的异常，构造一个自定义的异常类型（信息为“未知错误”）</li>
+</ul>
+<p>springmvc提供一个<code>HandlerExceptionResolver</code>接口</p>
+<pre><code class="java">   public ModelAndView resolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
+        //handler就是处理器适配器要执行Handler对象（只有method）
+        //解析出异常类型
+        //如果该 异常类型是系统 自定义的异常，直接取出异常信息，在错误页面展示
+        //String message = null;
+        //if(ex instanceof CustomException){
+            //message = ((CustomException)ex).getMessage();
+        //}else{
+            ////如果该 异常类型不是系统 自定义的异常，构造一个自定义的异常类型（信息为“未知错误”）
+            //message=&quot;未知错误&quot;;
+        //}
+
+        //上边代码变为
+        CustomException customException;
+        if(ex instanceof CustomException){
+            customException = (CustomException)ex;
+        }else{
+            customException = new CustomException(&quot;未知错误&quot;);
+        }
+
+        //错误信息
+        String message = customException.getMessage();
+
+        ModelAndView modelAndView = new ModelAndView();
+
+        //将错误信息传到页面
+        modelAndView.addObject(&quot;message&quot;, message);
+
+        //指向错误页面
+        modelAndView.setViewName(&quot;error&quot;);
+
+        return modelAndView;
+
+    }
+}
+</code></pre>
+
+<h2 id="_4">错误页面</h2>
+<pre><code class="jsp">&lt;%--
+  Created by IntelliJ IDEA.
+  User: Brian
+  Date: 2016/3/4
+  Time: 10:51
+  To change this template use File | Settings | File Templates.
+--%&gt;
+&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;错误提示&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+${message}
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+
+<h2 id="springmvcxml">在springmvc.xml配置全局异常处理器</h2>
+<pre><code class="xml">&lt;!-- 全局异常处理器
+只要实现HandlerExceptionResolver接口就是全局异常处理器
+--&gt;
+&lt;bean class=&quot;com.iot.learnssm.firstssm.exception.CustomExceptionResolver&quot;&gt;&lt;/bean&gt;
+</code></pre>
+
+<p>全局异常处理器只有一个，配置多个也没用。</p>
+<h2 id="_5">异常测试</h2>
+<p>在controller、service、dao中任意一处需要手动抛出异常。如果是程序中手动抛出的异常，在错误页面中显示自定义的异常信息，如果不是手动抛出异常说明是一个运行时异常，在错误页面只显示“未知错误”。</p>
+<ul>
+<li>在商品修改的controller方法中抛出异常 .</li>
+</ul>
+<pre><code class="java">public String editItems(Model model,@RequestParam(value=&quot;id&quot;,required=true) Integer items_id)throws Exception {
+
+    //调用service根据商品id查询商品信息
+    ItemsCustom itemsCustom = itemsService.findItemsById(items_id);
+
+    //判断商品是否为空，根据id没有查询到商品，抛出异常，提示用户商品信息不存在
+    if(itemsCustom == null){
+        throw new CustomException(&quot;修改的商品信息不存在!&quot;);
+    }
+
+    //通过形参中的model将model数据传到页面
+    //相当于modelAndView.addObject方法
+    model.addAttribute(&quot;items&quot;, itemsCustom);
+
+    return &quot;items/editItems&quot;;
+}
+</code></pre>
+
+<ul>
+<li>在service接口中抛出异常：</li>
+</ul>
+<pre><code class="java">public ItemsCustom findItemsById(Integer id) throws Exception {
+    Items items = itemsMapper.selectByPrimaryKey(id);
+    if(items==null){
+        throw new CustomException(&quot;修改的商品信息不存在!&quot;);
+    }
+    //中间对商品信息进行业务处理
+    //....
+    //返回ItemsCustom
+    ItemsCustom itemsCustom = null;
+    //将items的属性值拷贝到itemsCustom
+    if(items!=null){
+        itemsCustom = new ItemsCustom();
+        BeanUtils.copyProperties(items, itemsCustom);
+    }
+
+    return itemsCustom;
+}
+</code></pre>
+
+<ul>
+<li>如果与业务功能相关的异常，建议在service中抛出异常。</li>
+<li>与业务功能没有关系的异常，建议在controller中抛出。</li>
+</ul>
+<p>上边的功能，建议在service中抛出异常。</p>
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> <code>|</code> <a href="http://blog.csdn.net/h3243212/">CSDN</a> <code>|</code> <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

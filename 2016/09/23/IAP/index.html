@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>IAP | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="前言：应用内支付（IAP）一直是苹果尽力强迫大家使用的在线支付方式, 用以获利。
+进入主题，如何将IAP继承至自己的应用中。我们使用到了开源库APKit，github地址：
+APKit的Github仓库主页，包含了本地校验。
+准备In-App Purchase， 简称IAP，允许在iOS app与macOS app中出售商品，如果你想将IAP加入自己的应用中，需要在集成之前做一些配置，下边将会一步">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IAP">
+<meta property="og:url" content="https://wilddylan.github.io/2016/09/23/IAP/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="前言：应用内支付（IAP）一直是苹果尽力强迫大家使用的在线支付方式, 用以获利。
+进入主题，如何将IAP继承至自己的应用中。我们使用到了开源库APKit，github地址：
+APKit的Github仓库主页，包含了本地校验。
+准备In-App Purchase， 简称IAP，允许在iOS app与macOS app中出售商品，如果你想将IAP加入自己的应用中，需要在集成之前做一些配置，下边将会一步">
+<meta property="og:image" content="http://img.sy.kuaiyong.com/kuaiyong/iosnews/2016-01-25/16b5aedc1c332472d0c9d3b1a05ac8a5.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:06.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="IAP">
+<meta name="twitter:description" content="前言：应用内支付（IAP）一直是苹果尽力强迫大家使用的在线支付方式, 用以获利。
+进入主题，如何将IAP继承至自己的应用中。我们使用到了开源库APKit，github地址：
+APKit的Github仓库主页，包含了本地校验。
+准备In-App Purchase， 简称IAP，允许在iOS app与macOS app中出售商品，如果你想将IAP加入自己的应用中，需要在集成之前做一些配置，下边将会一步">
+<meta name="twitter:image" content="http://img.sy.kuaiyong.com/kuaiyong/iosnews/2016-01-25/16b5aedc1c332472d0c9d3b1a05ac8a5.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-IAP" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            IAP
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/09/23/IAP/">
+            <time datetime="2016-09-23T02:08:53.000Z" itemprop="datePublished">2016-09-23</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/支付与IAP/">支付与IAP</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>前言：应用内支付（IAP）一直是苹果<strong>尽力强迫</strong>大家使用的在线支付方式, 用以获利。</p>
+<p>进入主题，如何将IAP继承至自己的应用中。我们使用到了开源库<code>APKit</code>，github地址：</p>
+<p><a href="https://github.com/WildDylan/APKit" target="_blank" rel="external">APKit</a>的Github仓库主页，包含了本地校验。</p>
+<h4 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h4><p><code>In-App Purchase</code>， 简称IAP，允许在iOS app与macOS app中出售商品，如果你想将IAP加入自己的应用中，需要在集成之前做一些配置，下边将会一步一步的教大家配置相关的信息。</p>
+<blockquote>
+<p>IAP在iOS 3.0 和 macOS 10.7之后有效。</p>
+</blockquote>
+<h6 id="Agreements-Tax-and-Banking-Information"><a href="#Agreements-Tax-and-Banking-Information" class="headerlink" title="Agreements, Tax, and Banking Information"></a>Agreements, Tax, and Banking Information</h6><p>必须完成以下步骤：</p>
+<a id="more"></a>
+<ol>
+<li>在创建IAP之前必须要先同意最近的开发者协议（Developer Program License Agreement）。</li>
+<li>完成一些必须的信息：协议、税务、银行信息。<a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/ManagingContractsandBanking.html#//apple_ref/doc/uid/TP40011225-CH21-SW1" target="_blank" rel="external">更多关于协议、税务、银行的资料</a>。</li>
+</ol>
+<p>第一步，打开 <a href="https://developer.apple.com/account" target="_blank" rel="external">https://developer.apple.com/account</a>，如果协议有更新的话, 需要先同意最新的协议：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/UpdateLicences" alt=""></p>
+<p>第二部，打开<a href="https://itunesconnect.apple.com" target="_blank" rel="external">https://itunesconnect.apple.com</a>，点击协议、税务与银行，编辑并完成信息：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/Banking" alt=""></p>
+<p>通常我们对Contact info，Bank info，Tax info进行编辑，我这里已经有了合同号，新用户打开界面后，合同号为空。完善这一部分信息比较杂乱，而本文的重点还是在集成，所以协议税务和银行这里大家参考<a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/ManagingContractsandBanking.html#//apple_ref/doc/uid/TP40011225-CH21-SW1" target="_blank" rel="external">配置协议、税务、银行的信息</a>来完成。</p>
+<h6 id="Certificates-Identifiers-amp-Profiles"><a href="#Certificates-Identifiers-amp-Profiles" class="headerlink" title="Certificates, Identifiers &amp; Profiles"></a>Certificates, Identifiers &amp; Profiles</h6><p>配置IAP应用的App ID与描述文件，必须完成以下步骤：</p>
+<ol>
+<li>注册一个新的App ID（这一部分对于iOS开发者来说不需要赘述，小白参考<a href="https://developer.apple.com/library/content/documentation/IDEs/Conceptual/AppDistributionGuide/MaintainingProfiles/MaintainingProfiles.html" target="_blank" rel="external">官网关于这一部分的介绍</a>）。</li>
+</ol>
+<p>注册一个App ID为<code>com.hack.app</code>的应用。目前创建的App ID默认是勾选了IAP。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/AppIdSelect" alt=""></p>
+<h6 id="iTunes-Connect"><a href="#iTunes-Connect" class="headerlink" title="iTunes Connect"></a>iTunes Connect</h6><p>为了后续测试IAP，需要创建商品以及用于测试的帐号，<code>iTunes Connect</code>提供了这些操作，需要完成以下步骤：</p>
+<ol>
+<li>创建测试账户</li>
+</ol>
+<p>苹果提供的测试环境，被称为沙箱（sandbox），可用来对IAP应用进行测试，模拟真实交易流程。不明真像的吃瓜群众可以看一下<a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnect_Guide/Chapters/SettingUpUserAccounts.html#//apple_ref/doc/uid/TP40011225-CH25-SW9" target="_blank" rel="external">如何创建Sandbox tester</a>。</p>
+<ol>
+<li>创建IAP商品</li>
+</ol>
+<p>手先创建一个App，然后才可以为该App创建内购商品。依旧，小白用户看一下如何<a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnectInAppPurchase_Guide/Chapters/CreatingInAppPurchaseProducts.html" target="_blank" rel="external">创建内购商品</a>。</p>
+<p>再次动手实践：</p>
+<p>步骤1： 打开<a href="https://itunesconnect.apple.com" target="_blank" rel="external">iTunes Connect</a>，点击用户和职能，Tab栏点击沙箱技术测试员，点击<code>+</code>号添加；</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/SandBoxTester" alt=""></p>
+<p>比较坑的事是已经注册成为苹果用户的邮箱帐号在这里会被显示为占用。</p>
+<p>步骤2：创建新的App，并且创建新的内购商品；</p>
+<p>建议读一下<a href="https://developer.apple.com/library/content/documentation/LanguagesUtilities/Conceptual/iTunesConnectInAppPurchase_Guide/Chapters/CreatingInAppPurchaseProducts.html#//apple_ref/doc/uid/TP40013727-CH3-SW8" target="_blank" rel="external">内购商品的区别与创建</a>这篇官方文档。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/createApp" alt=""></p>
+<p>套装ID选择刚创建的App ID，SKU是一个你希望的唯一App的标识，不会出现在AppStore中。</p>
+<p>创建成功之后，Tab选择功能，默认选中的项目就是App内购项目，点击添加之后，会先弹窗告诉你内购商品的4中类型的特性，选择一种，一般游戏币充值类似的选择消耗类；游戏场景开通类似的选择非消耗类；陌陌会员类似的选择自动续订，每月自动扣费；VPN年限内有效类似的选择非续订。</p>
+<p>选择创建消耗类项目，进入创建界面后，每一个项目后边都有一个查看提示信息的问号。审核信息以及审核信息暂时不需要配置，在提交App审核之前，需要先提交内购商品审核，那个时候再上传截图也可以。产品的ID一般存储与服务器中，App从服务器获取到商品列表之后进行选择购买。</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/ProductList" alt=""></p>
+<p>创建2个商品供未来测试购买。</p>
+<p>至此，准备工作告一段落，接下来进入集成工作。</p>
+<h4 id="集成"><a href="#集成" class="headerlink" title="集成"></a>集成</h4><p>完成以下步骤</p>
+<ol>
+<li>创建新的Xcode工程，使用OC作为开发语言。</li>
+<li>修改bundleIdentifier为我们创建的App ID。</li>
+<li>配置需要的证书以及描述文件，但是在Xcode8中为了测试便捷，自动管理。</li>
+<li>打开IAP功能支持。</li>
+<li>编码前须知。</li>
+</ol>
+<p>完成步骤1，2，3：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/XcodeAppConfig" alt=""></p>
+<p>这里作者使用的Xcode8，Xcode7.3界面与稍有区别。</p>
+<p>完成步骤4：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/openInApp" alt=""></p>
+<p>步骤5，须知：</p>
+<p>注：macOS开发需在didFinishLaunch要先获取一下凭证</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if ( ![NSData dataWithContentsOfURL:[NSBundle mainBundle].appStoreReceiptURL] ) &#123;</div><div class="line">  exit(173);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果不存在的话直接让程序退掉就好了。</p>
+<p>注：测试之前，先退出当前登录的AppStore帐号，选择真机测试，需要支付的时候登录配置好的测试帐号。</p>
+<h4 id="编码"><a href="#编码" class="headerlink" title="编码"></a>编码</h4><p>工程目录下，<code>pod init</code>，Podfile中加入</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">"APKit"</span>, <span class="string">"~&gt;1.1"</span></div></pre></td></tr></table></figure>
+<p>执行<code>pod update --no-repo-update</code>，如果是第一次使用，<code>pod install --no-repo-update</code>。</p>
+<h6 id="STEP1"><a href="#STEP1" class="headerlink" title="STEP1"></a>STEP1</h6><p>打开<code>AppDelegate.m</code>配置<code>APKit</code>接收商店购买回调：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">#import &lt;StoreKit/StoreKit.h&gt;</div><div class="line">#import &lt;APKit/APKit.h&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</div><div class="line">#warning Add transaction observer</div><div class="line">    [[SKPaymentQueue defaultQueue] addTransactionObserver:[APStoreObserver sharedInstance]];</div><div class="line">    </div><div class="line">    return YES;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">- (void)applicationWillTerminate:(UIApplication *)application &#123;</div><div class="line">#warning Remove transaction observer</div><div class="line">    [[SKPaymentQueue defaultQueue] removeTransactionObserver: [APStoreObserver sharedInstance]];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>设置与移除监听，要在购买操作之前。</p>
+<h6 id="STEP2"><a href="#STEP2" class="headerlink" title="STEP2"></a>STEP2</h6><p>设置商品获取与商品购买结果监听（这里是测试，所以放到了一起）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">- (instancetype)init &#123;</div><div class="line">    self = [super init];</div><div class="line">    if ( self ) &#123;</div><div class="line">        [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                                 selector:@selector(handleProductRequestNotification:)</div><div class="line">                                                     name:APProductRequestNotification</div><div class="line">                                                   object:[APProductManager sharedInstance]];</div><div class="line">        </div><div class="line">        [[NSNotificationCenter defaultCenter] addObserver:self</div><div class="line">                                                 selector:@selector(handlePurchasesNotification:)</div><div class="line">                                                     name:APPurchaseNotification</div><div class="line">                                                   object:[APStoreObserver sharedInstance]];</div><div class="line">    &#125;</div><div class="line">    return self;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第一个监听会在收到iTunes Connect商品获取成功之后，第二个监听是支付或者恢复购买的结果。</p>
+<h6 id="SETP3"><a href="#SETP3" class="headerlink" title="SETP3"></a>SETP3</h6><p>请求商品，这里建议从服务器获取商品唯一标识，然后请求。这里测试写的是上边创建的ID，并写了一个不存在的商品标识以供测试（01， 02存在，03不存在）。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">- (void)viewDidLoad &#123;</div><div class="line">    [super viewDidLoad];</div><div class="line">    </div><div class="line">    NSArray *productIdentifiers = @[</div><div class="line">                                    @&quot;1994101101&quot;,</div><div class="line">                                    @&quot;1994101102&quot;,</div><div class="line">                                    @&quot;1994101103&quot;</div><div class="line">                                    ];</div><div class="line">    </div><div class="line">    APProductManager *productManager = [APProductManager sharedInstance];</div><div class="line">    [productManager</div><div class="line">     fetchProductInformationForIds:productIdentifiers];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>fetchProductInformationForIds</code>即根据商品唯一标识获取商品信息。在通知里我们可以收到一些信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">-(void)handleProductRequestNotification: (NSNotification *)notification &#123;</div><div class="line">    APProductManager *productRequestNotification = (APProductManager*)notification.object;</div><div class="line">    APProductRequestStatus result = (APProductRequestStatus)productRequestNotification.status;</div><div class="line">    </div><div class="line">    if (result == APProductRequestSuccess) &#123;</div><div class="line">        NSLog(@&quot;VALID: %@&quot;, productRequestNotification.availableProducts);</div><div class="line">        NSLog(@&quot;INVALID: %@&quot;, productRequestNotification.invalidProductIds);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>VALID: 可以使用的数组</p>
+<p>INVALID：不正确的商品标识</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/productResult" alt=""></p>
+<p>1994101103不是正确的标识。</p>
+<h6 id="STEP4"><a href="#STEP4" class="headerlink" title="STEP4"></a>STEP4</h6><p>发起购买请求：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">NSArray *productArray = productRequestNotification.availableProducts;</div><div class="line">if ( productArray.count &gt; 0 ) &#123;</div><div class="line">    SKProduct *product_1 = productArray.firstObject;</div><div class="line">  </div><div class="line">    APStoreObserver *storeObs = [APStoreObserver sharedInstance];</div><div class="line">    [storeObs buy:product_1];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>使用<code>buy</code>方法轻松的开始购买商品，要注意的是，一定要先设置APStoreObserver为IAP的处理（在AppDelegate.m中的设置，当然也可以在你需要的位置），并设置结果监听（在上边的init方法中）。</p>
+<p>在通知里我们可以收到一些信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">#pragma mark - Handle purchase notification</div><div class="line"></div><div class="line">-(void)handlePurchasesNotification: (NSNotification *)notification &#123;</div><div class="line">    APStoreObserver *purchasesNotification = (APStoreObserver *)notification.object;</div><div class="line">    APPurchaseStatus status = (APPurchaseStatus)purchasesNotification.status;</div><div class="line">    </div><div class="line">    switch ( status ) &#123;</div><div class="line">#pragma - Purchase</div><div class="line">        case APPurchaseSucceeded: &#123;</div><div class="line">            NSLog(@&quot;Purchase-Success: %@&quot;, purchasesNotification.productsPurchased);</div><div class="line">            // Verify receipts step.</div><div class="line">            [self verifyReceipts];</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        case APPurchaseFailed: &#123;</div><div class="line">            NSLog(@&quot;Purchase-Failed %@&quot;, purchasesNotification.errorMessage);</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        case APPurchaseCancelled: &#123;</div><div class="line">            NSLog(@&quot;Purchase-Cancelled!&quot;);</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">#pragma - Restore</div><div class="line">        case APRestoredSucceeded: &#123;</div><div class="line">            NSLog(@&quot;Restored-Success: %@&quot;, purchasesNotification.productsRestored);</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        case APRestoredFailed: &#123;</div><div class="line">            NSLog(@&quot;Restored-Failed %@&quot;, purchasesNotification.errorMessage);</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        case APRestoredCancelled: &#123;</div><div class="line">            NSLog(@&quot;Restored-Cancelled!&quot;);</div><div class="line">            break;</div><div class="line">        &#125;</div><div class="line">        default:</div><div class="line">            break;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这些枚举值都很清晰的表达了意思，不做赘述。需要注意的是第12行<code>[self verifyReceipts];</code>，这个是很重要的一步，用于验证凭证（验证是否合法的完成的购买）。</p>
+<h6 id="STEP5"><a href="#STEP5" class="headerlink" title="STEP5"></a>STEP5</h6><p>凭证验证：</p>
+<p>在macOS中，凭证有可能丢失</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">NSURL *localReceiptURL = [[NSBundle mainBundle] appStoreReceiptURL];</div></pre></td></tr></table></figure>
+<p>URL是否存在的判断，在文章准备工作的步骤5中有提到过。</p>
+<p>目前，在iPhone非越狱设备下，我没有碰到过凭证丢失的情况（我们直接抛弃了越狱用户）。所以文中不做赘述。</p>
+<p>凭证校验出错可以使用<code>SKReceiptRefreshRequest</code>刷新，<a href="https://developer.apple.com/reference/storekit/skreceiptrefreshrequest" target="_blank" rel="external">阅读SKReceiptRefreshRequest官方文档</a>。</p>
+<p>获得凭证：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">NSURL *localReceiptURL = [[NSBundle mainBundle] appStoreReceiptURL];</div><div class="line">NSData *data = [NSData dataWithContentsOfURL:localReceiptURL];</div><div class="line">NSString *receiptStr = [data base64EncodedStringWithOptions:NSDataBase64EncodingEndLineWithLineFeed];</div></pre></td></tr></table></figure>
+<p>将<code>receiptStr</code>发送到服务器，由服务器与苹果通信进行验证。</p>
+<p>这里提供2种验证路径：</p>
+<ol>
+<li>通过与苹果通信进行验证，还没有了解过的开发小伙伴<a href="https://developer.apple.com/library/content/releasenotes/General/ValidateAppStoreReceipt/Introduction.html#//apple_ref/doc/uid/TP40010573" target="_blank" rel="external">阅读一下验证相关的文档</a>。</li>
+<li>服务器做本地验证，实现苹果验证的规则，没有了解过的小伙伴<a href="https://github.com/WildDylan/iap-local-receipt" target="_blank" rel="external">了解一下用python做本地凭证校验</a>。这种校验方式是可以直接用到生产环境的，某知名公司已经在使用了，这是取来的经，放心尝试吧。我把它Fork到了自己的仓库里，希望各路的服务端大牛可以依据思路贡献多个版本的本地验证库，我也会抽时间用Node.js实现一遍以供使用。</li>
+</ol>
+<blockquote>
+<p>验证的<a href="http://openfibers.github.io/blog/2015/02/28/in-app-purchase-walk-through/" target="_blank" rel="external">参考文章</a>，也涵盖了基础的一些配置以及基本的编码等等。</p>
+</blockquote>
+<h4 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h4><p>至此，IAP开发结束了，感谢大家的阅读。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/09/23/IAP/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/09/23/IAP/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/09/Swift语法熟悉（一）/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    Swift语法熟悉（一）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/08/31/CFNetwork/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">CFNetwork</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/09/23/IAP/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

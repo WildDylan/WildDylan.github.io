@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>SwiftTips（一） | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="最新1年的Swift小Tip与一些建议阅读源码或者使用到项目中的开源库">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SwiftTips（一）">
+<meta property="og:url" content="https://wilddylan.github.io/2016/11/21/SwiftTips（一）/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="最新1年的Swift小Tip与一些建议阅读源码或者使用到项目中的开源库">
+<meta property="og:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:01:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SwiftTips（一）">
+<meta name="twitter:description" content="最新1年的Swift小Tip与一些建议阅读源码或者使用到项目中的开源库">
+<meta name="twitter:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-SwiftTips（一）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            SwiftTips（一）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/21/SwiftTips（一）/">
+            <time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <blockquote>
+<p>最新1年的Swift小Tip与一些建议阅读源码或者使用到项目中的开源库</p>
+</blockquote>
+<a id="more"></a>
+<h6 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h6><ul>
+<li>模型转为JSON <a href="https://github.com/WildDylan/Wrap" target="_blank" rel="external">https://github.com/WildDylan/Wrap</a></li>
+<li>OCR <a href="https://github.com/garnele007/SwiftOCR" target="_blank" rel="external">https://github.com/garnele007/SwiftOCR</a></li>
+<li>Machine Learning <a href="https://github.com/collinhundley/Swift-AI" target="_blank" rel="external">https://github.com/collinhundley/Swift-AI</a></li>
+<li>代码规范约束 <a href="https://github.com/realm/SwiftLint" target="_blank" rel="external">https://github.com/realm/SwiftLint</a></li>
+<li>加解密  <a href="https://github.com/krzyzanowskim/CryptoSwift" target="_blank" rel="external">https://github.com/krzyzanowskim/CryptoSwift</a></li>
+<li>日历 <a href="https://github.com/patchthecode/JTAppleCalendar" target="_blank" rel="external">https://github.com/patchthecode/JTAppleCalendar</a></li>
+<li>引导页 <a href="https://github.com/Ramotion/paper-onboarding" target="_blank" rel="external">https://github.com/Ramotion/paper-onboarding</a></li>
+<li>头像显示  <a href="https://github.com/BeauNouvelle/FaceAware" target="_blank" rel="external">https://github.com/BeauNouvelle/FaceAware</a></li>
+<li>hexColor <a href="https://github.com/hyperoslo/Hue" target="_blank" rel="external">https://github.com/hyperoslo/Hue</a></li>
+<li>颜色扩展 <a href="https://github.com/ViccAlexander/Chameleon" target="_blank" rel="external">https://github.com/ViccAlexander/Chameleon</a></li>
+<li>用户使用引导 <a href="https://github.com/ephread/Instructions" target="_blank" rel="external">https://github.com/ephread/Instructions</a></li>
+<li>segmentControl <a href="https://github.com/twicketapp/TwicketSegmentedControl" target="_blank" rel="external">https://github.com/twicketapp/TwicketSegmentedControl</a></li>
+<li>安卓风 <a href="https://github.com/CosmicMind/Material" target="_blank" rel="external">https://github.com/CosmicMind/Material</a></li>
+<li>Spring <a href="https://github.com/MengTo/Spring" target="_blank" rel="external">https://github.com/MengTo/Spring</a></li>
+<li>JSON <a href="https://github.com/SwiftyJSON/SwiftyJSON" target="_blank" rel="external">https://github.com/SwiftyJSON/SwiftyJSON</a></li>
+<li>GCD <a href="https://github.com/duemunk/Async" target="_blank" rel="external">https://github.com/duemunk/Async</a></li>
+<li>Location <a href="https://github.com/varshylmobile/LocationManager" target="_blank" rel="external">https://github.com/varshylmobile/LocationManager</a></li>
+<li>Auto Check Update <a href="https://github.com/ArtSabintsev/Siren" target="_blank" rel="external">https://github.com/ArtSabintsev/Siren</a></li>
+<li>ASDK <a href="https://github.com/facebook/AsyncDisplayKit" target="_blank" rel="external">https://github.com/facebook/AsyncDisplayKit</a></li>
+<li>Layout <a href="https://github.com/robb/Cartography" target="_blank" rel="external">https://github.com/robb/Cartography</a></li>
+<li>Bind <a href="https://github.com/ReactiveCocoa/ReactiveCocoa" target="_blank" rel="external">https://github.com/ReactiveCocoa/ReactiveCocoa</a></li>
+<li>URL Route <a href="https://github.com/devxoul/URLNavigator" target="_blank" rel="external">https://github.com/devxoul/URLNavigator</a></li>
+<li>$扩展 <a href="https://github.com/ankurp/Dollar" target="_blank" rel="external">https://github.com/ankurp/Dollar</a></li>
+<li>Path  <a href="https://github.com/kylef/PathKit" target="_blank" rel="external">https://github.com/kylef/PathKit</a></li>
+<li>Logger <a href="https://github.com/DaveWoodCom/XCGLogger" target="_blank" rel="external">https://github.com/DaveWoodCom/XCGLogger</a></li>
+<li>SQLite3 <a href="https://github.com/stephencelis/SQLite.swift" target="_blank" rel="external">https://github.com/stephencelis/SQLite.swift</a></li>
+<li>WS <a href="https://github.com/daltoniam/starscream" target="_blank" rel="external">https://github.com/daltoniam/starscream</a></li>
+<li>Image more Color  <a href="https://github.com/indragiek/DominantColor" target="_blank" rel="external">https://github.com/indragiek/DominantColor</a></li>
+<li>Gif <a href="https://github.com/kaishin/gifu" target="_blank" rel="external">https://github.com/kaishin/gifu</a></li>
+<li>地图路线规划 <a href="https://github.com/varshylmobile/MapManager" target="_blank" rel="external">https://github.com/varshylmobile/MapManager</a></li>
+<li>提示框！<a href="https://github.com/SwiftKickMobile/SwiftMessages" target="_blank" rel="external">https://github.com/SwiftKickMobile/SwiftMessages</a></li>
+</ul>
+<h6 id="关于Swift下JSON解析库的分析图"><a href="#关于Swift下JSON解析库的分析图" class="headerlink" title="关于Swift下JSON解析库的分析图"></a>关于Swift下JSON解析库的分析图</h6><p><img src="http://ocef2grmj.bkt.clouddn.com/performance.png" alt=""></p>
+<h6 id="如何像安卓一样方便的使用R加载资源文件"><a href="#如何像安卓一样方便的使用R加载资源文件" class="headerlink" title="如何像安卓一样方便的使用R加载资源文件"></a>如何像安卓一样方便的使用R加载资源文件</h6><p><a href="https://github.com/mac-cain13/R.swift" target="_blank" rel="external">https://github.com/mac-cain13/R.swift</a></p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/Pasted%20Graphic.tiff" alt=""></p>
+<h6 id="做好代码规范从编写开始-swiftlint"><a href="#做好代码规范从编写开始-swiftlint" class="headerlink" title="做好代码规范从编写开始-swiftlint"></a>做好代码规范从编写开始-swiftlint</h6><p>swiftlint autocorrect &lt;项目在Github中搜索即可&gt;</p>
+<h6 id="Swift-zip"><a href="#Swift-zip" class="headerlink" title="Swift zip"></a>Swift zip</h6><p>zip(arr1, arr2) 输出一个 元祖数组 [(arr1[0], arr2[0]), (…), (…)]</p>
+<h6 id="添加弃用信息"><a href="#添加弃用信息" class="headerlink" title="添加弃用信息"></a>添加弃用信息</h6><p>@available(*, deprecated, message: “no longer available …”)</p>
+<h6 id="获取系统信息，诸如版本之类的-NSProcessInfo"><a href="#获取系统信息，诸如版本之类的-NSProcessInfo" class="headerlink" title="获取系统信息，诸如版本之类的-NSProcessInfo"></a>获取系统信息，诸如版本之类的-NSProcessInfo</h6><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> os = <span class="type">ProcessInfo</span>().operatingSystemVersion</div><div class="line"><span class="keyword">let</span> info = <span class="string">"\(os.majorVersion).\(os.minorVersion).\(os.patchVersion)"</span></div></pre></td></tr></table></figure>
+<p>并且这样判断版本</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> #available(iOS <span class="number">10.0</span>, *) &#123;</div><div class="line">      <span class="type">Push</span>.registeNotification()</div><div class="line">&#125; <span class="keyword">else</span> &#123;</div><div class="line">      <span class="type">Pusher</span>.registeNotification()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="使用discardableResult设置可以忽略返回值"><a href="#使用discardableResult设置可以忽略返回值" class="headerlink" title="使用discardableResult设置可以忽略返回值"></a>使用<code>discardableResult</code>设置可以忽略返回值</h6><figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">@discardableResult</div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">data</span><span class="params">(to identifier: String, with parameter: Any?, <span class="number">_</span> handler: PNRouteCallBack?)</span></span> -&gt;<span class="type">Bool</span>&#123;</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> hand = dataing[identifier] <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    hand(parameter, handler)</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h6 id="更加清晰的Git工作流程"><a href="#更加清晰的Git工作流程" class="headerlink" title="更加清晰的Git工作流程"></a>更加清晰的Git工作流程</h6><p>首先应当创建新的分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git checkout -b dylan</div></pre></td></tr></table></figure>
+<p>在结束自己的工作之后，提交到本地</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git add .</div><div class="line">git commit -m “Fixed some quesitons“</div></pre></td></tr></table></figure>
+<p>如果需要提交多行文本，使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git commit -m &apos;</div></pre></td></tr></table></figure>
+<p>回车后即可输入，结束使用<code>&#39;</code>。接下来获取最新的主分支动态，并合并到我们当前已经修改的分支上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git fetch origin</div><div class="line">git rebase origin/master</div></pre></td></tr></table></figure>
+<p>做一些操作，比如说合并提交信息：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rebase -i origin/master</div></pre></td></tr></table></figure>
+<p>提交到自己的分支</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push origin dylan</div></pre></td></tr></table></figure>
+<p>发起pull request，由负责人进行代码review：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git checkout 提交者的分支</div><div class="line">git diff 提交者/master..HEAD</div></pre></td></tr></table></figure>
+<p>合并代码到主开发分支上：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git fetch origin</div><div class="line">git rebase -i origin/master</div></pre></td></tr></table></figure>
+<p>推送:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">git push —force-with-lease origin master</div><div class="line">git log origin/master..&lt;branch-name&gt;</div><div class="line">git diff --stat origin/master</div><div class="line">git checkout master</div><div class="line">git merge &lt;branch-name&gt; --ff-only</div><div class="line">git push</div></pre></td></tr></table></figure>
+<p>删除开发分支:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">git push origin --delete &lt;branch-name&gt;</div><div class="line">git branch --delete &lt;branch-name&gt;</div></pre></td></tr></table></figure>
+<p>这样一次开发的Git操作就完美的结束了，另外附上一些常用的git命令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">git checkout . #本地所有修改的。没有的提交的，都返回到原来的状态</div><div class="line">git stash #把所有没有提交的修改暂存到stash里面。可用git stash pop回复。</div><div class="line">git reset --hard HASH #返回到某个节点，不保留修改。</div><div class="line">git reset --soft HASH #返回到某个节点。保留修改</div><div class="line">git push origin master -f 强制覆盖</div></pre></td></tr></table></figure>
+<h6 id="最近的看到的iOS版本占比图"><a href="#最近的看到的iOS版本占比图" class="headerlink" title="最近的看到的iOS版本占比图"></a>最近的看到的iOS版本占比图</h6><p><img src="http://ocef2grmj.bkt.clouddn.com/ios10adoptionratestwoweeks-800x407.jpg" alt=""></p>
+<p>所以强烈建议大家开始从iOS8.0进行系统支撑，这并没有问题。</p>
+<h6 id="常用语"><a href="#常用语" class="headerlink" title="常用语"></a>常用语</h6><p>在Git Hub你提交给其他开源库的pull request被merge之后，请对项目拥有者说：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Pure awesomeness, thanks a lot!</div></pre></td></tr></table></figure>
+<h6 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">什么叫价值？</div><div class="line"></div><div class="line">同是两根竹子，</div><div class="line">一支做成了笛子，</div><div class="line">一支做成了晾衣杠。</div><div class="line"></div><div class="line">晾衣杠不服气的问笛子：</div><div class="line">“我们都是同一片山上的竹子，</div><div class="line">凭什么我天天日晒雨淋，不值一文，</div><div class="line">而你却价值千金呢？”</div><div class="line"></div><div class="line">笛子：”因为你只挨了一刀，</div><div class="line">而我却经历了千刀万剐，精雕细做。”</div><div class="line">晾衣杠此时沉默了……</div><div class="line"></div><div class="line">人生亦是如此，经得起打磨，</div><div class="line">耐得起寂寞，扛得起责任，</div><div class="line">肩负起使命！人生才会有价值！</div></pre></td></tr></table></figure>
+<p>现在碎片化知识已经出现在各个角落，人们对于碎片化知识的汲取到底是对还是错呢？总之我是赞成的，当然我也更赞成如果你有足够的时间，请系统化的了解、深入的了解。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/11/21/SwiftTips（一）/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/11/21/SwiftTips（一）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/11/22/WebApp问题整理/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    WebApp问题整理
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/11/16/如何利用Swift解析MarkDown/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何利用Swift解析MarkDown</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/11/21/SwiftTips（一）/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Springmvc学习笔记(20) 拦截器 - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(8)-动态sql/">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../../mybatis/mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../springmvc学习笔记(2)-非注解的处理器映射器和适配器/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#_1">拦截定义</a></li>
+        <li class="main "><a href="#_2">拦截器配置</a></li>
+            <li><a href="#handlermapping">针对HandlerMapping配置</a></li>
+            <li><a href="#_3">类似全局的拦截器</a></li>
+        <li class="main "><a href="#_4">拦截测试</a></li>
+        <li class="main "><a href="#_5">拦截器应用(实现登陆认证)</a></li>
+            <li><a href="#_6">需求</a></li>
+            <li><a href="#controller">登陆controller方法</a></li>
+            <li><a href="#_7">登陆认证拦截实现</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# springmvc学习笔记(20)-拦截器</p>
+<p>标签： springmvc</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#拦截定义">拦截定义</a></li>
+<li><a href="#拦截器配置">拦截器配置</a><ul>
+<li><a href="#针对handlermapping配置">针对HandlerMapping配置</a></li>
+<li><a href="#类似全局的拦截器">类似全局的拦截器</a></li>
+</ul>
+</li>
+<li><a href="#拦截测试">拦截测试</a></li>
+<li><a href="#拦截器应用实现登陆认证">拦截器应用(实现登陆认证)</a><ul>
+<li><a href="#需求">需求</a></li>
+<li><a href="#登陆controller方法">登陆controller方法</a></li>
+<li><a href="#登陆认证拦截实现">登陆认证拦截实现</a></li>
+</ul>
+</li>
+</ul>
+<hr />
+<p>本文主要介绍springmvc中的拦截器，包括拦截器定义和的配置，然后演示了一个链式拦截的测试示例，最后通过一个登录认证的例子展示了拦截器的应用</p>
+<h2 id="_1">拦截定义</h2>
+<p>定义拦截器，实现<code>HandlerInterceptor</code>接口。接口中提供三个方法。</p>
+<pre><code class="java">public class HandlerInterceptor1 implements HandlerInterceptor{
+    //进入 Handler方法之前执行
+    //用于身份认证、身份授权
+    //比如身份认证，如果认证通过表示当前用户没有登陆，需要此方法拦截不再向下执行
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        //return false表示拦截，不向下执行
+        //return true表示放行
+        return false;
+    }
+
+    //进入Handler方法之后，返回modelAndView之前执行
+    //应用场景从modelAndView出发：将公用的模型数据(比如菜单导航)在这里传到视图，也可以在这里统一指定视图
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
+
+    }
+
+    //执行Handler完成执行此方法
+    //应用场景：统一异常处理，统一日志处理
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+
+    }
+}
+</code></pre>
+
+<p>可以从名称和参数看出各个接口的顺序和作用:</p>
+<ul>
+<li><code>public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception</code></li>
+<li>参数最少，只有三个</li>
+<li>进入 Handler方法之前执行</li>
+<li>用于身份认证、身份授权。比如身份认证，如果认证通过表示当前用户没有登陆，需要此方法拦截不再向下执行</li>
+<li><code>public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception</code></li>
+<li>多了一个modelAndView参数</li>
+<li>进入Handler方法之后，返回modelAndView之前执行 </li>
+<li>应用场景从modelAndView出发：将公用的模型数据(比如菜单导航)在这里传到视图，也可以在这里统一指定视图</li>
+<li><code>public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception</code></li>
+<li>多了一个Exception的类型的参数</li>
+<li>执行Handler完成执行此方法</li>
+<li>应用场景：统一异常处理，统一日志处理</li>
+</ul>
+<h2 id="_2">拦截器配置</h2>
+<h3 id="handlermapping">针对HandlerMapping配置</h3>
+<p>springmvc拦截器针对HandlerMapping进行拦截设置，如果在某个HandlerMapping中配置拦截，经过该HandlerMapping映射成功的handler最终使用该拦截器。</p>
+<pre><code class="xml">&lt;bean
+    class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot;&gt;
+    &lt;property name=&quot;interceptors&quot;&gt;
+        &lt;list&gt;
+            &lt;ref bean=&quot;handlerInterceptor1&quot;/&gt;
+            &lt;ref bean=&quot;handlerInterceptor2&quot;/&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+    &lt;bean id=&quot;handlerInterceptor1&quot; class=&quot;springmvc.intercapter.HandlerInterceptor1&quot;/&gt;
+    &lt;bean id=&quot;handlerInterceptor2&quot; class=&quot;springmvc.intercapter.HandlerInterceptor2&quot;/&gt;
+</code></pre>
+
+<p>一般不推荐使用。</p>
+<h3 id="_3">类似全局的拦截器</h3>
+<p>springmvc配置类似全局的拦截器，springmvc框架将配置的类似全局的拦截器注入到每个HandlerMapping中。</p>
+<pre><code class="xml"> &lt;!--拦截器 --&gt;
+&lt;mvc:interceptors&gt;
+    &lt;!--多个拦截器,顺序执行 --&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;!-- /**表示所有url包括子url路径 --&gt;
+        &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+        &lt;bean class=&quot;com.iot.learnssm.firstssm.interceptor.HandlerInterceptor1&quot;&gt;&lt;/bean&gt;
+    &lt;/mvc:interceptor&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+        &lt;bean class=&quot;com.iot.learnssm.firstssm.interceptor.HandlerInterceptor2&quot;&gt;&lt;/bean&gt;
+    &lt;/mvc:interceptor&gt;
+&lt;/mvc:interceptors&gt;
+</code></pre>
+
+<h2 id="_4">拦截测试</h2>
+<p>测试多个拦截器各个方法执行时机</p>
+<p>访问<code>/items/queryItems.action</code></p>
+<ul>
+<li>1.两个拦截器都放行</li>
+</ul>
+<pre><code>DEBUG [http-apr-8080-exec-1] - DispatcherServlet with name 'springmvc' processing GET request for [/ssm1/items/queryItems.action]
+DEBUG [http-apr-8080-exec-1] - Looking up handler method for path /items/queryItems.action
+DEBUG [http-apr-8080-exec-1] - Returning handler method [public org.springframework.web.servlet.ModelAndView com.iot.learnssm.firstssm.controller.ItemsController.queryItems(javax.servlet.http.HttpServletRequest,com.iot.learnssm.firstssm.po.ItemsQueryVo) throws java.lang.Exception]
+DEBUG [http-apr-8080-exec-1] - Returning cached instance of singleton bean 'itemsController'
+DEBUG [http-apr-8080-exec-1] - Last-Modified value for [/ssm1/items/queryItems.action] is: -1
+HandlerInterceptor1...preHandle
+HandlerInterceptor2...preHandle
+DEBUG [http-apr-8080-exec-1] - Fetching JDBC Connection from DataSource
+DEBUG [http-apr-8080-exec-1] - Registering transaction synchronization for JDBC Connection
+DEBUG [http-apr-8080-exec-1] - Returning JDBC Connection to DataSource
+HandlerInterceptor2...postHandle
+HandlerInterceptor1...postHandle
+DEBUG [http-apr-8080-exec-1] - Rendering view [org.springframework.web.servlet.view.JstlView: name 'items/itemsList'; URL [/WEB-INF/jsp/items/itemsList.jsp]] in DispatcherServlet with name 'springmvc'
+DEBUG [http-apr-8080-exec-1] - Added model object 'itemtypes' of type [java.util.HashMap] to request in view with name 'items/itemsList'
+DEBUG [http-apr-8080-exec-1] - Added model object 'itemsQueryVo' of type [com.iot.learnssm.firstssm.po.ItemsQueryVo] to request in view with name 'items/itemsList'
+DEBUG [http-apr-8080-exec-1] - Added model object 'org.springframework.validation.BindingResult.itemsQueryVo' of type [org.springframework.validation.BeanPropertyBindingResult] to request in view with name 'items/itemsList'
+DEBUG [http-apr-8080-exec-1] - Added model object 'itemsList' of type [java.util.ArrayList] to request in view with name 'items/itemsList'
+DEBUG [http-apr-8080-exec-1] - Forwarding to resource [/WEB-INF/jsp/items/itemsList.jsp] in InternalResourceView 'items/itemsList'
+HandlerInterceptor2...afterCompletion
+HandlerInterceptor1...afterCompletion
+DEBUG [http-apr-8080-exec-1] - Successfully completed request
+
+</code></pre>
+
+<p>总结：preHandle方法按顺序执行，postHandle和afterCompletion按拦截器配置的逆向顺序执行。</p>
+<p>2.拦截器1放行，拦截器2不放行</p>
+<pre><code>DEBUG [http-apr-8080-exec-8] - DispatcherServlet with name 'springmvc' processing GET request for [/ssm1/items/queryItems.action]
+DEBUG [http-apr-8080-exec-8] - Looking up handler method for path /items/queryItems.action
+DEBUG [http-apr-8080-exec-8] - Returning handler method [public org.springframework.web.servlet.ModelAndView com.iot.learnssm.firstssm.controller.ItemsController.queryItems(javax.servlet.http.HttpServletRequest,com.iot.learnssm.firstssm.po.ItemsQueryVo) throws java.lang.Exception]
+DEBUG [http-apr-8080-exec-8] - Returning cached instance of singleton bean 'itemsController'
+DEBUG [http-apr-8080-exec-8] - Last-Modified value for [/ssm1/items/queryItems.action] is: -1
+HandlerInterceptor1...preHandle
+HandlerInterceptor2...preHandle
+HandlerInterceptor1...afterCompletion
+DEBUG [http-apr-8080-exec-8] - Successfully completed request
+</code></pre>
+
+<p>总结：</p>
+<ul>
+<li>拦截器1放行，拦截器2 preHandle才会执行。</li>
+<li>拦截器2 preHandle不放行，拦截器2 postHandle和afterCompletion不会执行。</li>
+<li>只要有一个拦截器不放行，postHandle不会执行。</li>
+</ul>
+<p>3.两个拦截器都不放</p>
+<pre><code>DEBUG [http-apr-8080-exec-9] - DispatcherServlet with name 'springmvc' processing GET request for [/ssm1/items/queryItems.action]
+DEBUG [http-apr-8080-exec-9] - Looking up handler method for path /items/queryItems.action
+DEBUG [http-apr-8080-exec-9] - Returning handler method [public org.springframework.web.servlet.ModelAndView com.iot.learnssm.firstssm.controller.ItemsController.queryItems(javax.servlet.http.HttpServletRequest,com.iot.learnssm.firstssm.po.ItemsQueryVo) throws java.lang.Exception]
+DEBUG [http-apr-8080-exec-9] - Returning cached instance of singleton bean 'itemsController'
+DEBUG [http-apr-8080-exec-9] - Last-Modified value for [/ssm1/items/queryItems.action] is: -1
+HandlerInterceptor1...preHandle
+DEBUG [http-apr-8080-exec-9] - Successfully completed request
+</code></pre>
+
+<p>总结：</p>
+<ul>
+<li>拦截器1 preHandle不放行，postHandle和afterCompletion不会执行。</li>
+<li>拦截器1 preHandle不放行，拦截器2不执行。</li>
+</ul>
+<p>4.拦截器1不放行，拦截器2放行</p>
+<pre><code>DEBUG [http-apr-8080-exec-8] - DispatcherServlet with name 'springmvc' processing GET request for [/ssm1/items/queryItems.action]
+DEBUG [http-apr-8080-exec-8] - Looking up handler method for path /items/queryItems.action
+DEBUG [http-apr-8080-exec-8] - Returning handler method [public org.springframework.web.servlet.ModelAndView com.iot.learnssm.firstssm.controller.ItemsController.queryItems(javax.servlet.http.HttpServletRequest,com.iot.learnssm.firstssm.po.ItemsQueryVo) throws java.lang.Exception]
+DEBUG [http-apr-8080-exec-8] - Returning cached instance of singleton bean 'itemsController'
+DEBUG [http-apr-8080-exec-8] - Last-Modified value for [/ssm1/items/queryItems.action] is: -1
+HandlerInterceptor1...preHandle
+DEBUG [http-apr-8080-exec-8] - Successfully completed request
+</code></pre>
+
+<p>和两个拦截器都不行的结果一致，因为拦截器1先执行，没放行</p>
+<ul>
+<li>小结</li>
+</ul>
+<p>根据测试结果，对拦截器应用。</p>
+<p>比如：统一日志处理拦截器，需要该拦截器preHandle一定要放行，且将它放在拦截器链接中第一个位置。</p>
+<p>比如：登陆认证拦截器，放在拦截器链接中第一个位置。权限校验拦截器，放在登陆认证拦截器之后。（因为登陆通过后才校验权限，当然登录认证拦截器要放在统一日志处理拦截器后面）</p>
+<h2 id="_5">拦截器应用(实现登陆认证)</h2>
+<h3 id="_6">需求</h3>
+<ul>
+<li>1.用户请求url</li>
+<li>2.拦截器进行拦截校验<ul>
+<li>如果请求的url是公开地址（无需登陆即可访问的url），让放行</li>
+<li>如果用户session 不存在跳转到登陆页面</li>
+<li>如果用户session存在放行，继续操作。</li>
+</ul>
+</li>
+</ul>
+<h3 id="controller">登陆controller方法</h3>
+<pre><code class="java">@Controller
+public class LoginController {
+    // 登陆
+    @RequestMapping(&quot;/login&quot;)
+    public String login(HttpSession session, String username, String password)
+            throws Exception {
+
+        // 调用service进行用户身份验证
+        // ...
+
+        // 在session中保存用户身份信息
+        session.setAttribute(&quot;username&quot;, username);
+        // 重定向到商品列表页面
+        return &quot;redirect:/items/queryItems.action&quot;;
+    }
+
+    // 退出
+    @RequestMapping(&quot;/logout&quot;)
+    public String logout(HttpSession session) throws Exception {
+
+        // 清除session
+        session.invalidate();
+
+        // 重定向到商品列表页面
+        return &quot;redirect:/items/queryItems.action&quot;;
+    }
+}
+</code></pre>
+
+<h3 id="_7">登陆认证拦截实现</h3>
+<ul>
+<li>代码实现</li>
+</ul>
+<pre><code class="java">/**
+ * Created by brian on 2016/3/8.
+ * 登陆认证拦截器
+ */
+
+public class LoginInterceptor implements HandlerInterceptor {
+
+
+    //进入 Handler方法之前执行
+    //用于身份认证、身份授权
+    //比如身份认证，如果认证通过表示当前用户没有登陆，需要此方法拦截不再向下执行
+    public boolean preHandle(HttpServletRequest request,
+                             HttpServletResponse response, Object handler) throws Exception {
+
+        //获取请求的url
+        String url = request.getRequestURI();
+        //判断url是否是公开 地址（实际使用时将公开 地址配置配置文件中）
+        //这里公开地址是登陆提交的地址
+        if(url.indexOf(&quot;login.action&quot;)&gt;=0){
+            //如果进行登陆提交，放行
+            return true;
+        }
+
+        //判断session
+        HttpSession session  = request.getSession();
+        //从session中取出用户身份信息
+        String username = (String) session.getAttribute(&quot;username&quot;);
+
+        if(username != null){
+            //身份存在，放行
+            return true;
+        }
+
+        //执行这里表示用户身份需要认证，跳转登陆页面
+        request.getRequestDispatcher(&quot;/WEB-INF/jsp/login.jsp&quot;).forward(request, response);
+
+        //return false表示拦截，不向下执行
+        //return true表示放行
+        return false;
+    }
+
+    //进入Handler方法之后，返回modelAndView之前执行
+    //应用场景从modelAndView出发：将公用的模型数据(比如菜单导航)在这里传到视图，也可以在这里统一指定视图
+    public void postHandle(HttpServletRequest request,
+                           HttpServletResponse response, Object handler,
+                           ModelAndView modelAndView) throws Exception {
+
+        System.out.println(&quot;LoginInterceptor...postHandle&quot;);
+
+    }
+
+    //执行Handler完成执行此方法
+    //应用场景：统一异常处理，统一日志处理
+    public void afterCompletion(HttpServletRequest request,
+                                HttpServletResponse response, Object handler, Exception ex)
+            throws Exception {
+
+        System.out.println(&quot;LoginInterceptor...afterCompletion&quot;);
+    }
+
+}
+</code></pre>
+
+<ul>
+<li>拦截器配置</li>
+</ul>
+<pre><code class="xml">&lt;!--拦截器 --&gt;
+&lt;mvc:interceptors&gt;
+    &lt;!--多个拦截器,顺序执行 --&gt;
+    &lt;!-- 登陆认证拦截器 --&gt;
+    &lt;mvc:interceptor&gt;
+        &lt;mvc:mapping path=&quot;/**&quot;/&gt;
+        &lt;bean class=&quot;com.iot.learnssm.firstssm.interceptor.LoginInterceptor&quot;&gt;&lt;/bean&gt;
+    &lt;/mvc:interceptor&gt;
+
+    ...省略
+</code></pre>
+
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> <code>|</code> <a href="http://blog.csdn.net/h3243212/">CSDN</a> <code>|</code> <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

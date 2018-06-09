@@ -1,0 +1,58 @@
+<h1 class="title">CSS</h1>
+<h2 class="subtitle"><strong>Cascading Style Sheets</strong> (CSS) are a stylesheet language used to describe the <code>presentation</code> of a document written in HTML or XML (including XML dialects like SVG or XHTML). CSS describes how elements should be <code>rendered</code> on screen, on paper, in speech, or on other media..</h2>
+<hr>
+
+<div class="content">
+  <p>
+    Use <code>CSS</code> to define styles for your documents, including the <strong>design</strong>, <strong>layout</strong> and <strong>variations</strong> in display for different devices and screen sizes. You can place your CSS in the &lt;head&gt; of a document with an <code>embedded style sheet</code>, or attach a separate file that defines your styles with an <code>external style sheet</code>. To link an external style sheet to your document, you'll simply add a link to the style sheet in the &lt;head&gt; of the document.
+  </p>
+  <p>
+    An external style sheet has many advantages. Keeping the styles separate from your HTML content:
+  </p>
+  <ul>
+    <li>Helps avoid duplication</li>
+    <li>Makes maintenance easier</li>
+    <li>Allows you to make a site-wide change in one place</li>
+  </ul>
+  <article class="message is-primary is-fullwidth">
+    <div class="message-body">
+      Using CSS, you store the style information in common files that all the pages share. For example, when the documents link to the same style sheet that defines the color of h2 headers, you can apply the style for h2 header tags globally by changing one css attribute.
+      When a user displays a web page, the user's browser loads the style information along with the content of the page.
+      When a user prints a web page, you can provide different style information that makes the printed page easy to read.
+    </div>
+  </article>
+  <p>
+    How do <code>HTML</code> and CSS work together? In general, you use <code>HTML</code> to describe the content of the document, not its style. You use CSS to specify the document's style, not its content. Later in this tutorial, you will see some exceptions to this arrangement.
+  </p>
+  <article class="message is-primary is-fullwidth">
+    <div class="message-body">
+      A markup language like HTML also provides some ways to specify style.
+      For example, in HTML you can use a &lt;b&gt; tag to make text bold, and you can specify the background color of a page in its &lt;body&gt; tag.
+      When you use CSS, you normally avoid using these features of the markup language so that all your document's style information is in one place.
+    </div>
+  </article>
+  <!-- CSS Sample code -->
+  <iframe width="100%" height="300" src="//jsfiddle.net/dylanccccc/bLy1hj03/7/embedded/html,css,result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+</div>
+
+<!-- Continue Sample code -->
+<div class="content">
+  <h1 class="title">How CSS works</h1>
+  <p>
+    When a browser displays a document, it must combine the document's content with its style information. It processes the document in two stages:
+  </p>
+  <ul>
+    <li>The browser converts the markup language and the CSS into the <a href="https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model">DOM</a> (Document Object Model). The DOM represents the document in the computer's memory. It combines the document's content with its style.</li>
+    <li>The browser displays the contents of the DOM.</li>
+  </ul>
+</div>
+
+<p>
+  Visit <a href="https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started/What_is_CSS">there</a> for more details.
+</p>
+
+<div class="column is-fullwidth has-text-right">
+  <a class="next-article" hlink="language-js.html">
+    <i class="fa fa-arrow-right">LANGUAGES-JAVASCRIPT</i>
+  </a>
+</div>

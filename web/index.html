@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Web with html/css</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.2.3/css/bulma.min.css"/>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+  <link rel="stylesheet" href="css/index.css"/>
+  <!-- Start of Async Drift Code -->
+  <script>
+    !function() {
+      var t;
+      if (t = window.driftt = window.drift = window.driftt || [], !t.init) return t.invoked ? void (window.console && console.error && console.error("Drift snippet included twice.")) : (t.invoked = !0,
+        t.methods = [ "identify", "config", "track", "reset", "debug", "show", "ping", "page", "hide", "off", "on" ],
+        t.factory = function(e) {
+          return function() {
+            var n;
+            return n = Array.prototype.slice.call(arguments), n.unshift(e), t.push(n), t;
+          };
+        }, t.methods.forEach(function(e) {
+        t[e] = t.factory(e);
+      }), t.load = function(t) {
+        var e, n, o, i;
+        e = 3e5, i = Math.ceil(new Date() / e) * e, o = document.createElement("script"),
+          o.type = "text/javascript", o.async = !0, o.crossorigin = "anonymous", o.src = "https://js.driftt.com/include/" + i + "/" + t + ".js",
+          n = document.getElementsByTagName("script")[0], n.parentNode.insertBefore(o, n);
+      });
+    }();
+    drift.SNIPPET_VERSION = '0.3.1';
+    drift.load('3usi22y3prrb');
+  </script>
+  <!-- End of Async Drift Code -->
+</head>
+<body class="hero is-fullheight">
+
+<header class="is-fullwidth">
+  <!-- Nav -->
+  <nav class="nav">
+    
+    <div class="nav-left">
+      <a class="nav-item is-brand" href="http://www.devdylan.cn/web/">
+        <img src="http://ocef2grmj.bkt.clouddn.com/Untitled.png" alt="DYLAN-WEB">
+      </a>
+    </div>
+    
+    <div class="nav-center"></div>
+    
+    <div class="nav-right nav-menu">
+      <span class="nav-item">
+        <a class="button" href="https://gitlab.com/WildDylan/WebStormProject/tree/master">
+          <span class="icon">
+            <i class="fa fa-github"></i>
+          </span>
+          <span>GitHub</span>
+        </a>
+        
+        <a class="button is-primary" href="https://gitlab.com/WildDylan/WebStormProject/repository/archive.zip?ref=master">
+          <span class="icon">
+            <i class="fa fa-download"></i>
+          </span>
+          <span>Sources</span>
+        </a>
+      </span>
+    </div>
+  
+  </nav>
+</header>
+
+<div class="columns" id="container">
+  
+  <div class="column is-narrow menu">
+    <aside class="menu">
+      <p class="menu-label">
+        Languages
+      </p>
+      <ul class="menu-list">
+        <li><a class="index-menu-item is-active" hlink="language-html.html">Html</a></li>
+        <li><a class="index-menu-item" hlink="language-css.html">Css</a></li>
+        <li><a class="index-menu-item" hlink="language-js.html">Javascript</a></li>
+      </ul>
+      
+      <p class="menu-label">
+        Training mission
+      </p>
+      <ul class="menu-list">
+        <li>
+          <a>Project prepare</a>
+          <ul>
+            <li><a class="index-menu-item" hlink="p-knowledge.html">知识准备</a></li>
+            <li><a class="index-menu-item" hlink="p-tools.html">工具以及资源</a></li>
+          </ul>
+        </li>
+        
+        <li>
+          <a>Project content</a>
+          <ul>
+            <li><a class="index-menu-item" hlink="p-design.html">项目设计</a></li>
+            <li><a class="index-menu-item" hlink="p-project-structure.html">项目目录结构</a></li>
+            <li><a class="index-menu-item" hlink="p-milestone.html">项目计划</a></li>
+          </ul>
+        </li>
+        
+        <li>
+          <a>Let's race</a>
+          <ul>
+            <li><a class="index-menu-item" hlink="p-index.html">首页制作</a></li>
+            <li><a class="index-menu-item" hlink="p-sign.html">登录、注册</a></li>
+            <li><a class="index-menu-item" hlink="p-detail.html">详情界面</a></li>
+          </ul>
+        </li>
+        
+        <li><a class="index-menu-item" hlink="p-summary.html">项目总结、思考</a></li>
+      </ul>
+      
+      <p class="menu-label">
+        Advanced
+      </p>
+      <ul class="menu-list">
+        <li><a class="index-menu-item" hlink="p-react.html">React, React-Native</a></li>
+        <li><a class="index-menu-item" hlink="p-vue.html">Vue</a></li>
+        <li><a class="index-menu-item" hlink="p-express-ejs.html">Express+ejs</a></li>
+      </ul>
+    </aside>
+  </div>
+  
+  <div class="column index-content">
+    
+  </div>
+
+</div>
+
+<footer>
+  <div class="has-text-centered">
+    <p>
+      <strong>DYLAN-WEB</strong> by <a href="http://www.devdylan.cn">Wild dylan</a>. The source code is licensed
+      <a href="http://opensource.org/licenses/mit-license.php">MIT</a>.
+    </p>
+  </div>
+</footer>
+
+<script src="../vendor/jquery/2.1.3/jquery.min.js"></script>
+<script>
+  var cachedResponsePool = {}
+  
+  $(function () {
+    $('.index-menu-item').click(function () {
+      loadHTML($(this).attr("hlink"));
+    });
+  
+    loadHTML("language-html.html");
+  });
+  
+  function loadHTML(link) {
+    var indexContent = $('.index-content');
+    
+    if (cachedResponsePool[link] != undefined) {
+      indexContent.html(cachedResponsePool[link]);
+      registerMethod(cachedResponsePool[link], "success", link);
+      scrollToTop();
+    } else {
+      indexContent.load(link, function (response, status) {
+        registerMethod(response, status, link);
+        scrollToTop();
+      });
+    }
+  }
+
+  /**
+   * Next article click method, should be register after content load
+   */
+  function registerMethod(response, status, link) {
+    // 更新缓存
+    if (status === 'success') {
+      cachedResponsePool[link] = response;
+    }
+    
+    // 替换样式
+    $('.is-active').removeClass("is-active");
+    $(".index-menu-item[hlink='" + link + "']").addClass("is-active");
+    
+    // 注册下一页方法
+    $('.next-article').click(function () {
+      loadHTML($(this).attr("hlink"));
+    });
+  }
+
+  /**
+   * Scroll content to top
+   */
+  function scrollToTop() {
+    $('body, html').animate({ scrollTop: 0 }, 300);
+  }
+</script>
+
+</body>
+</html>

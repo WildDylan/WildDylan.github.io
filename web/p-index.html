@@ -1,0 +1,70 @@
+<h1 class="title">首页制作</h1>
+<h2 class="subtitle">
+  人活脸、树活皮
+</h2>
+<hr>
+
+<div class="content">
+  
+  <p>打开项目设计文件，我们可以看到主页的设计图，这是一个很长的界面，但是姑且我们把它分为3个部分：</p>
+  <ul>
+    <li>header</li>
+    <li>content</li>
+    <li>footer</li>
+  </ul>
+
+  <p>而且大家会注意到，Header与Footer在每个HTML中都是相同的，所以我们把Header与Footer当做两个公用的模块来写。</p>
+  <hr>
+
+  <h1 class="title">Header</h1>
+  <p>分析Header的组成，左边的Title以及右边的菜单，很简单，我们着手去做。</p>
+  <p><code>index.html</code>为我们的入口界面，我们先大致的写一下项目的整个架子。</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/dylanccccc/bLy1hj03/18/embedded/html/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p>接下来，我们在 <code>views/components/header.html</code>中开始头部的代码编写，首先在 <code>index.html</code>中引入相应的工具类 <code>jQuery</code>与 <code>bulma.css</code>。</p>
+  <ul>
+    <li> <code>&ltlink type="text/css" rel="stylesheet" href="css/bulma.css" /&gt</code> </li>
+    <li> <code>&ltscript src="js/jquery-3.1.1.js" /&gt</code> </li>
+  </ul>
+  <p>然后打开 <code>header.html</code>，书写导航相关的代码：</p>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/ws_header.png" />
+  </p>
+  <p>我们发现，导航的内容分为标题以及菜单，所以我们使用一个&lta&gt来作为可以点击的网站名称，&ltul&gt标签作为菜单：</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/19/embedded/html,css/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p>Header就这样轻松的解决了，接下来我们开始编写Footer。</p>
+  <hr>
+  <h1 class="title">Footer</h1>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/ws_footer.png" />
+  </p>
+  <p>Footer的元素相对比较多，分为上下两部分，上边又分为左右两部分，我们来实现一下：</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/20/embedded/html,css/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <hr>
+  <h1 class="title">连接</h1>
+  <p>结束编写头部与尾部之后，最重要的就是把他们组合到一起，我们使用到了jQuery中的<code>LoadHtml();</code>方法：</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/21/embedded/js/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p>最终，我们看到的效果是：</p>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/ws_index_1.png" />
+  </p>
+  <hr>
+  <p>接下来我们编写首页的内容部分，分为13个小的部分，我们只编写其中有代表意义的几个（有几个模块一样），我们先来实现第一部分：</p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/22/embedded/html,css/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p class="has-text-centered">
+    <img src="http://ocef2grmj.bkt.clouddn.com/ws_index_2.png" />
+  </p>
+  <iframe width="100%" height="300" src="//jsfiddle.net/bLy1hj03/23/embedded/html,css/dark/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+  <p class="has-text-centered">
+    <img src="" />
+  </p>
+  <p>完成首页之后下节我们开始写登录与注册功能。</p>
+  <video src="http://ocef2grmj.bkt.clouddn.com/ws_index.mov" controls="controls">
+  your browser does not support the video tag
+  </video>
+</div>
+
+<div class="column is-fullwidth has-text-right">
+  <a class="next-article" hlink="p-sign.html">
+    <i class="fa fa-arrow-right">登录、注册</i>
+  </a>
+</div>

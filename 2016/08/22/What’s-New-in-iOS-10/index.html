@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>What’s New in iOS 10 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="What’s New in iOS 10.0
+Table of Contents
+
+
+Introduction
+iOS 10.0
+iOS 9.3
+iOS 9.2
+iOS 9.1
+iOS 9.0
+iOS 8.4
+iOS 8.3
+iOS 8.2
+iOS 8.1
+iOS 8.0
+iOS 7.1
+iOS 7.0
+iOS 6.1
+iOS 6.0
+iOS 5.1
+iOS 5.0
+
+iOS 10.0This a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="What’s New in iOS 10">
+<meta property="og:url" content="https://wilddylan.github.io/2016/08/22/What’s-New-in-iOS-10/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="What’s New in iOS 10.0
+Table of Contents
+
+
+Introduction
+iOS 10.0
+iOS 9.3
+iOS 9.2
+iOS 9.1
+iOS 9.0
+iOS 8.4
+iOS 8.3
+iOS 8.2
+iOS 8.1
+iOS 8.0
+iOS 7.1
+iOS 7.0
+iOS 6.1
+iOS 6.0
+iOS 5.1
+iOS 5.0
+
+iOS 10.0This a">
+<meta property="og:image" content="http://i3.qhmsg.com/dr/270_500_/t01e050479d57c15a07.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:01:37.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="What’s New in iOS 10">
+<meta name="twitter:description" content="What’s New in iOS 10.0
+Table of Contents
+
+
+Introduction
+iOS 10.0
+iOS 9.3
+iOS 9.2
+iOS 9.1
+iOS 9.0
+iOS 8.4
+iOS 8.3
+iOS 8.2
+iOS 8.1
+iOS 8.0
+iOS 7.1
+iOS 7.0
+iOS 6.1
+iOS 6.0
+iOS 5.1
+iOS 5.0
+
+iOS 10.0This a">
+<meta name="twitter:image" content="http://i3.qhmsg.com/dr/270_500_/t01e050479d57c15a07.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-What’s-New-in-iOS-10" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            What’s New in iOS 10
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/08/22/What’s-New-in-iOS-10/">
+            <time datetime="2016-08-22T01:30:09.000Z" itemprop="datePublished">2016-08-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/iOS新特性/">iOS新特性</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h1 id="What’s-New-in-iOS-10-0"><a href="#What’s-New-in-iOS-10-0" class="headerlink" title="What’s New in iOS 10.0"></a>What’s New in iOS 10.0</h1><ul>
+<li>Table of Contents</li>
+</ul>
+<ul>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008244-SW1" target="_blank" rel="external">Introduction</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-SW1" target="_blank" rel="external">iOS 10.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9_3.html#//apple_ref/doc/uid/TP40016661-SW1" target="_blank" rel="external">iOS 9.3</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9_2.html#//apple_ref/doc/uid/TP40016637-SW1" target="_blank" rel="external">iOS 9.2</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9_1.html#//apple_ref/doc/uid/TP40016572-SW1" target="_blank" rel="external">iOS 9.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS9.html#//apple_ref/doc/uid/TP40016198-SW1" target="_blank" rel="external">iOS 9.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_4.html#//apple_ref/doc/uid/TP40015986-SW1" target="_blank" rel="external">iOS 8.4</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_3.html#//apple_ref/doc/uid/TP40015154-SW1" target="_blank" rel="external">iOS 8.3</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_2.html#//apple_ref/doc/uid/TP40015039-SW1" target="_blank" rel="external">iOS 8.2</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8_1.html#//apple_ref/doc/uid/TP40015009-SW1" target="_blank" rel="external">iOS 8.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS8.html#//apple_ref/doc/uid/TP40014205-SW1" target="_blank" rel="external">iOS 8.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS7_1.html#//apple_ref/doc/uid/TP40013916-SW1" target="_blank" rel="external">iOS 7.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS7.html#//apple_ref/doc/uid/TP40013162-SW1" target="_blank" rel="external">iOS 7.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS6_1.html#//apple_ref/doc/uid/TP40012873-SW1" target="_blank" rel="external">iOS 6.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS6.html#//apple_ref/doc/uid/TP40011812-SW1" target="_blank" rel="external">iOS 6.0</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS5_1.html#//apple_ref/doc/uid/TP40012663-SW1" target="_blank" rel="external">iOS 5.1</a></li>
+<li><a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS5.html#//apple_ref/doc/uid/TP30915195-SW1" target="_blank" rel="external">iOS 5.0</a></li>
+</ul>
+<h1 id="iOS-10-0"><a href="#iOS-10-0" class="headerlink" title="iOS 10.0"></a>iOS 10.0</h1><p>This article summarizes the key developer-related features introduced in iOS 10, which runs on currently shipping iOS devices. The article also lists the documents that describe new features in more detail.</p>
+<p>For late-breaking news and information about known issues, see Release Notes at <a href="https://developer.apple.com/ios/download/" target="_blank" rel="external">https://developer.apple.com/ios/download/</a>. For the complete list of new APIs added in iOS 10, see <em>iOS 10.0 API Diffs</em>. For more information on new devices, see <em>iOS Device Compatibility Reference</em>.</p>
+<p>To learn about what’s new in Swift, see <a href="https://developer.apple.com/library/prerelease/content/documentation/DeveloperTools/Conceptual/WhatsNewXcode/introduction.html#//apple_ref/doc/uid/TP40004635-SW3" target="_blank" rel="external">Swift Language</a> and <em>The Swift Programming Language (Swift 3)</em>.</p>
+<a id="more"></a>
+<h2 id="SiriKit"><a href="#SiriKit" class="headerlink" title="SiriKit"></a>SiriKit</h2><p>Apps that provide services in specific domains can use SiriKit to make those services available from Siri on iOS. Making your services available requires creating one or more app extensions using the Intents and Intents UI frameworks. SiriKit supports services in the following domains:</p>
+<ul>
+<li>Audio or video calling</li>
+<li>Messaging</li>
+<li>Sending or receiving payments</li>
+<li>Searching photos</li>
+<li>Booking a ride</li>
+<li>Managing workouts</li>
+</ul>
+<p>When the user makes a request involving your service, SiriKit sends your extension an intent object, which describes the user’s request and provides any data related to that request. You use the intent object to provide an appropriate response object, which includes details of how you can handle the user’s request. Siri typically handles all user interactions, but you can use an extension to provide custom UI that incorporates branding or additional information from your app.</p>
+<p>SiriKit also provides a mechanism you can use to tell the system about the interactions and activities that occur within your app.When you tell the system about these interactions, the system can determine if your app can handle the user’s current request and, if it can, pass the request to your app. In addition to the intent, SiriKit defines an interaction object, which combines an intent with information about the intent-handling process, including details such as the start time and duration of a specific occurrence of the process. If your app is registered as capable of handling an activity that has the same name as an intent, the system can launch your app with an interaction object containing that intent even if you don’t provide an Intents app extension.</p>
+<p>Ride booking is supported by both Maps and Siri, and users can also make restaurants reservations with Maps. Your Intents extension handles interactions that originate from the Maps app in the same way that it handles requests coming from Siri. If you customize the user interface, your Intents UI extension can also configure itself differently, depending on whether the request came from Siri or Maps.</p>
+<p>To learn how to support SiriKit and give users new ways to access your services, read <em>SiriKit Programming Guide</em>. When you’re ready to implement the app extensions that handle various intents, see <em>Intents Framework Reference</em> and <em>Intents UI Framework Reference</em>.</p>
+<h2 id="Proactive-Suggestions"><a href="#Proactive-Suggestions" class="headerlink" title="Proactive Suggestions"></a>Proactive Suggestions</h2><p>iOS 10 introduces new ways to increase engagement with your app by helping the system suggest your app to users at appropriate times. If you adopted app search in your iOS 9 app, you gave users access to activities and content deep within your app through Spotlight and Safari search results, Handoff, and Siri suggestions. In iOS 10 and later, you can provide information about what users do in your app, which helps the system promote your app in additional places, such as the keyboard with QuickType suggestions, Maps and CarPlay, the app switcher, Siri interactions, and (for media playing apps) the lock screen. These opportunities for enhanced integration with the system are supported by a collection of technologies, such as <code>NSUserActivity</code>, web markup defined by <a href="http://schema.org/" target="_blank" rel="external">Schema.org</a>, and APIs defined in the Core Spotlight, MapKit, UIKit, and Media Player frameworks.</p>
+<p>In iOS 10, the <code>NSUserActivity</code> object includes the <code>mapItem</code> property, which lets you provide location information that can be used in other contexts. For example, if your app displays hotel reviews, you can use the <code>mapItem</code> property to hold the location of the hotel the user is viewing so that when the user switches to a travel planning app, that hotel’s location is automatically available. And if you support app search, you can use the new text-based address component properties in <code>CSSearchableItemAttributeSet</code>, such as <code>thoroughfare</code> and <code>postalCode</code>, to fully specify locations to which the user may want to go. Note that when you use the <code>mapItem</code> property, the system automatically populates the <code>contentAttributeSet</code> property, too.</p>
+<p>To share a location with the system, be sure to specify <code>latitude</code> and <code>longitude</code> values, in addition to values for the address component properties in<code>CSSearchableItemAttributeSet</code>. It’s also recommended that you supply a value for the <code>namedLocation</code> property, so that users can view the name of the location, and the<code>phoneNumbers</code> property, so that users can use Siri to initiate a call to the location.</p>
+<p>In iOS 9, adding markup to the structured data on your website enriched the content that users see in Spotlight and Safari search results. In iOS 10, you can use location-related vocabulary defined at <a href="http://schema.org/" target="_blank" rel="external">Schema.org</a>, such as <a href="http://schema.org/PostalAddress" target="_blank" rel="external">PostalAddress</a>, to further enhance the user’s experience. For example, if users view a location described on your website, the system can suggest the same location when users switch to Maps. Note that Safari supports both JSON-LD and Microdata encodings of <a href="http://schema.org/" target="_blank" rel="external">Schema.org</a> vocabularies.</p>
+<p>UIKit introduces the <code>textContentType</code> property in the <code>UITextInputTraits</code> protocol so that you can specify the semantic meaning of the content you expect users to enter in a text area. When you provide this information, the system can in some cases automatically select an appropriate keyboard and improve keyboard corrections and proactive integration with information supplied from other apps and websites. For example, if you use <code>UITextContentTypeFullStreetAddress</code> to tell the system that you expect users to enter a complete address in a text field, the system can suggest the address of a location the user was recently viewing.</p>
+<p>If your app plays media and you use the <code>MPPlayableContentManager</code> APIs, iOS 10 helps you let users view album art and play media through your app on the lock screen.</p>
+<p>If your ride-sharing app uses the <code>MKDirectionsRequest</code> API, iOS 10 can display it in the app switcher when the user is likely to want a ride. To register as a ride-share provider, specify the <code>MKDirectionsModeRideShare</code> value for the <a href="https://developer.apple.com/library/prerelease/content/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html#//apple_ref/doc/uid/TP40009252-SW33" target="_blank" rel="external">MKDirectionsApplicationSupportedModes</a> key in your <code>Info.plist</code> file. If your app supports only ride sharing, the system suggests your app with text that begins “Get a ride to…”; if your app supports both ride sharing and another routing type (such as Automobile or Bike), the system uses the text “Get directions to…”. Note that the <code>MKMapItem</code> object you receive may not include latitude and longitude information and would require geocoding.</p>
+<h2 id="Integrating-with-the-Messages-App"><a href="#Integrating-with-the-Messages-App" class="headerlink" title="Integrating with the Messages App"></a>Integrating with the Messages App</h2><p>In iOS 10, you can create app extensions that interact with the Messages app and let users send text, stickers, media files, and interactive messages. You can also support interactive messages that update as each recipient responds to the message. You can create two types of app extensions:</p>
+<ul>
+<li><p>A <em>Sticker pack</em> provides a set of stickers that users can add to their Messages content.</p>
+</li>
+<li><p>An <em>iMessage app</em> lets you present a custom user interface within the Messages app, create a sticker browser, include text, stickers, and media files within a conversation, and create, send, and update interactive messages.</p>
+<p>An iMessage app can also help users search images that you host on your app’s related website while they’re in the Messages app.</p>
+</li>
+</ul>
+<p>You can create a Sticker pack without writing any code: Simply drag images into the Sticker Pack folder inside the Stickers asset catalog in Xcode.</p>
+<p>To develop an iMessage app, you use the APIs in the Messages framework (<code>Messages.framework</code>). To learn about the Messages framework, see <em>Messages Framework Reference</em>. For general information about creating app extensions, see <em>App Extension Programming Guide</em>.</p>
+<p>If your app provides images for sharing in Messages and you want users to be able to use the Spotlight popular image search (that is, “#images”) to search these images without leaving the Messages app, first create an iMessage app. Then follow these steps:</p>
+<ul>
+<li>Add the <code>com.apple.developer.associated-domains</code> key to your app’s entitlements. Include a list of the web domains that host the images you want to make searchable. For each domain, specify the <code>spotlight-image-search</code> service.</li>
+<li>Add an <code>apple-app-site-association</code> file to your website. Add a dictionary for the <code>spotlight-image-search</code> service and include your app ID, which is the team ID or app ID prefix, followed by the bundle ID. You can also specify up to 500 paths and patterns that should be included for indexing by the Spotlight popular image search (for some examples of website paths, see the universal links examples in <a href="https://developer.apple.com/library/prerelease/content/documentation/General/Conceptual/AppSearch/UniversalLinks.html#//apple_ref/doc/uid/TP40016308-CH12-SW4" target="_blank" rel="external">Creating and Uploading the Association File</a>).</li>
+<li>Allow crawling by Applebot (to learn more, see <a href="https://support.apple.com/en-us/HT204683" target="_blank" rel="external">About Applebot</a>).</li>
+</ul>
+<h2 id="User-Notifications"><a href="#User-Notifications" class="headerlink" title="User Notifications"></a>User Notifications</h2><p>iOS 10 introduces the User Notifications framework (<code>UserNotifications.framework</code>), which supports the delivery and handling of local and remote notifications. You use the classes of this framework to schedule the delivery of local notifications based on specific conditions, such as time or location. Apps and app extensions can use this framework to receive and potentially modify local and remote notifications when they are delivered to the user’s device.</p>
+<p>Also introduced in iOS 10, the User Notifications UI framework (<code>UserNotificationsUI.framework</code>) lets you customize the appearance of local and remote notifications when they appear on the user’s device. You use this framework to define an app extension that receives the notification data and provides the corresponding visual representation. Your extension can also respond to custom actions associated with those notifications.</p>
+<h2 id="Speech-Recognition"><a href="#Speech-Recognition" class="headerlink" title="Speech Recognition"></a>Speech Recognition</h2><p>iOS 10 introduces a new API that supports continuous speech recognition and helps you build apps that can recognize speech and transcribe it into text. Using the APIs in the Speech framework (<code>Speech.framework</code>), you can perform speech transcription of both real-time and recorded audio. For example, you can get a speech recognizer and start simple speech recognition using code like this:</p>
+<table>
+<thead>
+<tr>
+<th><code>let recognizer = SFSpeechRecognizer()</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>let request = SFSpeechURLRecognitionRequest(url: audioFileURL)</code></td>
+</tr>
+<tr>
+<td><code>recognizer?.recognitionTask(with: request, resultHandler: { (result, error) in</code></td>
+</tr>
+<tr>
+<td><code>print (result?.bestTranscription.formattedString)</code></td>
+</tr>
+<tr>
+<td><code>})</code></td>
+</tr>
+</tbody>
+</table>
+<p>As with accessing other types of protected data, such as Calendar and Photos data, performing speech recognition requires the user’s permission (for more information about accessing protected data classes, see <a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-SW3" target="_blank" rel="external">Security and Privacy Enhancements</a>). In the case of speech recognition, permission is required because data is transmitted and temporarily stored on Apple’s servers to increase the accuracy of speech recognition. To request the user’s permission, you must add the <code>NSSpeechRecognitionUsageDescription</code> key to your app’s <code>Info.plist</code> file.</p>
+<p>When you adopt speech recognition in your app, be sure to indicate to users that their speech is being recognized, and that they should not make sensitive utterances at that time.</p>
+<h2 id="Wide-Color"><a href="#Wide-Color" class="headerlink" title="Wide Color"></a>Wide Color</h2><p>Most graphics frameworks throughout the system, including Core Graphics, Core Image, Metal, and AVFoundation, have substantially improved support for extended-range pixel formats and wide-gamut color spaces. By extending this behavior throughout the entire graphics stack, it is easier than ever to support devices with a wide color display. In addition, UIKit standardizes on working in a new extended sRGB color space, making it easy to mix sRGB colors with colors in other, wider color gamuts without a significant performance penalty.</p>
+<p>Here are some best practices to adopt as you start working with Wide Color.</p>
+<ul>
+<li>In iOS 10, the <code>UIColor</code> class uses the extended sRGB color space and its initializers no longer clamp raw component values to between <code>0.0</code> and <code>1.0</code>. If your app relies on UIKit to clamp component values (whether you’re creating a color or asking a color for its component values), you need to change your app’s behavior when you link against iOS 10.</li>
+<li>When performing custom drawing in a <code>UIView</code> on an iPad Pro (9.7 inch), the underlying drawing environment is configured with an extended sRGB color space.</li>
+<li>If your app renders custom image objects, use the new <code>UIGraphicsImageRenderer</code> class to control whether the destination bitmap is created using an extended-range or standard-range format.</li>
+<li>If you are performing your own image processing on wide-gamut devices using a lower level API, such as Core Graphics or Metal, you should use an extended range color space and a pixel format that supports 16-bit floating-point component values. When clamping of color values is necessary, you should do so explicitly.</li>
+<li>Core Graphics, Core Image, and Metal Performance Shaders provide new options for easily converting colors and images between color spaces.</li>
+</ul>
+<h2 id="Adapting-to-the-True-Tone-Display"><a href="#Adapting-to-the-True-Tone-Display" class="headerlink" title="Adapting to the True Tone Display"></a>Adapting to the True Tone Display</h2><p>The True Tone display uses ambient light sensors to automatically adjust the color and intensity of the display to match the lighting conditions of the current environment. To ensure that your app works well with the standard color shift provided by True Tone, add the new <a href="https://developer.apple.com/library/prerelease/content/documentation/General/Reference/InfoPlistKeyReference/Articles/iPhoneOSKeys.html#//apple_ref/doc/uid/TP40009252-SW31" target="_blank" rel="external">UIWhitePointAdaptivityStyle</a> key to your <code>Info.plist</code> file to describe your app’s primary visual content. For example:</p>
+<ul>
+<li>If your app is a photo editing app, color fidelity is more important than automatic adjustment to the environmental white point. In this case, you can use the<code>UIWhitePointAdaptivityStylePhoto</code> style to reduce the strength of True Tone shift applied by the system.</li>
+<li>If your app is a reading app, conformance with the environmental white point is helpful to users. In this case, you can use the <code>UIWhitePointAdaptivityStyleReading</code>style to increase the strength of True Tone shift applied by the system.</li>
+</ul>
+<h2 id="App-Search-Enhancements"><a href="#App-Search-Enhancements" class="headerlink" title="App Search Enhancements"></a>App Search Enhancements</h2><p>iOS 10 and the Core Spotlight framework introduce several enhancements to app search:</p>
+<ul>
+<li>In-app searching</li>
+<li>Search continuation</li>
+<li>Crowdsourcing deep link popularity with differential privacy</li>
+<li>Visualization of validation results</li>
+</ul>
+<p>The new <code>CSSearchQuery</code> class supports in-app searches of content that you index using existing Core Spotlight APIs. Using this API can eliminate the need to maintain your own separate search index and lets you take advantage of Spotlight’s powerful search technology and matching rules to allow users to search for content without leaving your app, just as they do within Mail, Messages, and Notes.</p>
+<p>In iOS 9, using search APIs (such as Core Spotlight, <code>NSUserActivity</code>, and web markup) to index content within your app let users search for that content using the Spotlight and Safari search interfaces. In iOS 10, you can use new Core Spotlight symbols to let users continue a search they began in Spotlight when they open your app. To enable this feature, add the <code>CoreSpotlightContinuation</code> key to your <code>Info.plist</code> file, give it the value <code>YES</code>, and update your code to handle an activity continuation of type<code>CSQueryContinuationActionType</code>. The user info dictionary in the <code>NSUserActivity</code> object that you receive in your<code>application:continueUserActivity:restorationHandler:</code> method includes the <code>CSSearchQueryString</code> key, whose value is a string that represents the user’s query.</p>
+<p>iOS 10 introduces a differentially private way to help improve the ranking of your app’s content in search results. iOS submits a subset of differentially private hashes to Apple servers as users use your app and as <code>NSUserActivity</code> objects that include a deep link URL and have their <code>eligibleForPublicIndexing</code> property set to <code>YES</code> are submitted to iOS. The differential privacy of the hashes allows Apple to count the frequency with which popular deep links are visited without ever associating a user with a link.</p>
+<p>When you test your website markup and deep links using the App Search API Validation tool, it now displays a visual representation of your results, including supported markup, such as that defined at <a href="http://schema.org/" target="_blank" rel="external">Schema.org</a>. The validation tool can help you see information that the Applebot web crawler has indexed, such as the title, description, URL, and other supported elements. You can access the validation tool here: <a href="https://search.developer.apple.com/appsearch-validation-tool" target="_blank" rel="external">https://search.developer.apple.com/appsearch-validation-tool</a>. To learn more about supporting deep links and adding markup, see <a href="https://developer.apple.com/library/prerelease/content/documentation/General/Conceptual/AppSearch/WebContent.html#//apple_ref/doc/uid/TP40016308-CH8" target="_blank" rel="external">Mark Up Web Content</a>.</p>
+<p>To learn how to make your website’s images searchable within the Messages app, see <a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-SW4" target="_blank" rel="external">Integrating with the Messages App</a>.</p>
+<h2 id="Widget-Enhancements"><a href="#Widget-Enhancements" class="headerlink" title="Widget Enhancements"></a>Widget Enhancements</h2><p>iOS 10 introduces a new design for the lock screen, which now displays widgets. To ensure that your widget looks good on any background, you can specify<code>widgetPrimaryVibrancyEffect</code> or <code>widgetSecondaryVibrancyEffect</code>, as appropriate (use these properties instead of the deprecated<code>notificationCenterVibrancyEffect</code> property). In addition, widgets now include the concept of display mode (represented by <code>NCWidgetDisplayMode</code>), which lets you describe how much content is available and allows users to choose a compact or expanded view.</p>
+<h2 id="Apple-Pay-Enhancements"><a href="#Apple-Pay-Enhancements" class="headerlink" title="Apple Pay Enhancements"></a>Apple Pay Enhancements</h2><p>In iOS 10, users can make easy and secure payments using Apple Pay from websites and through interaction with Siri and Maps. For developers, iOS 10 introduces new APIs you can use in code that runs in both iOS and watchOS, the ability to support dynamic payment networks, and a new sandbox testing environment.</p>
+<p>iOS 10 introduces new APIs that help you incorporate Apple Pay directly into your website. When you support Apple Pay in your website, users browsing with Safari in iOS or OS X can make payments using their cards in Apple Pay on their iPhone or Apple Watch. To learn more, see <em>ApplePay JS Framework Reference</em>.</p>
+<p>The PassKit framework (<code>PassKit.framework</code>) introduces APIs that let you support Apple Pay in places where UIKit is not available. Specifically,<code>PKPaymentAuthorizationController</code> and <code>PKPaymentAuthorizationControllerDelegate</code> enable features provided by <code>PKPaymentAuthorizationViewController</code> and its delegate, but don’t require UIKit. Although the new API is required for supporting Apple Pay in watchOS and in certain intents, it’s recommended that you adopt it in all of your code so that you can provide broad Apple Pay support with a single code base. (To learn more about intents and Siri integration, see <a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-SW5" target="_blank" rel="external">SiriKit</a>.)</p>
+<p>The PassKit framework also adds features that let card issuers present their cards from within their apps. Specifically, the <code>PKPaymentButtonTypeInStore</code> button type lets you display an Apple Pay button for a card and the <code>presentPaymentPass:</code> method lets you programmatically display the card (the <code>presentPaymentPass:</code> method is defined in<code>PKPassLibrary</code>).</p>
+<p>When a new payment network becomes available, your app can automatically support the new network without requiring you to modify and recompile your app. The<code>availableNetworks</code> method lets you discover the networks that are available on the user’s device at runtime. In addition, the <code>supportedNetworks</code> property is expanded, so that it can take some payment provider names as an argument. Your app then automatically supports any networks that the payment provider supports. To learn more, see<a href="https://developer.apple.com/apple-pay/" target="_blank" rel="external">https://developer.apple.com/apple-pay/</a>.</p>
+<p>iOS 10 introduces a new testing environment that lets you provision test cards directly on the device. The test environment returns encrypted test payment data. To use this environment, follow these steps:</p>
+<ol>
+<li>Create a testing iCloud Account at iTunes Connect.</li>
+<li>Log into that account on your device.</li>
+<li>Set the desired region for testing.</li>
+<li>Use test cards listed at <a href="https://developer.apple.com/apple-pay/" target="_blank" rel="external">https://developer.apple.com/apple-pay/</a>.</li>
+</ol>
+<p><strong>Note:</strong> When you switch iCloud accounts, the environment switches automatically.You must still test your payments using actual cards in an production environment.</p>
+<h2 id="Security-and-Privacy-Enhancements"><a href="#Security-and-Privacy-Enhancements" class="headerlink" title="Security and Privacy Enhancements"></a>Security and Privacy Enhancements</h2><p>iOS 10 introduces several changes and additions that help you improve the security of your code and maintain the privacy of user data. To learn more about these items, see<code>https://developer.apple.com/security/</code>.</p>
+<ul>
+<li>The new <code>NSAllowsArbitraryLoadsInWebContent</code> key for your <code>Info.plist</code> file gives you a convenient way to allow arbitrary web page loads to work while retaining ATS protections for the rest of your app.</li>
+<li>The SecKey API includes improvements for asymmetric key generation. Use the SecKey API instead of the deprecated Common Data Security Architecture (CDSA) APIs.</li>
+<li>The RC4 symmetric cipher suite is now disabled by default for all SSL/TLS connections, and SSLv3 is no longer supported in the Secure Transports API. It’s recommended that you stop using the SHA-1 and 3DES cryptographic algorithms as soon as possible.</li>
+<li>The <code>UIPasteboard</code> class supports the Clipboard feature, which lets users copy and paste between devices, and includes API you can use to restrict a pasteboard to a specific device and set an expiration timestamp after which the pasteboard is cleared. Additionally, named pasteboards are no longer persistent—instead, you should use shared containers—and the “Find” pasteboard (that is, the pasteboard identified by the <code>UIPasteboardNameFind</code> constant) is unavailable.</li>
+<li>You must statically declare your app’s intended use of protected data classes by including the appropriate purpose string keys in your <code>Info.plist</code> file. For example, you must include the <a href="https://developer.apple.com/library/prerelease/content/documentation/General/Reference/InfoPlistKeyReference/Articles/CocoaKeys.html#//apple_ref/doc/uid/TP40009251-SW15" target="_blank" rel="external">NSCalendarsUsageDescription</a> key to access the user’s Calendar data. If you don’t include the relevant purpose string keys, your app exits when it tries to access the data.</li>
+</ul>
+<h2 id="CallKit"><a href="#CallKit" class="headerlink" title="CallKit"></a>CallKit</h2><p>The CallKit framework (<code>CallKit.framework</code>) lets VoIP apps integrate with the iPhone UI and give users a great experience. Use this framework to let users view and answer incoming VoIP calls on the lock screen and manage contacts from VoIP calls in the Phone app’s Favorites and Recents views.</p>
+<p>CallKit also introduces app extensions that enable call blocking and caller identification. You can create an app extension that can associate a phone number with a name or tell the system when a number should be blocked.</p>
+<h2 id="News-Publisher-Enhancements"><a href="#News-Publisher-Enhancements" class="headerlink" title="News Publisher Enhancements"></a>News Publisher Enhancements</h2><p>News Publisher makes it easy to deliver beautifully designed news, magazine, and web content to Apple News using the Apple News Format. Anyone can sign up, from major magazines or news organizations to independent publishers and bloggers. To get started or to learn more about recent updates, visit <a href="https://newsresources.apple.com/" target="_blank" rel="external">https://newsresources.apple.com</a>.</p>
+<h2 id="Video-Subscriber-Account"><a href="#Video-Subscriber-Account" class="headerlink" title="Video Subscriber Account"></a>Video Subscriber Account</h2><p>iOS 10 introduces the Video Subscriber Account framework (<code>VideoSubscriberAccount.framework</code>) to help apps that support authenticated streaming or authenticated video on demand (also known as TV Everywhere) authenticate with their cable or satellite TV provider. Using the APIs in this framework can help you support a single sign-in experience in which users sign in once to unlock access in all of the streaming video apps that their subscription supports.</p>
+<h2 id="App-Extensions"><a href="#App-Extensions" class="headerlink" title="App Extensions"></a>App Extensions</h2><p>iOS 10 introduces several new extension points for which you can create an app extension, such as:</p>
+<ul>
+<li>Call Directory</li>
+<li>Intents</li>
+<li>Intents UI</li>
+<li>Messages</li>
+<li>Notification Content</li>
+<li>Notification Service</li>
+<li>Sticker Pack</li>
+</ul>
+<p>In addition, iOS 10 includes the following enhancements for third-party keyboard app extensions:</p>
+<ul>
+<li>You can automatically detect the input language of a document by using the <code>documentInputMode</code> property of the <code>UITextDocumentProxy</code> class, and change your keyboard extension to align with that language (if supported). When you detect the input language in this way, you can do per-language keyboard switching such as what is built in to Messages.</li>
+<li>The new <code>handleInputModeListFromView:withEvent:</code> method lets a keyboard extension display the system’s keyboard picker menu (that is, the globe key menu).</li>
+</ul>
+<p>A keyboard extension should position the globe key in the same location as the system globe key for each orientation. Also, if you need to provide a custom key—to enable keyboard settings, for example—you should put this key in the same location as the dictation key in the system keyboard.</p>
+<p>To learn more about creating app extensions in general, see <em>App Extension Programming Guide</em>.</p>
+<h2 id="Additional-Framework-Changes"><a href="#Additional-Framework-Changes" class="headerlink" title="Additional Framework Changes"></a>Additional Framework Changes</h2><p>In addition to the major changes described above, iOS 10 includes many other improvements.</p>
+<h3 id="AVFoundation"><a href="#AVFoundation" class="headerlink" title="AVFoundation"></a>AVFoundation</h3><p>The AVFoundation framework (<code>AVFoundation.framework</code>) includes the following enhancements:</p>
+<ul>
+<li>The new <code>AVCapturePhotoOutput</code> class provides a unified pipeline for all photography workflows, enabling more sophisticated control and monitoring of the entire capture process and including support for new features such as Live Photos and RAW format capture. You should transition to <code>AVCapturePhotoOutput</code> instead of<code>AVCaptureStillImageOutput</code>, which is deprecated in iOS 10.</li>
+<li>The Camera Capture pipeline now enables capture in wide-gamut color formats on supported hardware. By default, an <code>AVCaptureSession</code> automatically configures for wide-color capture when appropriate for your capture workflow—for details, see <em>iOS Device Compatibility Reference</em>.</li>
+<li>You no longer need to implement different behaviors for <code>AVPlayerItem</code>, depending on whether the content is a movie file or HLS content. In apps that link on or after iOS 10, you simply set the <code>rate</code> property and AVFoundation determines when enough content has been buffered to play without stalling.</li>
+<li>The <code>AVPlayerLooper</code> class makes it easier to loop a particular piece of media content during playback.</li>
+<li>Use the <code>AVAssetDownloadURLSession</code> and <code>AVAssetDownloadURLSession</code> classes to download an asset, including an HLS stream, to the device and then play it later. When used in conjunction with FairPlay Streaming, you can download an encrypted HLS stream and play the stream securely at a later time.</li>
+</ul>
+<h3 id="AVKit"><a href="#AVKit" class="headerlink" title="AVKit"></a>AVKit</h3><p>The AVKit framework (<code>AVKit.framework</code>) includes the <code>updatesNowPlayingInfoCenter</code> property, which indicates when the Now Playing Info Center should be updated.</p>
+<h3 id="Core-Data"><a href="#Core-Data" class="headerlink" title="Core Data"></a>Core Data</h3><p>The Core Data framework (<code>CoreData.framework</code>) includes the following enhancements:</p>
+<ul>
+<li><code>NSPersistentStoreCoordinator</code> now maintains a connection pool for SQLite stores. Root <code>NSManagedObjectContext</code> objects (those without parent MOCs) transparently support concurrent fetching and faulting without serializing against each other.</li>
+<li><code>NSManagedObjectContext</code> objects with SQLite stores in WAL journal_mode support a new feature called query generations. These allow a MOC to be pinned to a version of the database at a point in time and perform all future fetching and faulting against that version of the database. Pinned MOCs are moved to the most recent transaction with any save, and query generations do not survive the process’s life time.</li>
+<li>The new <code>NSPersistentContainer</code> class provides your app with a high-level integration point that maintains references to your <code>NSPersistentStoreCoordinator</code>,<code>NSManagedObjectModel</code>, and other configuration resources.</li>
+<li>Core Data now has tighter integration with Xcode and automatically generates and updates your <code>NSManagedObject</code> subclasses.</li>
+<li><code>NSManagedObject</code> includes several additional convenience methods, making it easier to fetch and create subclasses. <code>NSManagedObject</code> subclasses that have a 1:1 relationship with an entity now support <code>entity</code>.</li>
+<li>Core Data introduces several API adjustments that provide better integration with Swift, including parameterized <code>NSFetchRequest</code> objects.</li>
+</ul>
+<p>For more information, see <em>Core Data Framework Reference</em>.</p>
+<h3 id="Core-Image"><a href="#Core-Image" class="headerlink" title="Core Image"></a>Core Image</h3><p>The Core Image framework (<code>CoreImage.framework</code>) includes several enhancements.</p>
+<p>RAW image file support is now available on iOS devices that use the A8 or A9 CPU. Core Image can decode RAW images produced by several third-party cameras as well as images produced by the iSight camera of supported iOS devices (to learn more, see <a href="https://developer.apple.com/library/prerelease/content/releasenotes/General/WhatsNewIniOS/Articles/iOS10.html#//apple_ref/doc/uid/TP40017084-SW2" target="_blank" rel="external">AVFoundation</a>). To process RAW images, use <code>filterWithImageData:options:</code> or<code>filterWithImageURL:options:</code> to create a <code>CIFilter</code> object, adjust RAW processing options with the keys listed in RAW Image Options, and read the processed image from the filter’s <code>outputImage</code> property.</p>
+<p>You can now insert custom processing into a Core Image filter graph by using the<code>imageWithExtent:processorDescription:argumentDigest:inputFormat:outputFormat:options:roiCallback:processor:</code> method. This method adds a callback block that Core Image invokes in between filters when processing an image for display or output; in the block, you can access the pixel buffers or Metal textures containing the current state of the processed image and apply your own image processing algorithms.</p>
+<p>When using a custom processor block or writing filter kernels, you can process images in a color space other than the Core Image context’s working color space. Use the<code>imageByColorMatchingWorkingSpaceToColorSpace:</code> and <code>imageByColorMatchingColorSpaceToWorkingSpace:</code> methods to convert into and out of your color space before and after processing.</p>
+<p>Performance is significantly improved for rendering <code>UIImage</code> objects that are backed by Core Image images (such as those created by using the <code>initWithCIImage:</code> initializer) in a <code>UIImageView</code> object. In addition, a Core Image–backed <code>UIImage</code> object that’s tagged with a wide-gamut color profile renders in a <code>UIImageView</code> object that uses wide-gamut color (on capable iOS devices).</p>
+<p>Core Image kernel code can now request a specific output pixel format.</p>
+<p>Core Image introduces five new filters:</p>
+<ul>
+<li><code>CINinePartTiled</code></li>
+<li><code>CINinePartStretched</code></li>
+<li><code>CIHueSaturationValueGradient</code></li>
+<li><code>CIEdgePreserveUpsampleFilter</code></li>
+<li><code>CIClamp</code></li>
+</ul>
+<h3 id="Core-Motion"><a href="#Core-Motion" class="headerlink" title="Core Motion"></a>Core Motion</h3><p>The Core Motion framework (<code>CoreMotion.framework</code>) includes pedometer events, which enable apps to receive fast real-time notifications when users pause and resume while running. On supported devices, apps can use <code>CMPedometer</code> APIs to register to receive live pedometer events while running in the foreground or the background.</p>
+<h3 id="Foundation"><a href="#Foundation" class="headerlink" title="Foundation"></a>Foundation</h3><p>The Foundation framework (Foundation.framework) contains many enhancements, such as:</p>
+<ul>
+<li>The new <code>NSDateInterval</code> class defines a programmatic interface for calculating the duration of a time interval and determining whether a date falls within it, as well as comparing date intervals and checking to see whether they intersect.</li>
+<li>The <code>NSLocale</code> class defines many new properties that you can use to get information about a locale and how it can be displayed.</li>
+<li>The new <code>NSMeasurement</code> class helps you convert measurements into different units, and calculate the sum or difference between two measurements. The new<code>NSMeasurementFormatter</code> class helps you create localized representations of measurements when displaying quantities of units to the user.</li>
+<li>The new <code>NSUnit</code> class and concrete <code>NSDimension</code> subclasses help you represent specific units of measure.</li>
+</ul>
+<h3 id="GameKit"><a href="#GameKit" class="headerlink" title="GameKit"></a>GameKit</h3><p>The GameKit framework (<code>GameKit.framework</code>) includes the following changes and enhancements:</p>
+<ul>
+<li>The Game Center app has been removed. If your game implements GameKit features, it must also implement the interface behavior necessary for the user to see these features. For example, if your game supports leaderboards, it could present a <code>GKGameCenterViewController</code> object or read the data directly from Game Center to implement a custom user interface.</li>
+<li>A new account type, implemented by the <code>GKCloudPlayer</code> class, supports iCloud-only game accounts.</li>
+<li>Game Center provides a new generalized solution for managing persistent storage of data on Game Center. A game session (<code>GKGameSession</code>) has a list of players who are the session’s participants. Your game’s implementation defines when and how a participant stores or retrieves data from the server or exchanges data between players. Game sessions can often replace existing turn-based matches, real-time matches, and persistent save games, and also enable other models of interaction between participants.</li>
+</ul>
+<h3 id="GameplayKit"><a href="#GameplayKit" class="headerlink" title="GameplayKit"></a>GameplayKit</h3><p>The GameplayKit framework (<code>GameplayKit.framework</code>) includes the following changes and enhancements:</p>
+<ul>
+<li>Procedural noise generation can be used to generate rich game worlds, create sophisticated natural-looking textures, and add realism to camera movement.</li>
+<li>Spatial partitioning lets you partition your game world data so that the data in the game world can be searched efficiently.</li>
+<li>A new Monte Carlo strategist (<code>GKMonteCarloStrategist</code>) helps you model games where exhaustive computation of possible moves is difficult.</li>
+<li>The new decision tree API can enhance your game-building AI when you adopt decision-tree learning to generalize behavior based on data mining of logged player actions. To learn more, see <code>GKDecisionTree</code> and <code>GKDecisionNode</code>.</li>
+<li>The <code>GKAgent3D</code> and <code>GKGraphNode3D</code> classes introduce 3D support to existing agent and path-finding behavior.</li>
+<li>The new <code>GKMeshGraph</code> class provides a higher performance alternative to <code>GKObstacleGraph</code>, allowing you to produce more natural-looking output at the cost of less mathematically perfect paths.</li>
+<li>The new <code>GKScene</code> and <code>GKSKNodeComponent</code> classes, combined with changes in SpriteKit and the Xcode editor, make integrating GameplayKit with SpriteKit easier than ever.</li>
+</ul>
+<h3 id="HealthKit"><a href="#HealthKit" class="headerlink" title="HealthKit"></a>HealthKit</h3><p>The HealthKit framework (<code>HealthKit.framework</code>) includes the following changes and enhancements:</p>
+<ul>
+<li>The new <code>HKCDADocument</code> class, which represents a CDA document (that is, a document that follows the Clinical Document Architecture standard).</li>
+<li>The new <code>HKWorkoutConfiguration</code> class, which lets you specify the <code>activityType</code> and <code>locationType</code> for a workout.</li>
+<li>The new <code>HKWheelchairUseObject</code> characteristic object type and the related <code>HKHealthStore</code> method <code>wheelchairUseWithError:</code>.</li>
+<li>New metadata keys that indicate weather types, such as <code>HKWeatherConditionClear</code> and <code>HKWeatherConditionCloudy</code>, and workout types, such as<code>HKWorkoutActivityTypeFlexibility</code> and <code>HKWorkoutActivityTypeWheelchairRunPace</code>.</li>
+</ul>
+<h3 id="HomeKit"><a href="#HomeKit" class="headerlink" title="HomeKit"></a>HomeKit</h3><p>In iOS 10, iPad can be configured to provide remote access to accessories, run automation triggers, and enable shared user permissions. In addition, the HomeKit framework (<code>HomeKit.framework</code>) adds support for camera and doorbell accessories and introduces many new APIs that help you:</p>
+<ul>
+<li>View and interact with IP camera accessory profiles, display live streams and snapshots, and control a camera’s settings, speaker, and microphone</li>
+<li>Access new services and characteristics</li>
+<li>For the primary service, link services and valid values to provide more context and configuration about the accessories</li>
+</ul>
+<p>You can also add and set up accessories using the Apple accessory setup workflow. To learn more, see <em>HomeKit Framework Reference</em>.</p>
+<h3 id="Metal"><a href="#Metal" class="headerlink" title="Metal"></a>Metal</h3><p>In iOS 10, Metal includes several new features and enhancements, such as:</p>
+<ul>
+<li>Support for tessellation, enabling 3D apps and games to render more detailed scenes by efficiently describing complex geometry to the GPU.</li>
+<li>Function Specialization, which makes it easy to create a collection of highly optimized functions to handle all the material and light combinations in a scene.</li>
+<li>Resource Heaps and Memoryless Render Targets, which grant even finer-grained control of resource allocation to further optimize the performance of Metal-based apps.</li>
+</ul>
+<p>To learn more, see <a href="https://developer.apple.com/library/prerelease/content/documentation/Miscellaneous/Conceptual/MetalProgrammingGuide/WhatsNewiniOS10tvOS10andOSX1012/WhatsNewiniOS10tvOS10andOSX1012.html#//apple_ref/doc/uid/TP40014221-CH14" target="_blank" rel="external">What’s New in iOS 10, tvOS 10, and OS X 10.12</a> in <em>Metal Programming Guide</em>.</p>
+<h3 id="ModelIO"><a href="#ModelIO" class="headerlink" title="ModelIO"></a>ModelIO</h3><p>The ModelIO framework (<code>ModelIO.framework</code>) includes the following enhancements:</p>
+<ul>
+<li>The USD file format is now supported.</li>
+<li>The new <code>MDLMaterialPropertyGraph</code> class makes it easier to support runtime procedural changes to models.</li>
+<li>The <code>MDLVoxelArray</code> class adds support for signed distance fields.</li>
+<li>You can add assisted light probe placement by implementing the <code>MDLLightProbeIrradianceDataSource</code> protocol.</li>
+</ul>
+<h3 id="Photos"><a href="#Photos" class="headerlink" title="Photos"></a>Photos</h3><p>The Photos framework (<code>Photos.framework</code>) makes Live Photo editing available to apps that use Photos framework APIs to access the user’s Photos library and to photo editing app extensions for use in the Photos and Camera apps. Specifically, the new <code>PHLivePhotoEditingContext</code> class lets you apply edits to the video and still photo content of a Live Photo, with an easy-to-use API based on Core Image enhancements. In addition, you can take advantage of the new Core Image processor feature to use other image processing technologies to perform edits. To learn more, see <code>CIImageProcessorInput</code> and <code>CIImageProcessorOutput</code>.</p>
+<h3 id="ReplayKit"><a href="#ReplayKit" class="headerlink" title="ReplayKit"></a>ReplayKit</h3><p>The ReplayKit framework (<code>ReplayKit.framework</code>) includes the following enhancements:</p>
+<ul>
+<li>ReplayKit supports broadcasting services so that a user can broadcast recorded media through a third-party site. You can implement support for this functionality by using the <code>RPScreenRecorder</code>, <code>RPBroadcastActivityViewController</code>, and <code>RPBroadcastController</code> classes.</li>
+<li>To participate in ReplayKit broadcast, third-party broadcast services need to implement a pair of app extensions. The Broadcast UI extension provides a UI that lets users sign into the service and set up a broadcast. The Broadcast Upload extension receives movie clips and transmits them to the service.</li>
+</ul>
+<h3 id="SceneKit"><a href="#SceneKit" class="headerlink" title="SceneKit"></a>SceneKit</h3><p>The SceneKit framework (<code>SceneKit.framework</code>) includes several enhancements.</p>
+<p>A new Physically Based Rendering (PBR) system allows you to leverage the latest in 3D graphics research to create more realistic results with simpler asset authoring. Specifically:</p>
+<ul>
+<li>Use the new <code>SCNLightingModelPhysicallyBased</code> shading model to opt into PBR shading for materials. PBR materials require only three fundamental properties—<code>diffuse</code>,<code>metalness</code>, and <code>roughness</code>—to produce a wide range of realistic shading effects. (The <code>normal</code>, <code>ambientOcclusion</code>, and <code>selfIllumination</code> material properties also remain useful for PBR materials, but you can now ignore the large number of other properties used for traditional materials.)</li>
+<li>PBR shading works best with environment-based lighting, which causes even diffuse surfaces to pick up the colors of the scene around them. Use the<code>lightingEnvironment</code> property to assign global image-based lighting to an entire scene, and place light probes in the Xcode scene editor to pick up the local lighting contributions from objects within your scene.</li>
+<li>Authors of PBR scene content often prefer working in physically based terms, so you can now define lighting using intensity (in lumens) and color temperature (in degrees Kelvin), and import specifications for real-world light fixtures using the <code>IESProfileURL</code> property.</li>
+</ul>
+<p>Add even more realism with the new HDR features and effects in the <code>SCNCamera</code> class. With HDR rendering, SceneKit captures a much wider range of brightness and contrast in a scene, then allows you to customize the tone mapping that adapts that scene for the narrower range of a device’s display. Enable exposure adaptation to create automatic effects when, for example, the player in your game moves from a darkened area into sunlight. Or use vignetting, color fringing, and color grading to add a filmic look to your game.</p>
+<p>Although linear, more color-accurate rendering is the basis for PBR shading and HDR camera features, it produces better results even for traditional rendering. By default, SceneKit now performs all color calculations in a linear (not gamma-adjusted) color space, and uses the P3 color gamut of devices that include wide-color displays. This feature is enabled automatically for all apps linking against the iOS 10 SDK, and has a few ramifications for content design and asset management:</p>
+<ul>
+<li>SceneKit color matches all colors. In previous versions, SceneKit would read only the color values from material colors specified as <code>NSColor</code> or <code>UIColor</code> objects, ignoring color profile information and assuming the sRGB color space.</li>
+<li>SceneKit interprets color component values specified within shader modifier or custom Metal or OpenGL shader code in linear RGB space.</li>
+<li>SceneKit reads and adjusts for color profile information in texture images. Design textures for a linear brightness ramp, and use Asset Catalogs in Xcode to make sure your images use the correct color profile.</li>
+<li>If necessary, you can disable linear space rendering with the <code>SCNDisableLinearSpaceRendering</code> key in your app’s <code>Info.plist</code> file, and wide color rendering with the<code>SCNDisableWideGamut</code> key.</li>
+</ul>
+<p>Geometry can now be loaded from scene files or programmatically defined using arbitrary polygon primitives (<code>SCNGeometryPrimitiveTypePolygon</code>). SceneKit automatically triangulates polygon meshes for rendering, but makes use of the underlying polygon mesh for more accurate surface subdivision (to learn more, see the <code>subdivisionLevel</code>property).</p>
+<h3 id="SpriteKit"><a href="#SpriteKit" class="headerlink" title="SpriteKit"></a>SpriteKit</h3><p>The SpriteKit framework (<code>SpriteKit.framework</code>) includes the following enhancements:</p>
+<ul>
+<li>A new tilemap solution supports square, hexagonal, and isometric tilemaps that make it easy to create 2D, 2.5D, and side-scroller games. The Xcode editor provides comprehensive support for organizing your tiles and creating your tilemap. For more information, see the <code>SKTileMapNode</code>, <code>SKTileGroup</code>, <code>SKTileGroupRule</code>, and<code>SKTileSet</code> classes .</li>
+<li>The new <code>SKWarpGeometry</code> class is used to stretch or distort how a <code>SKSpriteNode</code> or <code>SKEffectNode</code> object is rendered. The warp is specified by a set of control points. New<code>SKAction</code> types can be used to animate between different warp effects.</li>
+<li>A custom shader can use attributes that can be configured separately by each node that uses the shader. To add an attribute, create an <code>SKAttribute</code> object and attach it to your shader. Then, for each node that uses that shader, attach an <code>SKAttributeValue</code> object.]</li>
+<li>The <code>SKView</code> class defines new methods that give you finer control over when and how your scene is rendered.</li>
+</ul>
+<h3 id="UIKit"><a href="#UIKit" class="headerlink" title="UIKit"></a>UIKit</h3><p>The UIKit framework (<code>UIKit.framework</code>) includes many enhancements, such as:</p>
+<ul>
+<li>New object-based, fully interactive and interruptible animation support that lets you retain control of your animations and link them with gesture-based interactions. To learn more, see <em>UIViewAnimating Protocol Reference</em>, <em>UIViewPropertyAnimator Class Reference</em>, <em>UITimingCurveProvider Protocol Reference</em>, <em>UICubicTimingParameters Class Reference</em>, and <em>UISpringTimingParameters Class Reference</em>.</li>
+<li>The new <code>UIPreviewInteraction</code> class and <code>UIPreviewInteractionDelegate</code> protocol, which let you provide a custom user interface related to the peek and pop experience.</li>
+<li>The new <code>UIAccessibilityCustomRotor</code> class and related classes that help you provide custom, context-specific functionality that assistive technologies such as VoiceOver can expose to users. For example, you might create a custom rotor that lets VoiceOver users find misspelled words in a document by repeatedly returning the range of text that contains the next misspelled word.</li>
+<li>The <code>UIAccessibilityIsAssistiveTouchRunning</code> and <code>UIAccessibilityAssistiveTouchStatusDidChangeNotification</code> symbols, which let you determine when AssistiveTouch is enabled, and the <code>UIAccessibilityHearingDevicePairedEar</code> and <code>UIAccessibilityHearingDevicePairedEarDidChangeNotification</code> symbols, which give you the pairing status of MFi hearing aids.</li>
+<li>New <code>UIPasteboard</code> API that automatically declares compatible content types for common class instances and new options that limit the lifetime of objects on the pasteboard.</li>
+<li>New options in <code>UIPasteboard</code></li>
+<li>The new <code>preferredFontForTextStyle:compatibleWithTraitCollection:</code> <code>UIFont</code> method, which lets you add support for Dynamic Type in labels, text fields, and other text areas.</li>
+<li>The <code>UIContentSizeCategoryAdjusting</code> protocol, which provides the <code>adjustsFontForContentSizeCategory</code> property that you can use to determine if the adopting element should update its font when the device’s <code>UIContentSizeCategory</code> changes.</li>
+<li>Additional control over the appearance of the badge on a tab bar item, such as background color and text attributes.</li>
+<li>Support for the refresh control in all scroll views and scroll-view subclasses, such as <code>UICollectionView</code>.</li>
+<li>The new <code>UIApplication</code> method <code>openURL:options:completionHandler:</code>, which is executed asynchronously and calls the specified completion handler on the main queue (this method replaces <code>openURL:</code>).</li>
+<li>The new <code>UICloudSharingController</code> class and <code>UICloudSharingControllerDelegate</code> protocol, which help you initiate a CloudKit sharing operation and display a view controller that lets users view and modify participants and start and stop sharing.</li>
+<li>Enhancements to <code>UICollectionView</code> and the new <code>UICollectionViewDataSourcePrefetching</code> protocol, which help you take advantage of automatic prefetching of cells to improve the scrolling experience.</li>
+</ul>
+<h3 id="WebKit"><a href="#WebKit" class="headerlink" title="WebKit"></a>WebKit</h3><p>The WebKit framework (<code>WebKit.framework</code>) introduces enhanced peek and pop support in <code>WKWebView</code> objects. In iOS 10, you can use the <code>webView:shouldPreviewElement:</code>method to determine if the specified web view should display the preview.</p>
+<h2 id="Deprecated-APIs"><a href="#Deprecated-APIs" class="headerlink" title="Deprecated APIs"></a>Deprecated APIs</h2><p>iOS 10 deprecates several APIs, including:</p>
+<ul>
+<li><p>The CloudKit <code>CKDiscoverAllContactsOperation</code>, <code>CKDiscoveredUserInfo</code>, <code>CKDiscoverUserInfosOperation</code>, <code>CKFetchRecordChangesOperation</code> classes. Instead, use <code>CKDiscoverAllUserIdentitiesOperation</code>, <code>CKUserIdentity</code>, <code>CKDiscoverUserIdentitiesOperation</code>, and <code>CKFetchRecordZoneChangesOperation</code> classes, all of which support record sharing.</p>
+<p>Several <code>CKSubscription</code> APIs, such as methods and properties related to zone-based subscriptions (use <code>CKRecordZoneSubscription</code> APIs instead) and to query-based subscriptions (use <code>CKQuerySubscription</code> APIs instead).</p>
+</li>
+<li><p>Several <code>NSPersistentStoreCoordinator</code> symbols related to ubiquitous content.</p>
+</li>
+<li><p>The <code>ADBannerView</code> and <code>ADInterstitialAd</code> classes and related symbols in <code>UIViewController</code>.</p>
+</li>
+<li><p>Several <code>SKUniform</code> symbols related to floating point values. Instead, use methods such as <code>initWithName:vectorFloat2:</code> and <code>uniformWithName:matrixFloat2x2:</code>, as appropriate.</p>
+</li>
+<li><p>Several UIKit classes related to notifications, such as <code>UILocalNotification</code>, <code>UIMutableUserNotificationAction</code>, <code>UIMutableUserNotificationCategory</code>,<code>UIUserNotificationAction</code>, <code>UIUserNotificationCategory</code>, and <code>UIUserNotificationSettings</code>. Use APIs in the User Notifications framework instead (see <em>User Notifications Framework Reference</em>).</p>
+</li>
+<li><p>The <code>handleActionWithIdentifier:forLocalNotification:</code>, <code>handleActionWithIdentifier:forRemoteNotification:</code>,<code>didReceiveLocalNotification:withCompletion:</code>, and <code>didReceiveRemoteNotification:withCompletion:</code> WatchKit methods. Use<code>handleActionWithIdentifier:forNotification:</code> and <code>didReceiveNotification:withCompletion:</code> instead.</p>
+<p>Also the notification-handling methods in <code>WKExtensionDelegate</code>, such as <code>didReceiveRemoteNotification:</code> and<code>handleActionWithIdentifier:forRemoteNotification:</code>. Instead of using these methods, first create a delegate object that adopts the<code>UNUserNotificationCenterDelegate</code> protocol and implement the appropriate methods. Then assign the delegate object to the <code>delegate</code> property of the singleton<code>UNUserNotificationCenter</code> object.</p>
+</li>
+</ul>
+<p>For a complete list of specific API deprecations, see <em>iOS 10.0 API Diffs</em>.</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/08/22/What’s-New-in-iOS-10/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/08/22/What’s-New-in-iOS-10/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/08/22/AddressBook-framework/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    AddressBook.framework
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/08/15/方便的处理在StoryBoard、Xib中的圆角设置/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">方便的处理在StoryBoard、Xib中的圆角设置</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/08/22/What’s-New-in-iOS-10/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

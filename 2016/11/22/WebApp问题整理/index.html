@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>WebApp问题整理 | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="问题列表伪类 :active 生效要CSS伪类 :active 生效，只需要给 document 绑定 touchstart 或 touchend 事件
+&amp;lt;style&amp;gt;
+a {
+  color: #000;
+}
+a:active {
+  color: #fff;
+}
+&amp;lt;/style&amp;gt;
+&amp;lt;a herf=foo &amp;gt;bar&amp;lt;/a&amp;gt;
+&amp;lt;script&amp;g">
+<meta property="og:type" content="article">
+<meta property="og:title" content="WebApp问题整理">
+<meta property="og:url" content="https://wilddylan.github.io/2016/11/22/WebApp问题整理/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="问题列表伪类 :active 生效要CSS伪类 :active 生效，只需要给 document 绑定 touchstart 或 touchend 事件
+&amp;lt;style&amp;gt;
+a {
+  color: #000;
+}
+a:active {
+  color: #fff;
+}
+&amp;lt;/style&amp;gt;
+&amp;lt;a herf=foo &amp;gt;bar&amp;lt;/a&amp;gt;
+&amp;lt;script&amp;g">
+<meta property="og:image" content="http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:01:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="WebApp问题整理">
+<meta name="twitter:description" content="问题列表伪类 :active 生效要CSS伪类 :active 生效，只需要给 document 绑定 touchstart 或 touchend 事件
+&amp;lt;style&amp;gt;
+a {
+  color: #000;
+}
+a:active {
+  color: #fff;
+}
+&amp;lt;/style&amp;gt;
+&amp;lt;a herf=foo &amp;gt;bar&amp;lt;/a&amp;gt;
+&amp;lt;script&amp;g">
+<meta name="twitter:image" content="http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-WebApp问题整理" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            WebApp问题整理
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/11/22/WebApp问题整理/">
+            <time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Hybrid/">Hybrid</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h2 id="问题列表"><a href="#问题列表" class="headerlink" title="问题列表"></a>问题列表</h2><h3 id="伪类-active-生效"><a href="#伪类-active-生效" class="headerlink" title="伪类 :active 生效"></a>伪类 :active 生效</h3><p>要CSS伪类 <code>:active</code> 生效，只需要给 document 绑定 <code>touchstart</code> 或 <code>touchend</code> 事件</p>
+<pre><code>&lt;style&gt;
+a {
+  color: #000;
+}
+a:active {
+  color: #fff;
+}
+&lt;/style&gt;
+&lt;a herf=foo &gt;bar&lt;/a&gt;
+&lt;script&gt;
+  document.addEventListener(&apos;touchstart&apos;,function(){},false);
+&lt;/script&gt;
+</code></pre><h3 id="消除-transition-闪屏"><a href="#消除-transition-闪屏" class="headerlink" title="消除 transition 闪屏"></a>消除 transition 闪屏</h3><p>两个方法</p>
+<a id="more"></a>
+<pre><code>-webkit-transform-style: preserve-3d;
+/*设置内嵌的元素在 3D 空间如何呈现：保留 3D*/
+-webkit-backface-visibility: hidden;
+/*（设置进行转换的元素的背面在面对用户时是否可见：隐藏）*/
+</code></pre><h3 id="消除-IE10-里面的那个叉号"><a href="#消除-IE10-里面的那个叉号" class="headerlink" title="消除 IE10 里面的那个叉号"></a>消除 IE10 里面的那个叉号</h3><pre><code>input:-ms-clear{display:none;}
+</code></pre><p>来源出处：<a href="http://msdn.microsoft.com/en-us/library/windows/apps/hh767361.aspx" title="article4" target="_blank" rel="external">http://msdn.microsoft.com/en-us/library/windows/apps/hh767361.aspx</a><br>​    </p>
+<p>###关于 iOS 与 OS X 端字体的优化(横竖屏会出现字体加粗不一致等)<br>iOS 浏览器横屏时会重置字体大小，设置 <code>text-size-adjust</code> 为 <code>none</code> 可以解决 iOS 上的问题，但桌面版 Safari 的字体缩放功能会失效，因此最佳方案是将 <code>text-size-adjust</code> 为 <code>100%</code> 。</p>
+<pre><code>-webkit-text-size-adjust: 100%;
+-ms-text-size-adjust: 100%;
+text-size-adjust: 100%;
+</code></pre><h3 id="JS-事件相关"><a href="#JS-事件相关" class="headerlink" title="JS 事件相关"></a>JS 事件相关</h3><p>click 事件普遍 300ms 的延迟<br>在手机上绑定 click 事件，会使得操作有 300ms 的延迟，体验并不是很好。<br>开发者大多数会使用封装的 tap 事件来代替 click 事件，所谓的 tap 事件由 touchstart 事件 + touchmove 判断 + touchend 事件封装组成</p>
+<h3 id="iOS-点击会慢-300ms-问题"><a href="#iOS-点击会慢-300ms-问题" class="headerlink" title="iOS 点击会慢 300ms 问题"></a>iOS 点击会慢 300ms 问题</h3><p> <a href="https://developers.google.com/mobile/articles/fast_buttons?hl=de-DE" title="article5" target="_blank" rel="external">https://developers.google.com/mobile/articles/fast_buttons?hl=de-DE</a><br> <a href="http://stackoverflow.com/questions/12238587/eliminate-300ms-delay-on-click-events-in-mobile-safari" title="article5" target="_blank" rel="external">http://stackoverflow.com/questions/12238587/eliminate-300ms-delay-on-click-events-in-mobile-safari</a></p>
+<p>使用 CSS3 动画的时尽量利用3D加速，从而使得动画变得流畅。动画过程中的动画闪白可以通过 backface-visibility 隐藏。</p>
+<pre><code>-webkit-transform-style: preserve-3d;
+-webkit-backface-visibility: hidden;
+</code></pre><h3 id="IE10-的特殊鼠标事件"><a href="#IE10-的特殊鼠标事件" class="headerlink" title="IE10 的特殊鼠标事件"></a>IE10 的特殊鼠标事件</h3><p><a href="http://www.mansonchor.com/blog/blog_detail_73.html" title="article5" target="_blank" rel="external">http://www.mansonchor.com/blog/blog_detail_73.html</a></p>
+<h3 id="不让-Android-手机识别邮箱"><a href="#不让-Android-手机识别邮箱" class="headerlink" title="不让 Android 手机识别邮箱"></a>不让 Android 手机识别邮箱</h3><pre><code>&lt;meta content=&quot;email=no&quot; name=&quot;format-detection&quot; /&gt;
+</code></pre><h3 id="禁止-iOS-识别长串数字为电话"><a href="#禁止-iOS-识别长串数字为电话" class="headerlink" title="禁止 iOS 识别长串数字为电话"></a>禁止 iOS 识别长串数字为电话</h3><pre><code>&lt;meta content=&quot;telephone=no&quot; name=&quot;format-detection&quot; /&gt;
+</code></pre><h3 id="禁止-iOS-弹出各种操作窗口"><a href="#禁止-iOS-弹出各种操作窗口" class="headerlink" title="禁止 iOS 弹出各种操作窗口"></a>禁止 iOS 弹出各种操作窗口</h3><pre><code>-webkit-touch-callout:none
+</code></pre><h3 id="禁止用户选中文字"><a href="#禁止用户选中文字" class="headerlink" title="禁止用户选中文字"></a>禁止用户选中文字</h3><pre><code>-webkit-user-select:none
+</code></pre><h3 id="动画效果中，使用-translate-比使用定位性能高"><a href="#动画效果中，使用-translate-比使用定位性能高" class="headerlink" title="动画效果中，使用 translate 比使用定位性能高"></a>动画效果中，使用 translate 比使用定位性能高</h3><p><a href="http://paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/" target="_blank" rel="external">http://paulirish.com/2012/why-moving-elements-with-translate-is-better-than-posabs-topleft/</a></p>
+<h3 id="获取滚动条"><a href="#获取滚动条" class="headerlink" title="获取滚动条"></a>获取滚动条</h3><pre><code>window.scrollY
+window.scrollX
+</code></pre><p> 比如要绑定一个 touchmove 的事件，正常的情况下类似这样(来自呼吸二氧化碳)</p>
+<pre><code>$(&apos;div&apos;).on(&apos;touchmove&apos;, function(){
+   //.….code
+});
+</code></pre><p>而如果中间的 code 需要处理的东西多的话，FPS 就会下降影响程序顺滑度，而如果改成这样</p>
+<pre><code>$(&apos;div&apos;).on(&apos;touchmove&apos;, function(){
+   setTimeout(function(){
+     //.….code
+   },0);
+});
+</code></pre><p>把代码放在 setTimeout 中，会发现程序变快.</p>
+<h3 id="关于-iOS-系统中，WebAPP-启动图片在不同设备上的适应性设置"><a href="#关于-iOS-系统中，WebAPP-启动图片在不同设备上的适应性设置" class="headerlink" title="关于 iOS 系统中，WebAPP 启动图片在不同设备上的适应性设置"></a>关于 iOS 系统中，WebAPP 启动图片在不同设备上的适应性设置</h3><p><a href="http://stackoverflow.com/questions/4687698/mulitple-apple-touch-startup-image-resolutions-for-ios-web-app-esp-for-ipad/10011893#10011893" target="_blank" rel="external">http://stackoverflow.com/questions/4687698/mulitple-apple-touch-startup-image-resolutions-for-ios-web-app-esp-for-ipad/10011893#10011893</a></p>
+<h3 id="关于-iOS-系统中，中文输入法输入英文时，字母之间可能会出现一个六分之一空格-焦点科技葛亮"><a href="#关于-iOS-系统中，中文输入法输入英文时，字母之间可能会出现一个六分之一空格-焦点科技葛亮" class="headerlink" title="关于 iOS 系统中，中文输入法输入英文时，字母之间可能会出现一个六分之一空格(焦点科技葛亮)"></a>关于 iOS 系统中，中文输入法输入英文时，字母之间可能会出现一个六分之一空格(焦点科技葛亮)</h3><p>可以通过正则去掉 </p>
+<pre><code>this.value = this.value.replace(/\u2006/g, &apos;&apos;);
+</code></pre><h3 id="关于-Android-WebView中，input-元素输入时出现的怪异情况"><a href="#关于-Android-WebView中，input-元素输入时出现的怪异情况" class="headerlink" title="关于 Android WebView中，input 元素输入时出现的怪异情况"></a>关于 Android WebView中，input 元素输入时出现的怪异情况</h3><p>见图<br><img src="http://cdn.bielousov.com/wp-content/uploads/2012/08/android-input-label-text-issue.png" alt="怪异图"></p>
+<p>Android web视图，例如在 HTC EVO 和三星的 Galaxy Nexus 中，文本输入框在输入时表现的就像占位符。情况为一个类似水印的东西在用户输入区域，一旦用户开始输入便会消失(见图片)。</p>
+<p>在 Android 的默认样式下当输入框获得焦点后，若存在一个绝对定位或者fixed的元素，布局会被破坏，其他元素与系统输入字段会发生重叠(如搜索图标将消失为搜索字段)，可以观察到布局与原始输入字段有偏差(见截图)。<br>这是一个相当复杂的问题，以下简单布局可以重现这个问题:</p>
+<pre><code>&lt;label for=&quot;phone&quot;&gt;Phone: *&lt;/label&gt;
+&lt;input type=&quot;tel&quot; name=&quot;phone&quot; id=&quot;phone&quot; minlength=&quot;10&quot; maxlength=&quot;10&quot; inputmode=&quot;latin digits&quot; required=&quot;required&quot; /&gt;
+</code></pre><p>解决方法</p>
+<pre><code>-webkit-user-modify: read-write-plaintext-only
+</code></pre><p>详细参考：<a href="http://www.bielousov.com/2012/android-label-text-appears-in-input-field-as-a-placeholder/" target="_blank" rel="external">http://www.bielousov.com/2012/android-label-text-appears-in-input-field-as-a-placeholder/</a><br>注意，该属性会导致中文不能输入词组，只能单个字。感谢鬼哥与飞（游勇飞）贡献此问题与解决方案</p>
+<h3 id="JS-动态生成的-select-下拉菜单在-Android2-x-版本的默认浏览器里不起作用"><a href="#JS-动态生成的-select-下拉菜单在-Android2-x-版本的默认浏览器里不起作用" class="headerlink" title="JS 动态生成的 select 下拉菜单在 Android2.x 版本的默认浏览器里不起作用"></a>JS 动态生成的 select 下拉菜单在 Android2.x 版本的默认浏览器里不起作用</h3><p>解决方法删除了 <code>overflow-x:hidden;</code> 然后在JS生成下来菜单之后 focus 聚焦，这两步操作之后解决了问题。(来自岛都-小Qi)</p>
+<p>参考：<a href="http://stackoverflow.com/questions/4697908/html-select-control-disabled-in-android-webview-in-emulator" target="_blank" rel="external">http://stackoverflow.com/questions/4697908/html-select-control-disabled-in-android-webview-in-emulator</a></p>
+<p>###移动端 HTML5 audio autoplay 失效问题</p>
+<p>这个不是 BUG，由于自动播放网页中的音频或视频，会给用户带来一些困扰或者不必要的流量消耗，所以苹果系统和安卓系统通常都会禁止自动播放和使用 JS 的触发播放，必须由用户来触发才可以播放。</p>
+<p>解决方法思路：先通过用户 touchstart 触碰，触发播放并暂停（音频开始加载，后面用 JS 再操作就没问题了）。</p>
+<p>解决代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">document.addEventListener(&apos;touchstart&apos;, function () &#123;</div><div class="line">    document.getElementsByTagName(&apos;audio&apos;)[0].play();</div><div class="line">    document.getElementsByTagName(&apos;audio&apos;)[0].pause();</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>方案出处：<a href="http://stackoverflow.com/questions/17350924/iphone-html5-audio-tag-not-working" target="_blank" rel="external">http://stackoverflow.com/questions/17350924/iphone-html5-audio-tag-not-working</a></p>
+<p>扩展阅读：<a href="http://yujiangshui.com/recent-projects-review/#toc-7" target="_blank" rel="external">http://yujiangshui.com/recent-projects-review/#toc-7</a></p>
+<p>###移动端 HTML5 input date 不支持 placeholder 问题</p>
+<p>input type date 的 placeholder 支持性有一定问题，因为浏览器会针对此类型 input 增加 datepicker 模块，看上去没那么必要支持 placeholder。</p>
+<p>对 input type date 使用 placeholder 的目的是为了让用户更准确的输入日期格式，iOS 上会有 datepicker 不会显示 placeholder 文字，但是为了统一表单外观，往往需要显示。Android 部分机型没有 datepicker 也不会显示 placeholder 文字。</p>
+<p>简单的进行了测试：</p>
+<p>桌面端（Mac）</p>
+<ul>
+<li>Safari 不支持 datepicker，placeholder 正常显示。</li>
+<li>Firefox 不支持 datepicker，placeholder 正常显示。</li>
+<li>Chrome 支持 datepicker，显示 年、月、日 格式，忽略 placeholder。</li>
+</ul>
+<p>移动端</p>
+<ul>
+<li>iPhone5 iOS7 有 datepicker 功能，但是不显示 placeholder。</li>
+<li>Andorid 4.0.4 无 datepicker 功能，不显示 placeholder</li>
+</ul>
+<p>问题解决方法：</p>
+<p>先使其 type 为 text，此时支持 placeholder，当触摸或者聚焦的时候，使用 JS 切换使其触发 datepicker 功能。</p>
+<pre><code>&lt;input placeholder=&quot;Date&quot; class=&quot;textbox-n&quot; type=&quot;text&quot; onfocus=&quot;(this.type=&apos;date&apos;)&quot;  id=&quot;date&quot;&gt; 
+</code></pre><p>方案出处：<a href="http://stackoverflow.com/questions/20321202/not-showing-place-holder-for-input-type-date-field-ios-phonegap-app" target="_blank" rel="external">http://stackoverflow.com/questions/20321202/not-showing-place-holder-for-input-type-date-field-ios-phonegap-app</a></p>
+<p>###IOS Safari  支持localstorage但是setItem异常（QUOTA_EXCEEDED_ERR:DOM Exception 22）</p>
+<pre><code>平台：IOS8.1
+browser：Safari600.1.4
+</code></pre><p> 问题源自于项目需要在浏览器中遮罩提示,点击关闭状态存储在localstorage中。Safari浏览器关闭后刷新页面层依旧存在<br> <a href="http://stackoverflow.com/questions/14555347/html5-localstorage-error-with-safari-quota-exceeded-err-dom-exception-22-an" target="_blank" rel="external">bug issue</a><br>简单的存储状态可以使用cookie的方式替代。</p>
+<p>###Chrome 地址栏自动隐藏交互行为对于fixed 顶部的元素遮挡</p>
+<pre><code>系统：IOS8.1
+浏览器：Chrome 26.0.1410.53
+</code></pre><p>  描述信息：页面包含fixed顶部的tip element，当页面向下滑动的时候Chrome地址栏自动隐藏，当向上滑动的时候地址栏自动出现。这种交互行为本身的好处会增大用户可视、交互区域。但是在Chrome 26这个版本这个浏览器UI布局使用adjustPan的方式，以至于向上滑动以后fixed的元素没有被自动向下移动（没有重绘）。</p>
+<p><a href="https://code.google.com/p/chromium/issues/detail?id=288747" target="_blank" rel="external">bug fixed</a><br><a href="http://stackoverflow.com/questions/11258877/fixed-element-disappears-in-chrome" target="_blank" rel="external">解决办法在这里</a></p>
+<p>###Android平台遮罩层下的input、select、a等元素可以被点击和focus(点击穿透)</p>
+<p>  问题发现于三星手机，这个在特定需求下才会有，因此如果没有类似问题的可以不看。首先需求是浮层操作，在三星上被遮罩的元素依然可以获取focus、click、change. <a href="https://code.google.com/p/android/issues/detail?id=6721" target="_blank" rel="external">bug issue</a> ，在查看bug报告list以后，找到了两种解决方案，第一是通过层显示以后加入对应的class名控制，第二是通过将可获取焦点元素加入的disabled属性，也可以利用属性加dom锁定的方式（disabled的一种变换方式）</p>
+<p>###部分机型存在type为search的input，自带close按钮样式修改方法</p>
+<p>  有些机型的搜索input控件会自带close按钮（一个伪元素），而通常为了兼容所有浏览器，我们会自己实现一个，此时去掉原生close按钮的方法为</p>
+<pre><code>#Search::-webkit-search-cancel-button{
+    display: none;    
+}
+</code></pre><p>  如果想使用原生close按钮，又想使其符合设计风格，可以对这个伪元素的样式进行修改。</p>
+<p>###唤起select的option展开<br>zepto方式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$(sltElement).trrgger(&quot;mousedown&quot;);</div></pre></td></tr></table></figure>
+<p>原生js方式:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function showDropdown(sltElement) &#123;</div><div class="line">    var event;</div><div class="line">    event = document.createEvent(&apos;MouseEvents&apos;);</div><div class="line">    event.initMouseEvent(&apos;mousedown&apos;, true, true, window);</div><div class="line">    sltElement.dispatchEvent(event);</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>来自<strong>Mars</strong></p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/11/22/WebApp问题整理/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/11/22/WebApp问题整理/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    快速搭建属于自己的斗鱼TV
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/11/21/SwiftTips（一）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">SwiftTips（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/11/22/WebApp问题整理/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

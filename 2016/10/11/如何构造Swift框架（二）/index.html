@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>如何构造Swift框架（二） | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="功能编写环境管理 ModeSwitch新建ModeSwitch.swift
+1234567891011121314151617181920212223242526272829import Foundation/// 开发模式public enum Mode: String &amp;#123;  /// 开发模式，打印日志，不上报日志  case develope = &quot;[DEVELOPE MODE]&quot;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何构造Swift框架（二）">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/11/如何构造Swift框架（二）/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="功能编写环境管理 ModeSwitch新建ModeSwitch.swift
+1234567891011121314151617181920212223242526272829import Foundation/// 开发模式public enum Mode: String &amp;#123;  /// 开发模式，打印日志，不上报日志  case develope = &quot;[DEVELOPE MODE]&quot;">
+<meta property="og:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+<meta property="og:updated_time" content="2016-10-13T02:21:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何构造Swift框架（二）">
+<meta name="twitter:description" content="功能编写环境管理 ModeSwitch新建ModeSwitch.swift
+1234567891011121314151617181920212223242526272829import Foundation/// 开发模式public enum Mode: String &amp;#123;  /// 开发模式，打印日志，不上报日志  case develope = &quot;[DEVELOPE MODE]&quot;">
+<meta name="twitter:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?227e5d8d0caa5ecfb18870a04cf079c9";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+            <a href="/" id="logo">
+                <i class="logo"></i>
+                <span class="site-title">dylan</span>
+            </a>
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">Home</a>
+                
+                    <a class="main-nav-link" href="/archives">Archives</a>
+                
+                    <a class="main-nav-link" href="/tags">Tags</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">Home</a></td>
+                
+                    <td><a class="main-nav-link" href="/archives">Archives</a></td>
+                
+                    <td><a class="main-nav-link" href="/tags">Tags</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App &amp; Web &amp; Server Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <a id="follow" target="_blank" href="https://github.com/WildDylan/">关注我</a>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                11
+                <span>文章</span>
+            </div>
+            <div class="article-info-block">
+                6
+                <span>标签</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="dribbble" class=tooltip>
+                            <i class="fa fa-dribbble"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-如何构造Swift框架（二）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            如何构造Swift框架（二）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/11/如何构造Swift框架（二）/">
+            <time datetime="2016-10-11T03:49:34.000Z" itemprop="datePublished">2016-10-11</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <h4 id="功能编写"><a href="#功能编写" class="headerlink" title="功能编写"></a>功能编写</h4><h6 id="环境管理-ModeSwitch"><a href="#环境管理-ModeSwitch" class="headerlink" title="环境管理 ModeSwitch"></a>环境管理 ModeSwitch</h6><p>新建<code>ModeSwitch.swift</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="comment">/// 开发模式</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Mode</span>: <span class="title">String</span> </span>&#123;</div><div class="line">  <span class="comment">/// 开发模式，打印日志，不上报日志</span></div><div class="line">  <span class="keyword">case</span> develope = <span class="string">"[DEVELOPE MODE]"</span></div><div class="line">  <span class="comment">/// 调试模式，关闭日志打印，上报日志</span></div><div class="line">  <span class="keyword">case</span> prepared = <span class="string">"[PREPARED MODE]"</span></div><div class="line">  <span class="comment">/// 生产模式，关闭日志打印，上报日志</span></div><div class="line">  <span class="keyword">case</span> production = <span class="string">"[PRODUCTION MODE]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 模式控制</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">INSModeSwitch</span> </span>&#123;</div><div class="line">  <span class="comment">/// 默认为调试模式</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">INSModeSwitch</span>(.develope)</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> currentMode: <span class="type">Mode</span> &#123;</div><div class="line">    <span class="keyword">didSet</span> &#123;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  <span class="comment">/// 私有初始化方法</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">init</span>(<span class="number">_</span> mode: <span class="type">Mode</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.currentMode = mode</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 模式选择器</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">let</span> <span class="type">ModeSwitcher</span> = <span class="type">INSModeSwitch</span>.<span class="keyword">default</span></div></pre></td></tr></table></figure>
+<p>目前这是一个极其简单的模式控制，毫无别的作用，以后扩展功能</p>
+<a id="more"></a>
+<h6 id="日志模块-基础日志-Console"><a href="#日志模块-基础日志-Console" class="headerlink" title="日志模块-基础日志 Console"></a>日志模块-基础日志 Console</h6><p>第一步我们先完成日志输出，新建<code>Logger.swift</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="comment">/// 日志级别</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">LogLevel</span>: <span class="title">String</span> </span>&#123;</div><div class="line">  <span class="comment">/// 打印所有类型日志</span></div><div class="line">  <span class="keyword">case</span> all = <span class="string">"🛢[ALL]"</span></div><div class="line">  <span class="comment">/// 仅打印调试日志</span></div><div class="line">  <span class="keyword">case</span> debug = <span class="string">"⚒[DEBUG]"</span></div><div class="line">  <span class="comment">/// 仅打印警告日志</span></div><div class="line">  <span class="keyword">case</span> warning = <span class="string">"❗️[WARN]"</span></div><div class="line">  <span class="comment">/// 仅打印信息日志</span></div><div class="line">  <span class="keyword">case</span> information = <span class="string">"📢[INFO]"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">INSLogger</span> </span>&#123;</div><div class="line">  <span class="comment">/// 默认为输出全部日志</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">INSLogger</span>(.all)</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> level: <span class="type">LogLevel</span> &#123;</div><div class="line">    <span class="keyword">didSet</span> &#123;</div><div class="line">      </div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 日志输出</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - parameter lev: 日志级别</span></div><div class="line">  <span class="comment">/// - parameter content: 日志内容</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">printLog</span><span class="params">(<span class="number">_</span> lev: LogLevel, <span class="number">_</span> details: String, <span class="number">_</span> items: Any)</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> level == .all || level == lev, <span class="type">ModeSwitcher</span>.currentMode == .develope <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">print</span>(lev.rawValue, details, <span class="string">"\n"</span>, items)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">init</span>(<span class="number">_</span> level: <span class="type">LogLevel</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.level = level</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 公开日志打印模块</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">let</span> <span class="type">Logger</span> = <span class="type">INSLogger</span>.<span class="keyword">default</span></div><div class="line"><span class="comment">/// 公开便捷调用方法</span></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">ILog</span><span class="params">(<span class="number">_</span> lev: LogLevel, <span class="number">_</span> items: Any, <span class="number">_</span> function: StaticString = #function, <span class="number">_</span> line: Int = #line, <span class="number">_</span> file: StaticString = #file)</span></span> &#123;</div><div class="line">  <span class="keyword">var</span> details = <span class="string">"[\("</span>\(file)<span class="string">".components(separatedBy: "</span>/<span class="string">").last!): \(function): \(line)]"</span></div><div class="line">  <span class="type">Logger</span>.printLog(lev, details, items)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个时候，我们对前2部分进行简单的测试：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="type">ModeSwitcher</span>.currentMode = .develope</div><div class="line"><span class="built_in">print</span>(<span class="type">ModeSwitcher</span>.currentMode)</div><div class="line">    </div><div class="line"><span class="type">Logger</span>.level = .warning</div><div class="line">    </div><div class="line"><span class="type">ILog</span>(.all, <span class="string">"Hello world! Current Mode is \(Logger.level)"</span>)</div><div class="line"><span class="type">ILog</span>(.debug, <span class="string">"Hello world! Current Mode is \(Logger.level)"</span>)</div><div class="line"><span class="type">ILog</span>(.warning, <span class="string">"Hello world! Current Mode is \(Logger.level)"</span>)</div><div class="line"><span class="type">ILog</span>(.information, <span class="string">"Hello world! Current Mode is \(Logger.level)"</span>)</div></pre></td></tr></table></figure>
+<p><code>.developer</code>情况下会输出相应的日志，<code>.all</code>为输出所有日志，预发、生产模式下不会输出日志。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">🛢 [<span class="type">WARN</span>] [<span class="type">ViewController</span>.swift: viewDidLoad(): <span class="number">24</span>] </div><div class="line"> [<span class="string">"2"</span>: <span class="string">"3"</span>, <span class="string">"4"</span>: <span class="string">"5"</span>]</div></pre></td></tr></table></figure>
+<p>分别为文件，方法，行号，内容。</p>
+<h6 id="功能扩展，界面扩展"><a href="#功能扩展，界面扩展" class="headerlink" title="功能扩展，界面扩展"></a>功能扩展，界面扩展</h6><p>一些<code>Foundation</code>，<code>UIKit</code>的扩展。新建2个文件夹，分别为FoundationExtension，UIKitExtension。在文件夹内添加这些扩展方法。这一块内容暂时省略，接着往下写功能模块。</p>
+<p>UISDK这里我依旧支持<code>AsyncDisplayKit</code>，从这个库诞生我就开始一直使用，所以对于我来说，用这个比UIKit顺手：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">"AsyncDisplayKit"</span></div></pre></td></tr></table></figure>
+<p>Foundation扩展先添加Keychain的帮助模块</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'KeychainAccess'</span></div></pre></td></tr></table></figure>
+<h6 id="权限服务"><a href="#权限服务" class="headerlink" title="权限服务"></a>权限服务</h6><p>权限服务：获得一些系统的权限，新建<code>Permission.swift</code></p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div><div class="line">148</div><div class="line">149</div><div class="line">150</div><div class="line">151</div><div class="line">152</div><div class="line">153</div><div class="line">154</div><div class="line">155</div><div class="line">156</div><div class="line">157</div><div class="line">158</div><div class="line">159</div><div class="line">160</div><div class="line">161</div><div class="line">162</div><div class="line">163</div><div class="line">164</div><div class="line">165</div><div class="line">166</div><div class="line">167</div><div class="line">168</div><div class="line">169</div><div class="line">170</div><div class="line">171</div><div class="line">172</div><div class="line">173</div><div class="line">174</div><div class="line">175</div><div class="line">176</div><div class="line">177</div><div class="line">178</div><div class="line">179</div><div class="line">180</div><div class="line">181</div><div class="line">182</div><div class="line">183</div><div class="line">184</div><div class="line">185</div><div class="line">186</div><div class="line">187</div><div class="line">188</div><div class="line">189</div><div class="line">190</div><div class="line">191</div><div class="line">192</div><div class="line">193</div><div class="line">194</div><div class="line">195</div><div class="line">196</div><div class="line">197</div><div class="line">198</div><div class="line">199</div><div class="line">200</div><div class="line">201</div><div class="line">202</div><div class="line">203</div><div class="line">204</div><div class="line">205</div><div class="line">206</div><div class="line">207</div><div class="line">208</div><div class="line">209</div><div class="line">210</div><div class="line">211</div><div class="line">212</div><div class="line">213</div><div class="line">214</div><div class="line">215</div><div class="line">216</div><div class="line">217</div><div class="line">218</div><div class="line">219</div><div class="line">220</div><div class="line">221</div><div class="line">222</div><div class="line">223</div><div class="line">224</div><div class="line">225</div><div class="line">226</div><div class="line">227</div><div class="line">228</div><div class="line">229</div><div class="line">230</div><div class="line">231</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"></div><div class="line"><span class="keyword">import</span> CoreBluetooth</div><div class="line"><span class="keyword">import</span> AddressBook;</div><div class="line"><span class="keyword">import</span> AVFoundation;</div><div class="line"><span class="keyword">import</span> CoreBluetooth;</div><div class="line"><span class="keyword">import</span> CoreLocation;</div><div class="line"><span class="keyword">import</span> CoreMotion;</div><div class="line"><span class="keyword">import</span> EventKit;</div><div class="line"><span class="keyword">import</span> Photos</div><div class="line"></div><div class="line"><span class="comment">/// 当前的状态</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">kPermissionAccess</span> </span>&#123;</div><div class="line">  <span class="comment">/// 用户拒绝</span></div><div class="line">  <span class="keyword">case</span> denied</div><div class="line">  <span class="comment">/// 用户同意</span></div><div class="line">  <span class="keyword">case</span> granted</div><div class="line">  <span class="comment">/// 系统设置拉黑等错误</span></div><div class="line">  <span class="keyword">case</span> restricted</div><div class="line">  <span class="comment">/// 未知错误</span></div><div class="line">  <span class="keyword">case</span> unknown</div><div class="line">  <span class="comment">/// 设备不支持</span></div><div class="line">  <span class="keyword">case</span> unsupported</div><div class="line">  <span class="comment">/// 开发者没有导入相应的库</span></div><div class="line">  <span class="keyword">case</span> missingFramework</div><div class="line">  <span class="comment">/// 用户没选</span></div><div class="line">  <span class="keyword">case</span> notDetermined</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">hasAccessToBluetoothLE</span><span class="params">()</span></span> -&gt;kPermissionAccess &#123;</div><div class="line">  <span class="keyword">switch</span> <span class="type">CBCentralManager</span>().state &#123;</div><div class="line">    <span class="keyword">case</span> .unsupported:</div><div class="line">    <span class="keyword">return</span> .unsupported;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">case</span> .unauthorized:</div><div class="line">    <span class="keyword">return</span> .denied;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">    <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">hasAccessToCalendar</span><span class="params">()</span></span> -&gt;kPermissionAccess &#123;</div><div class="line">  </div><div class="line">  <span class="keyword">switch</span> <span class="type">EKEventStore</span>.authorizationStatus(<span class="keyword">for</span>: .event) &#123;</div><div class="line">  <span class="keyword">case</span> .authorized:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .denied:</div><div class="line">    <span class="keyword">return</span> .denied;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .restricted:</div><div class="line">    <span class="keyword">return</span> .restricted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .notDetermined:</div><div class="line">    <span class="keyword">return</span> .notDetermined;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">return</span> .unknown;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">hasAccessToContacts</span><span class="params">()</span></span> -&gt;kPermissionAccess &#123;</div><div class="line">  <span class="keyword">switch</span> (<span class="type">ABAddressBookGetAuthorizationStatus</span>()) &#123;</div><div class="line">  <span class="keyword">case</span> .authorized:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .denied:</div><div class="line">    <span class="keyword">return</span> .denied;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .restricted:</div><div class="line">    <span class="keyword">return</span> .restricted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .notDetermined:</div><div class="line">    <span class="keyword">return</span> .notDetermined;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">return</span> .unknown;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">hasAccessToLocation</span><span class="params">()</span></span> -&gt;kPermissionAccess &#123;</div><div class="line">  <span class="keyword">switch</span> <span class="type">CLLocationManager</span>.authorizationStatus() &#123;</div><div class="line">  <span class="keyword">case</span> .authorizedAlways:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .authorizedWhenInUse:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .denied:</div><div class="line">    <span class="keyword">return</span> .denied;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .restricted:</div><div class="line">    <span class="keyword">return</span> .restricted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .notDetermined:</div><div class="line">    <span class="keyword">return</span> .notDetermined;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">return</span> .unknown;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">hasAccessToPhotos</span><span class="params">()</span></span> -&gt;kPermissionAccess &#123;</div><div class="line">  </div><div class="line">  <span class="keyword">switch</span> <span class="type">PHPhotoLibrary</span>.authorizationStatus() &#123;</div><div class="line">  <span class="keyword">case</span> .authorized:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .denied:</div><div class="line">    <span class="keyword">return</span> .denied;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .restricted:</div><div class="line">    <span class="keyword">return</span> .restricted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .notDetermined:</div><div class="line">    <span class="keyword">return</span> .notDetermined;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">return</span> .unknown;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">hasAccessToReminders</span><span class="params">()</span></span> -&gt;kPermissionAccess &#123;</div><div class="line">  <span class="keyword">switch</span> <span class="type">EKEventStore</span>.authorizationStatus(<span class="keyword">for</span>: .reminder) &#123;</div><div class="line">  <span class="keyword">case</span> .authorized:</div><div class="line">    <span class="keyword">return</span> .granted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .denied:</div><div class="line">    <span class="keyword">return</span> .denied;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .restricted:</div><div class="line">    <span class="keyword">return</span> .restricted;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">case</span> .notDetermined:</div><div class="line">    <span class="keyword">return</span> .notDetermined;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">    </div><div class="line">  <span class="keyword">default</span>:</div><div class="line">    <span class="keyword">return</span> .unknown;</div><div class="line">    <span class="keyword">break</span>;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">typealias</span> requestAccessHandler = (<span class="type">Bool</span>?, <span class="type">Any</span>?) -&gt;()</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToCalendarWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler)</span></span> &#123;</div><div class="line">  <span class="type">EKEventStore</span>().requestAccess(to: .event) &#123;</div><div class="line">    handler($<span class="number">0</span>, $<span class="number">1</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToContactsWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler)</span></span> &#123;</div><div class="line">  <span class="keyword">if</span> <span class="keyword">let</span> addressBook = <span class="type">ABAddressBookCreateWithOptions</span>(<span class="literal">nil</span>, <span class="literal">nil</span>) &#123;</div><div class="line">    <span class="type">ABAddressBookRequestAccessWithCompletion</span>(addressBook <span class="keyword">as</span> <span class="type">ABAddressBook</span>!) &#123;</div><div class="line">      handler($<span class="number">0</span>, $<span class="number">1</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToMicrophoneWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler)</span></span> &#123;</div><div class="line">  <span class="keyword">let</span> session = <span class="type">AVAudioSession</span>.sharedInstance()</div><div class="line">  session.requestRecordPermission &#123;</div><div class="line">    handler($<span class="number">0</span>, <span class="literal">nil</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToPhotosWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler)</span></span> &#123;</div><div class="line">  <span class="type">PHPhotoLibrary</span>.requestAuthorization &#123;</div><div class="line">    <span class="keyword">if</span> $<span class="number">0</span> == .authorized &#123;</div><div class="line">      handler(<span class="literal">true</span>, <span class="literal">nil</span>)</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">      handler(<span class="literal">false</span>, <span class="literal">nil</span>)</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToRemindersWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler)</span></span> &#123;</div><div class="line">  <span class="type">EKEventStore</span>().requestAccess(to: .reminder) &#123;</div><div class="line">    handler($<span class="number">0</span>, $<span class="number">1</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 获取位置访问权限</span></div><div class="line"><span class="comment">///</span></div><div class="line"><span class="comment">/// - parameter whenInUse: 如果为False，则请求总是需要的权限</span></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToLocationWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler, <span class="number">_</span> whenInUse: Bool = <span class="literal">true</span>)</span></span> &#123;</div><div class="line">  <span class="keyword">let</span> locationManager = <span class="type">CLLocationManager</span>()</div><div class="line">  <span class="keyword">if</span> whenInUse, <span class="keyword">let</span> content = <span class="type">Bundle</span>.main.object(forInfoDictionaryKey: <span class="string">"NSLocationWhenInUseUsageDescription"</span>) &#123;</div><div class="line">    locationManager.requestWhenInUseAuthorization()</div><div class="line">  &#125; <span class="keyword">else</span> &#123;</div><div class="line">    locationManager.requestAlwaysAuthorization()</div><div class="line">  &#125;</div><div class="line">  handler(<span class="literal">true</span>, <span class="literal">nil</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">requestAccessToMotionWithSuccess</span><span class="params">(<span class="number">_</span> handler: @escaping requestAccessHandler)</span></span> &#123;</div><div class="line">  <span class="keyword">let</span> motionManager = <span class="type">CMMotionActivityManager</span>()</div><div class="line">  <span class="keyword">let</span> motionQueue = <span class="type">OperationQueue</span>()</div><div class="line">  motionManager.startActivityUpdates(to: motionQueue) &#123;<span class="number">_</span> <span class="keyword">in</span> </div><div class="line">    handler(<span class="literal">true</span>, <span class="literal">nil</span>)</div><div class="line">    motionManager.stopActivityUpdates()</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可是你们忘记了，我很懒，所以这段代码不需要了，直接：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pod <span class="string">'PermissionScope'</span></div></pre></td></tr></table></figure>
+<p>来嗨吧！</p>
+<p><img src="https://camo.githubusercontent.com/b3aadf6f7486413749922757a42d863132f836d6/687474703a2f2f726171756f2e6e65742f696d616765732f7065726d697373696f6e73636f70652e676966" alt=""></p>
+<h6 id="组件处理（核心模块）"><a href="#组件处理（核心模块）" class="headerlink" title="组件处理（核心模块）"></a>组件处理（核心模块）</h6><p>要解决的问题暂时有：</p>
+<ol>
+<li>如何成为组件（实现协议与方法即可）</li>
+<li>如何启动组件（调用组件必须实现的启动方法）</li>
+<li>组件之间如何数据传输（实现Router模拟HTTP请求数据传递）</li>
+<li>组件之间如何做界面跳转（利用上述Router模拟OpenURL方式调起）</li>
+<li>组件服务如何停止（调用协议实现的方法并从组件管理中心移除注册）</li>
+</ol>
+<p>规则1：只有已经注册了的组件才可以成为Router的操作对象，想成为组件则必须有单独类实现组件协议。</p>
+<p>规则2：Router仅负责数据传递与获取视图实例（可传值，后者拥有前者的弱引用）</p>
+<p>规则3：仅在每个模块的组件中心的代理方法中注册相应的URL供被调用</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div><div class="line">147</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="comment">/// 数据流</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">typealias</span> <span class="type">INSDataFlowHandler</span> = (<span class="type">Any</span>...) -&gt;<span class="type">Any</span></div><div class="line"><span class="comment">/// 错误的Scheme</span></div><div class="line">fileprivate <span class="keyword">let</span> <span class="type">INSDataUnknowedScheme</span> = <span class="string">"INSDataUnknowedScheme_Key"</span></div><div class="line"></div><div class="line"><span class="comment">/// 插件协议</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">protocol</span> <span class="title">INSPlugin</span> </span>&#123;</div><div class="line">  <span class="keyword">var</span> pluginLoaded: <span class="type">Bool</span> &#123; <span class="keyword">get</span> &#125;</div><div class="line">  <span class="comment">/// 插件唯一标识</span></div><div class="line">  <span class="comment">/// - returns: 插件标识，用来获取插件</span></div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">pluginScheme</span><span class="params">()</span></span> -&gt;<span class="type">String</span>!</div><div class="line">  </div><div class="line">  <span class="comment">// MARK: - Mappings</span></div><div class="line">  </div><div class="line">  <span class="comment">/// 视图控制器Map</span></div><div class="line">  <span class="comment">/// - returns: 视图控制器的对应字典</span></div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">classMapping</span><span class="params">()</span></span> -&gt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">AnyClass</span>&gt;?</div><div class="line">  <span class="comment">/// 数据流Map</span></div><div class="line">  <span class="comment">/// - returns: 数据流字典</span></div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">dataflowMapping</span><span class="params">()</span></span> -&gt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">INSDataFlowHandler</span>&gt;?</div><div class="line">  </div><div class="line">  <span class="comment">// MARK: - Plugin status</span></div><div class="line">  </div><div class="line">  <span class="comment">/// 当插件注册成功的时候会调用这个方法</span></div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">serviceStarted</span><span class="params">()</span></span></div><div class="line">  <span class="comment">/// 当插件取消注册的时候会调用这个方法</span></div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">serviceStopped</span><span class="params">()</span></span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">extension</span> <span class="title">INSPlugin</span> </span>&#123;</div><div class="line">  <span class="comment">/// 插件加载状态</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> pluginLoaded: <span class="type">Bool</span> &#123;</div><div class="line">    <span class="keyword">return</span> (<span class="type">ModuleCenter</span>.getPlugin(<span class="keyword">for</span>: pluginScheme()) != <span class="literal">nil</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 插件基类，成为模块插件管理器则必须继承该类，并实现方法</span></div><div class="line">open <span class="class"><span class="keyword">class</span> <span class="title">Plugin</span>: <span class="title">INSPlugin</span> </span>&#123;</div><div class="line">  <span class="keyword">final</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">registePlugin</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">ModuleCenter</span>.registePlugin(<span class="keyword">self</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">final</span> <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">deRegistePlugin</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">ModuleCenter</span>.deRegistePlugin(<span class="keyword">self</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">pluginScheme</span><span class="params">()</span></span> -&gt; <span class="type">String</span>! &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">serviceStopped</span><span class="params">()</span></span> &#123;&#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">serviceStarted</span><span class="params">()</span></span> &#123;&#125;</div><div class="line"></div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">dataflowMapping</span><span class="params">()</span></span> -&gt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">INSDataFlowHandler</span>&gt;? &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line"></div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">classMapping</span><span class="params">()</span></span> -&gt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">AnyClass</span>&gt;? &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">init</span>() &#123;</div><div class="line">    <span class="comment">// I'm a plug-in manager 🏵</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">/// 插件控制中心</span></div><div class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ModuleManager</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">ModuleManager</span>()</div><div class="line">  <span class="comment">/// 已经加载的插件</span></div><div class="line">  <span class="keyword">private</span>(<span class="keyword">set</span>) <span class="keyword">var</span> loadedPlugins: <span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">Plugin</span>&gt; = [:]</div><div class="line">  </div><div class="line">  <span class="comment">/// 注册新的插件</span></div><div class="line">  @discardableResult</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">registePlugin</span><span class="params">(<span class="number">_</span> item: Plugin)</span></span> -&gt;<span class="type">Bool</span> &#123;</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> scheme = item.pluginScheme(), loadedPlugins[scheme] == <span class="literal">nil</span> <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">    &#125;</div><div class="line">    loadedPlugins[scheme] = item</div><div class="line">    <span class="comment">/// 注册组件</span></div><div class="line">    item.serviceStarted()</div><div class="line">    <span class="keyword">return</span> <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 取消注册插件</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">deRegistePlugin</span><span class="params">(<span class="number">_</span> item: Plugin)</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> scheme = item.pluginScheme() <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    loadedPlugins.removeValue(forKey: scheme)</div><div class="line">    <span class="comment">/// 移除组件</span></div><div class="line">    item.serviceStopped()</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 根据唯一标识获取插件</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">getPlugin</span><span class="params">(<span class="keyword">for</span> scheme: String)</span></span> -&gt;<span class="type">Plugin</span>? &#123;</div><div class="line">    <span class="keyword">return</span> loadedPlugins[scheme]</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 数据流</span></div><div class="line">  @discardableResult</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">send</span><span class="params">(to url: String, and param: Any...)</span></span> -&gt;<span class="type">Any</span>? &#123;</div><div class="line">    <span class="keyword">let</span> (scheme, host) = validateURL(url)</div><div class="line">    </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> pluginItem = getPlugin(<span class="keyword">for</span>: scheme!), <span class="keyword">let</span> dataMapping = pluginItem.dataflowMapping() <span class="keyword">else</span> &#123;</div><div class="line">      <span class="type">ILog</span>(.warning, <span class="string">"找不到scheme对应的插件或插件没有dataMapping!"</span>)</div><div class="line">      <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> sendHandler = dataMapping[host!] <span class="keyword">else</span> &#123;</div><div class="line">      <span class="type">ILog</span>(.warning, <span class="string">"该路径没有对应的Handler"</span>)</div><div class="line">      <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> sendHandler(param)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 视图流</span></div><div class="line">  @discardableResult</div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> `<span class="title">class</span>`<span class="params">(<span class="keyword">for</span> url: String)</span></span> -&gt;<span class="type">AnyClass</span>? &#123;</div><div class="line">    <span class="keyword">let</span> (scheme, host) = validateURL(url)</div><div class="line">    </div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> pluginItem = getPlugin(<span class="keyword">for</span>: scheme!), <span class="keyword">let</span> dataMapping = pluginItem.classMapping() <span class="keyword">else</span> &#123;</div><div class="line">      <span class="type">ILog</span>(.warning, <span class="string">"找不到scheme对应的插件或插件没有classMapping!"</span>)</div><div class="line">      <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> dataMapping[host!]</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  @discardableResult</div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">validateURL</span><span class="params">(<span class="number">_</span> url:String)</span></span> -&gt;(<span class="type">String</span>?, <span class="type">String</span>?) &#123;</div><div class="line">    <span class="keyword">guard</span> <span class="keyword">let</span> <span class="type">URLObject</span> = <span class="type">URL</span>(string: url), <span class="keyword">let</span> scheme = <span class="type">URLObject</span>.scheme <span class="keyword">else</span> &#123;</div><div class="line">      <span class="type">ILog</span>(.warning, <span class="string">"输入的url不能转换为URL对象或URL对象没有Scheme!"</span>)</div><div class="line">      <span class="keyword">return</span> (<span class="type">INSDataUnknowedScheme</span>, <span class="string">""</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> (scheme, <span class="type">URLObject</span>.host)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</div><div class="line">    <span class="comment">// I'm a module manager 🏵</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">let</span> <span class="type">ModuleCenter</span> = <span class="type">ModuleManager</span>.<span class="keyword">default</span></div></pre></td></tr></table></figure>
+<p>接下来，我们实现一个小的插件继承自Plugin并实现一些代理方法：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> UIKit</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetworkPlugin</span>: <span class="title">Plugin</span> </span>&#123;</div><div class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">serviceStarted</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">ILog</span>(.debug, <span class="string">"Network service started"</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">serviceStopped</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">ILog</span>(.debug, <span class="string">"Network service stopped"</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">pluginScheme</span><span class="params">()</span></span> -&gt; <span class="type">String</span>! &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"Network"</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">dataflowMapping</span><span class="params">()</span></span> -&gt;<span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">INSDataFlowHandler</span>&gt;? &#123;</div><div class="line">    <span class="keyword">let</span> mapping: [<span class="type">String</span>: <span class="type">INSDataFlowHandler</span>] = [</div><div class="line">      <span class="string">"getData"</span>: &#123;</div><div class="line">        <span class="type">ILog</span>(.warning, <span class="string">"receive call \($0)"</span>)</div><div class="line">        <span class="keyword">return</span> <span class="string">"Custom data"</span></div><div class="line">      &#125;,</div><div class="line">      <span class="string">"supportMethod"</span>: &#123;</div><div class="line">        <span class="type">ILog</span>(.warning, <span class="string">"receive call \($0)"</span>)</div><div class="line">        <span class="keyword">return</span> [</div><div class="line">          <span class="string">"GET"</span>,</div><div class="line">          <span class="string">"POST"</span>,</div><div class="line">          <span class="string">"PUT"</span>,</div><div class="line">          <span class="string">"DELETE"</span></div><div class="line">          ]</div><div class="line">      &#125;</div><div class="line">    ]</div><div class="line">    <span class="keyword">return</span> mapping</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">func</span> <span class="title">classMapping</span><span class="params">()</span></span> -&gt; <span class="type">Dictionary</span>&lt;<span class="type">String</span>, <span class="type">AnyClass</span>&gt;? &#123;</div><div class="line">    <span class="keyword">let</span> mapping: [<span class="type">String</span>: <span class="type">AnyClass</span>] = [</div><div class="line">      <span class="string">"vc1"</span>: <span class="type">UIViewController</span>.<span class="keyword">self</span>,</div><div class="line">      <span class="string">"vc2"</span>: <span class="type">NSObject</span>.<span class="keyword">self</span></div><div class="line">    ]</div><div class="line">    <span class="keyword">return</span> mapping</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">NetworkPlugin</span>()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后在ViewController.swift中测试：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="type">ModeSwitcher</span>.currentMode = .develope</div><div class="line"><span class="type">Logger</span>.level = .all</div><div class="line">    </div><div class="line"><span class="keyword">let</span> sharedNetwork = <span class="type">NetworkPlugin</span>.<span class="keyword">default</span></div><div class="line">sharedNetwork.registePlugin()</div><div class="line">    </div><div class="line"><span class="type">ILog</span>(.information, <span class="type">ModuleCenter</span>.send(to: <span class="string">"Network://getData"</span>, and: <span class="string">"Hello World"</span>))</div><div class="line"><span class="type">ILog</span>(.information, <span class="type">ModuleCenter</span>.send(to: <span class="string">"Network://supportMethod"</span>, and: <span class="string">"Hello World"</span>, <span class="string">"Hello real world!"</span>, [<span class="string">"a"</span>: <span class="string">"b"</span>]))</div><div class="line"><span class="type">ILog</span>(.information, <span class="type">ModuleCenter</span>.<span class="keyword">class</span>(<span class="keyword">for</span>: <span class="string">"Network://vc1"</span>))</div><div class="line"><span class="type">ILog</span>(.information, <span class="type">ModuleCenter</span>.<span class="keyword">class</span>(<span class="keyword">for</span>: <span class="string">"Network://vc2"</span>))</div><div class="line">    </div><div class="line">sharedNetwork.deRegistePlugin()</div></pre></td></tr></table></figure>
+<p>看到输出为：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-11%20%E4%B8%8A%E5%8D%8811.45.15.png" alt=""></p>
+<p>说明功能已经基本的完成了。这里并没有将打开界面写入到当前模块，还是感觉直接获取类好一点，所以直接把OpenURL的方式改成了获取类型，然后由使用者自己去创建对象分情况使用，这样自定义的程度也高一点。 如果写为OpenURL的方式，那我们又要分很多种了，push还是present，是否需要导航，考虑到仅获取不使用的情况，要写控制器基类，还有必要统一一个初始化方法供使用。但是这些似乎已经不是一个框架应该做的事情了（仅鉴于我对Swift框架的理解，框架不干涉业务，框架不干涉UI）。</p>
+<p>文章篇幅过长并且均为代码，所以本文只写到这里。</p>
+<p>下篇文章会开始编写数据模块、网络模块。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/11/如何构造Swift框架（二）/#comments" class="article-comment-link">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/11/如何构造Swift框架（三）/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    如何构造Swift框架（三）
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/09/如何构造Swift框架（一）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何构造Swift框架（一）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="uyan_frame"></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/13/如何构造Swift框架（四）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（四）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/13/如何构造Swift框架（四）/" class="title">如何构造Swift框架（四）</a></p>
+                            <p class="item-date"><time datetime="2016-10-13T03:31:43.000Z" itemprop="datePublished">2016-10-13</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/11/如何构造Swift框架（三）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（三）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/11/如何构造Swift框架（三）/" class="title">如何构造Swift框架（三）</a></p>
+                            <p class="item-date"><time datetime="2016-10-11T04:16:46.000Z" itemprop="datePublished">2016-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/11/如何构造Swift框架（二）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（二）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/11/如何构造Swift框架（二）/" class="title">如何构造Swift框架（二）</a></p>
+                            <p class="item-date"><time datetime="2016-10-11T03:49:34.000Z" itemprop="datePublished">2016-10-11</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/10/09/如何构造Swift框架（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="如何构造Swift框架（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/10/09/如何构造Swift框架（一）/" class="title">如何构造Swift框架（一）</a></p>
+                            <p class="item-date"><time datetime="2016-10-09T10:56:43.000Z" itemprop="datePublished">2016-10-09</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/09/23/IAP/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.sy.kuaiyong.com/kuaiyong/iosnews/2016-01-25/16b5aedc1c332472d0c9d3b1a05ac8a5.jpg)" alt="IAP" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/09/23/IAP/" class="title">IAP</a></p>
+                            <p class="item-date"><time datetime="2016-09-23T02:08:53.000Z" itemprop="datePublished">2016-09-23</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">十月 2016</a><span class="archive-list-count">4</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">九月 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">八月 2016</a><span class="archive-list-count">6</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2016 dylan
+        </div>
+    </div>
+</footer>
+        
+    
+    <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2116265"></script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

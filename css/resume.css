@@ -1,0 +1,36 @@
+.resume-nav {
+    position: fixed;
+    width: 100vw;
+    height: 50px !important;
+}
+
+.resume-item {
+    min-height: 100vh;
+    padding-top: 50px;
+}
+
+.job-wanted {
+    
+}
+
+.profile {
+    
+}
+
+.skills {
+    
+}
+
+.job-experience {
+    min-height: 50vh;
+    
+}
+
+.edu-experience {
+    min-height: 50vh;
+    
+}
+
+.life {
+    
+}

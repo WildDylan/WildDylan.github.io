@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>Swift语法熟悉（四） | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="上期提到了使用Moya作为网络基础模块，但是涉及到了一个sampleData的问题，我们也是即时的提交了一个issue来质问这样的默认Response data为什么类型竟然是Optional的。Moya的开发者举例：可以将上一次获取到的数据在需要的时候（网络请求失败）传入这里，所以进而给出建议：将var sampleData改为var cachePolicy进行缓存控制即可，缓存过期的时间由Se">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Swift语法熟悉（四）">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/13/Swift语法熟悉（四）/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="上期提到了使用Moya作为网络基础模块，但是涉及到了一个sampleData的问题，我们也是即时的提交了一个issue来质问这样的默认Response data为什么类型竟然是Optional的。Moya的开发者举例：可以将上一次获取到的数据在需要的时候（网络请求失败）传入这里，所以进而给出建议：将var sampleData改为var cachePolicy进行缓存控制即可，缓存过期的时间由Se">
+<meta property="og:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:01:56.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Swift语法熟悉（四）">
+<meta name="twitter:description" content="上期提到了使用Moya作为网络基础模块，但是涉及到了一个sampleData的问题，我们也是即时的提交了一个issue来质问这样的默认Response data为什么类型竟然是Optional的。Moya的开发者举例：可以将上一次获取到的数据在需要的时候（网络请求失败）传入这里，所以进而给出建议：将var sampleData改为var cachePolicy进行缓存控制即可，缓存过期的时间由Se">
+<meta name="twitter:image" content="http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-Swift语法熟悉（四）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            Swift语法熟悉（四）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/13/Swift语法熟悉（四）/">
+            <time datetime="2016-10-13T03:31:43.000Z" itemprop="datePublished">2016-10-13</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/Swift/">Swift</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>上期提到了使用<code>Moya</code>作为网络基础模块，但是涉及到了一个<code>sampleData</code>的问题，我们也是即时的提交了一个<a href="https://github.com/Moya/Moya/issues/713" target="_blank" rel="external">issue</a>来质问这样的默认<code>Response data</code>为什么类型竟然是<code>Optional</code>的。<code>Moya</code>的开发者举例：可以将上一次获取到的数据在需要的时候（网络请求失败）传入这里，所以进而给出建议：将<code>var sampleData</code>改为<code>var cachePolicy</code>进行缓存控制即可，缓存过期的时间由Server端使用Cache-control或Expires决定，目前有的回复是，作者觉得这个建议很棒，说不定有机会为<code>Moya</code>加入缓存机制。接下来继续我们的开发计划：</p>
+<h6 id="推送服务"><a href="#推送服务" class="headerlink" title="推送服务"></a>推送服务</h6><p>应当明确的是，每家公司用的推送第三方都是不同的（大部分是阿里云、极光、个推），所以继承第三方SDK这个事情不应该出现在框架中。框架仅仅负责申请推送能力即可。测试：在测试之前，Info.plist中所需要申请权限的Key需要自己手动配置。Xcode 8 后打开推送需要在程序中打开选项：</p>
+<a id="more"></a>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-10-13%20%E4%B8%8B%E5%8D%8812.04.27.png" alt=""></p>
+<p>这样，如果是单单写权限的话，直接用之前我们引入的<code>PermissionScope</code>就可以搞定了，Push的class可以写为open的，因为每个项目对Push的需求不同，所以在Push中我们顺便截获一下信息然后提供给用户，也很简单。所以获得推送权限的需求我们放到Permission.swift中。由于屏幕限制，所以Permission也最多允许大家同时打开3个权限。改写之前的<code>Permission.swift</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> PermissionScope</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">INSPermissionType</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> notification(<span class="type">Set</span>&lt;<span class="type">UIUserNotificationCategory</span>&gt;?, <span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> locationAlways(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> locationWhenInUse(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> contact(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> event(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> microphone(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> camera(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> photos(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> reminders(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> bluetooth(<span class="type">String</span>)</div><div class="line">  <span class="keyword">case</span> motion(<span class="type">String</span>)</div><div class="line">&#125;</div><div class="line"></div><div class="line">open <span class="class"><span class="keyword">class</span> <span class="title">Permission</span> </span>&#123;</div><div class="line">  open <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">Permission</span>()</div><div class="line">  <span class="keyword">static</span> <span class="keyword">let</span> pscope: <span class="type">PermissionScope</span> = &#123;</div><div class="line">    <span class="keyword">let</span> permissionScope = <span class="type">PermissionScope</span>()</div><div class="line">    <span class="comment">// Default customs</span></div><div class="line">    permissionScope.headerLabel.text = <span class="string">"嗨，你好！"</span></div><div class="line">    permissionScope.bodyLabel.text = <span class="string">"在使用我们的应用之前\n我们需要你做一些事情："</span></div><div class="line">    permissionScope.closeButtonTextColor = <span class="type">UIColor</span>.clear</div><div class="line">    permissionScope.permissionButtonΒorderWidth = <span class="number">0.5</span></div><div class="line">    permissionScope.permissionButtonCornerRadius = <span class="number">2</span></div><div class="line">    <span class="comment">/// 如果你希望更改权限开启按钮的英文，就需要自己配置本地化文件</span></div><div class="line">    <span class="comment">/// 参考这里 https://github.com/nickoneill/PermissionScope/pull/12#issuecomment-96428580</span></div><div class="line">    <span class="keyword">return</span> permissionScope</div><div class="line">  &#125;()</div><div class="line">  </div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">requestPermission</span>(<span class="title">_</span> <span class="title">permissionTypes</span>: [<span class="title">INSPermissionType</span>], <span class="title">_</span> <span class="title">authChange</span>: <span class="title">authClosureType</span>? = <span class="title">nil</span>, <span class="title">cancelled</span>: <span class="title">cancelClosureType</span>? = <span class="title">nil</span>) </span>&#123;</div><div class="line">    <span class="keyword">for</span> item <span class="keyword">in</span> permissionTypes &#123;</div><div class="line">      <span class="keyword">switch</span> item &#123;</div><div class="line">      <span class="keyword">case</span> .notification(<span class="keyword">let</span> categories, <span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">NotificationsPermission</span>(notificationCategories: categories), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .locationAlways(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">LocationWhileInUsePermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .locationWhenInUse(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">LocationWhileInUsePermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .contact(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">ContactsPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .event(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">EventsPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .microphone(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">MicrophonePermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .camera(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">CameraPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .photos(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">PhotosPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .reminders(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">RemindersPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .bluetooth(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">BluetoothPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">case</span> .motion(<span class="keyword">let</span> message):</div><div class="line">        pscope.addPermission(<span class="type">MotionPermission</span>(), message: message)</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      <span class="keyword">default</span>:</div><div class="line">        <span class="keyword">continue</span></div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    pscope.show(authChange, cancelled: cancelled)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>然后测试效果（别忘记在Info.plist中添加相关的请求权限的Key-Desc）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">let</span> permissionTypes = [</div><div class="line">  <span class="type">INSPermissionType</span>.notification(<span class="literal">nil</span>, <span class="string">"打开推送服务"</span>),</div><div class="line">  <span class="type">INSPermissionType</span>.camera(<span class="string">"打开相机服务"</span>),</div><div class="line">  <span class="type">INSPermissionType</span>.photos(<span class="string">"希望使用照片"</span>)</div><div class="line">]</div><div class="line">    </div><div class="line"><span class="type">Permission</span>.requestPermission(permissionTypes)</div></pre></td></tr></table></figure>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/Simulator%20Screen%20Shot%202016%E5%B9%B410%E6%9C%8813%E6%97%A5%20%E4%B8%8B%E5%8D%883.01.27.png" alt=""></p>
+<p>原本计划是要写Push.swift进行截获数据的，但是总感觉这样做貌似不太合理。所以索性我们止只统计一下用户收到推送好了，在Push.swift中仅提供一个方法入口，把推送的内容传进来供我们内部处理。不要干涉AppDelegate处理推送了，而且在iOS10之后要做版本兼容，使用<code>UNUserNotificationCenterDelegate</code>来处理推送，而且大多数第三方SDK都会有自己的处理方式。</p>
+<p>所以在我们的<code>Push.swift</code>中，我们先预留一些代码：</p>
+<p>等会儿先看个东西：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/2A408F4BC0C4A4890BD6645C07F93DCC.jpg" alt=""></p>
+<p>好、继续写代码：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Push</span> </span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">Push</span>()</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">DeviceToken</span><span class="params">(<span class="number">_</span> deviceToken: Data)</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">ReceivedPushMessage</span> <span class="params">(<span class="number">_</span> userInfo: [AnyHashable : Any])</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">init</span>() &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>简单的预留一些方法入口即可，不急着写，接着往下写日志上报（直接改造之前的Logger类）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">INSLogger</span> </span>&#123;</div><div class="line">  <span class="comment">/// 默认为输出全部日志</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">INSLogger</span>()</div><div class="line">  </div><div class="line">  <span class="comment">/// 日志级别</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> level: <span class="type">LogLevel</span> = .all</div><div class="line">  <span class="comment">/// 是否上报崩溃</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> crashCollect: <span class="type">Bool</span> = <span class="literal">true</span></div><div class="line">  </div><div class="line">  <span class="comment">/// 日志输出</span></div><div class="line">  <span class="comment">///</span></div><div class="line">  <span class="comment">/// - parameter lev: 日志级别</span></div><div class="line">  <span class="comment">/// - parameter content: 日志内容</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">printLog</span><span class="params">(<span class="number">_</span> lev: LogLevel, <span class="number">_</span> details: String, <span class="number">_</span> items: Any)</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> level == .all || level == lev, <span class="type">ModeSwitcher</span>.currentMode == .develope <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    <span class="built_in">print</span>(lev.rawValue, details, <span class="string">"\n"</span>, items)</div><div class="line">  &#125;</div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> exception: <span class="type">NSException</span>? = <span class="literal">nil</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">setUncaughtException</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">NSSetUncaughtExceptionHandler</span> &#123;</div><div class="line">      <span class="keyword">let</span> exception = $<span class="number">0</span></div><div class="line">      <span class="keyword">let</span> name = exception.name</div><div class="line">      <span class="keyword">let</span> reason = exception.reason ?? <span class="string">"Without system crash version."</span></div><div class="line">      <span class="keyword">let</span> callStack = exception.callStackSymbols</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"name:\(name)\nreason:\(reason)\ncallStack:\(callStack.joined(separator: "</span>\n<span class="string">"))"</span></div><div class="line">      </div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>获取到崩溃的信息后，我们在这里加一个<code>TODO</code>标签。 这里需要注意的是：<strong>框架外部如果也需要做日志捕获</strong>，那么需要先使用<code>NSGetUncaughtExceptionHandler()</code>获取当前的捕获器，在自己的捕获成功之后也让别人的捕获成功。啊好累啊，这还不是完整的奔溃捕获，于是我们接着写代码（写代码到时无妨，主要是这里有一坑爹的事情，需要自己去查看解决，说明：<a href="http://stackoverflow.com/questions/25441302/how-should-i-use-nssetuncaughtexceptionhandler-in-swift" target="_blank" rel="external">无法把方法传入这些捕获方法</a>，<a href="https://github.com/getsentry/raven-swift/tree/master/Raven" target="_blank" rel="external">也附上气前一个链接中的代码</a>）：</p>
+<p><img src="https://camo.githubusercontent.com/8154976fc5aac34a717ebbfbd98727725e1be912/68747470733a2f2f6d656469612e67697068792e636f6d2f6d656469612f31314f4f4151536e55615a54324d2f67697068792e676966" alt=""></p>
+<p>慵懒的完善了<code>signal</code>后（上边提到的不能使用C方法的问题自己去解决把，这里仅仅是展示，所以不写那么详细了）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/// 设置异常捕获</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">setUncaughtException</span><span class="params">()</span></span> &#123;</div><div class="line">    </div><div class="line">    <span class="type">NSSetUncaughtExceptionHandler</span> &#123;</div><div class="line">      <span class="keyword">let</span> exception = $<span class="number">0</span></div><div class="line">      <span class="keyword">let</span> name = exception.name</div><div class="line">      <span class="keyword">let</span> reason = exception.reason ?? <span class="string">"Without system crash version."</span></div><div class="line">      <span class="keyword">let</span> callStack = exception.callStackSymbols</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"name:\(name)\nreason:\(reason)\ncallStack:\(callStack.joined(separator: "</span>\n<span class="string">"))"</span></div><div class="line">      </div><div class="line">      exception.raise()</div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    </div><div class="line">    signal(<span class="type">SIGILL</span>) &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): Illegal instruction (not reset when caught)"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    signal(<span class="type">SIGABRT</span>)  &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): Abort, abort()"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    signal(<span class="type">SIGFPE</span>)  &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): Floating point exception"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    signal(<span class="type">SIGBUS</span>)  &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): Bus Error"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    signal(<span class="type">SIGSEGV</span>)  &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): segmentation violation"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    signal(<span class="type">SIGSYS</span>)  &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): Bad argument to system call"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">    signal(<span class="type">SIGPIPE</span>)  &#123;</div><div class="line">      <span class="keyword">let</span> crashLog = <span class="string">"SignalRaisedException(\($0)): Write on a pipe with no one to read it"</span></div><div class="line">      <span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">unSetUncaughtException</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">NSSetUncaughtExceptionHandler</span>(<span class="literal">nil</span>)</div><div class="line">    signal(<span class="type">SIGILL</span>, <span class="type">SIG_DFL</span>);</div><div class="line">    signal(<span class="type">SIGABRT</span>, <span class="type">SIG_DFL</span>);</div><div class="line">    signal(<span class="type">SIGFPE</span>, <span class="type">SIG_DFL</span>);</div><div class="line">    signal(<span class="type">SIGBUS</span>, <span class="type">SIG_DFL</span>);</div><div class="line">    signal(<span class="type">SIGSEGV</span>, <span class="type">SIG_DFL</span>);</div><div class="line">    signal(<span class="type">SIGSYS</span>, <span class="type">SIG_DFL</span>);</div><div class="line">    signal(<span class="type">SIGPIPE</span>, <span class="type">SIG_DFL</span>);</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>这里只捕获了一部分signal，点进去自己看了解下，我之前也写过一篇关于日志捕获的文章，可以去找找。继续往下写：信息收集，新建swift文件<code>Analytics.swift</code>，这里我只给出一部分思路（完整的Analytics又是一个独立的框架，建议参考的是<a href="https://github.com/zhugesdk/zhuge-ios/tree/master/Zhuge" target="_blank" rel="external">开源的ZhugeIO</a>）：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> Foundation</div><div class="line"><span class="keyword">import</span> LKDBHelper</div><div class="line"></div><div class="line"><span class="keyword">let</span> <span class="type">AnalyticsManagerFlushedFlagKey</span> = <span class="string">"AnalyticsManagerFlushedFlagKey"</span></div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">AnalyticsItem</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">  <span class="comment">/// 事件名称</span></div><div class="line">  <span class="keyword">var</span> eventName: <span class="type">String</span></div><div class="line">  <span class="comment">/// 事件数据</span></div><div class="line">  <span class="keyword">var</span> parameters: [<span class="type">String</span>: <span class="type">Any</span>]?</div><div class="line">  </div><div class="line">  <span class="function"><span class="keyword">func</span> <span class="title">toAnalytice</span><span class="params">()</span></span> -&gt;[<span class="type">String</span>: <span class="type">String</span>] &#123;</div><div class="line">    <span class="keyword">return</span> [eventName ?? <span class="string">""</span>: <span class="string">"\(parameters ?? ["</span><span class="string">": "</span><span class="string">"])"</span>]</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">init</span>(<span class="number">_</span> eventName: <span class="type">String</span>, <span class="number">_</span> parameters: [<span class="type">String</span>: <span class="type">Any</span>]? = <span class="literal">nil</span>) &#123;</div><div class="line">    <span class="keyword">self</span>.eventName = eventName</div><div class="line">    <span class="keyword">self</span>.parameters = parameters</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">override</span> <span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">getTableName</span><span class="params">()</span></span> -&gt; <span class="type">String</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="string">"AnalyticsItem"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">final</span> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Analytics</span> </span>&#123;</div><div class="line">  <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">Analytics</span>()</div><div class="line">  <span class="keyword">public</span> <span class="keyword">typealias</span> <span class="type">FlushHandler</span> = (<span class="number">_</span> info: [<span class="type">String</span>], <span class="number">_</span> analyticsData: [[<span class="type">String</span>: <span class="type">String</span>]])-&gt;()</div><div class="line">  </div><div class="line">  <span class="comment">/// 设备唯一标识，默认是UUID</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> deviceIdentifier: <span class="type">String</span></div><div class="line">  <span class="comment">/// 设备用户标识，以设备标识为准</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> userIdentifier: <span class="type">String</span></div><div class="line">  <span class="comment">/// 上报间隔，会调用上报的方法，外部控制网络请求</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> flushInterval: <span class="type">Int</span> = <span class="number">10</span></div><div class="line">  <span class="comment">/// 上报的回调方法</span></div><div class="line">  <span class="keyword">public</span> <span class="keyword">var</span> flushHandler: <span class="type">FlushHandler</span>?</div><div class="line">  </div><div class="line">  <span class="comment">/// 存储准备上报的数组</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> analyticsItems: [<span class="type">AnalyticsItem</span>] = []</div><div class="line">  <span class="comment">/// 是否已经上报，通过检查本地值来确定</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> flushed: <span class="type">Bool</span></div><div class="line">  <span class="keyword">private</span> <span class="keyword">var</span> timer: <span class="type">Timer</span>? = <span class="literal">nil</span></div><div class="line">  </div><div class="line">  <span class="comment">/// 追踪事件</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">track</span><span class="params">(<span class="number">_</span> eventName: String, <span class="number">_</span> parameters: [String: Any]? = <span class="literal">nil</span>)</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> analyticsItems.<span class="built_in">count</span> == <span class="number">0</span> &#123;</div><div class="line">      startTimer()</div><div class="line">    &#125;</div><div class="line">    analyticsItems.append(<span class="type">AnalyticsItem</span>(eventName, parameters))</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">/// 主动上报到服务器</span></div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">flush</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">guard</span> analyticsItems.<span class="built_in">count</span> &gt; <span class="number">0</span>, <span class="keyword">let</span> handler = flushHandler <span class="keyword">else</span> &#123;</div><div class="line">      <span class="keyword">return</span></div><div class="line">    &#125;</div><div class="line">    handler([deviceIdentifier, userIdentifier], analyticsItems.<span class="built_in">map</span> &#123; <span class="keyword">return</span> $<span class="number">0</span>.toAnalytice() &#125;)</div><div class="line">    stopTimer()</div><div class="line">    flushed = <span class="literal">true</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">startTimer</span><span class="params">()</span></span> &#123;</div><div class="line">    stopTimer()</div><div class="line">    timer = <span class="type">Timer</span>.<span class="keyword">init</span>(timeInterval: <span class="type">TimeInterval</span>(flushInterval), target: <span class="keyword">self</span>, selector: <span class="string">"flush"</span>, userInfo: <span class="literal">nil</span>, repeats: <span class="literal">true</span>)</div><div class="line">    <span class="type">RunLoop</span>.current.add(timer!, forMode: .commonModes)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">stopTimer</span><span class="params">()</span></span> &#123;</div><div class="line">    timer?.invalidate()</div><div class="line">    timer = <span class="literal">nil</span></div><div class="line">    analyticsItems.removeAll()</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">getLocalAnalyticsItem</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">AnalyticsItem</span>.search(withWhere: <span class="literal">nil</span>).forEach &#123;</div><div class="line">      [<span class="keyword">unowned</span> <span class="keyword">self</span>] <span class="keyword">in</span></div><div class="line">      <span class="keyword">self</span>.analyticsItems.append($<span class="number">0</span> <span class="keyword">as</span>! <span class="type">AnalyticsItem</span>)</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">let</span> dbHelper = <span class="type">AnalyticsItem</span>.getUsingLKDBHelper()!</div><div class="line">    dbHelper.dropTable(with: <span class="type">AnalyticsItem</span>.<span class="keyword">self</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">setNeedsRestoreItems</span><span class="params">()</span></span> &#123;</div><div class="line">    analyticsItems.forEach &#123; $<span class="number">0</span>.saveToDB() &#125;</div><div class="line">    analyticsItems.removeAll()</div><div class="line">    <span class="type">UserDefaults</span>.standard.<span class="keyword">set</span>(<span class="literal">false</span>, forKey: <span class="type">AnalyticsManagerFlushedFlagKey</span>)</div><div class="line">    <span class="type">UserDefaults</span>.standard.synchronize()</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="function"><span class="keyword">func</span> <span class="title">restoreItems</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">if</span> flushed == <span class="literal">false</span> &#123;</div><div class="line">      getLocalAnalyticsItem()</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">UIApplicationDidEnterBackground</span><span class="params">()</span></span> &#123;</div><div class="line">    setNeedsRestoreItems()</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">UIApplicationDidBecomeActive</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="keyword">self</span>.flushed = <span class="type">UserDefaults</span>.standard.bool(forKey: <span class="type">AnalyticsManagerFlushedFlagKey</span>)</div><div class="line">    restoreItems()</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">addListener</span><span class="params">()</span></span> &#123;</div><div class="line">    <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.addObserver(<span class="keyword">self</span>, selector: <span class="string">"UIApplicationDidEnterBackground"</span>, name: .<span class="type">UIApplicationDidEnterBackground</span>, object: <span class="literal">nil</span>)</div><div class="line">    <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.addObserver(<span class="keyword">self</span>, selector: <span class="string">"UIApplicationDidBecomeActive"</span>, name: .<span class="type">UIApplicationDidBecomeActive</span>, object: <span class="literal">nil</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="function"><span class="keyword">func</span> <span class="title">removeListener</span><span class="params">()</span></span> &#123;</div><div class="line">    stopTimer()</div><div class="line">    <span class="type">NotificationCenter</span>.<span class="keyword">default</span>.removeObserver(<span class="keyword">self</span>)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">private</span> <span class="keyword">init</span>() &#123;</div><div class="line">    <span class="keyword">self</span>.deviceIdentifier = <span class="type">UUID</span>().uuidString</div><div class="line">    <span class="keyword">self</span>.userIdentifier = <span class="string">"iOS Device"</span></div><div class="line">    <span class="keyword">self</span>.flushed = <span class="type">UserDefaults</span>.standard.bool(forKey: <span class="type">AnalyticsManagerFlushedFlagKey</span>)</div><div class="line">    restoreItems()</div><div class="line">    addListener()</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">deinit</span> &#123;</div><div class="line">    removeListener()</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">let</span> <span class="type">AnalyticsManager</span> = <span class="type">Analytics</span>.<span class="keyword">default</span></div></pre></td></tr></table></figure>
+<p>完成之前的奔溃时日志上报</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// <span class="doctag">TODO:</span> 上报</span></div><div class="line"><span class="type">AnalyticsManager</span>.track(<span class="string">"CRASH"</span>, [<span class="string">"info"</span>: crashLog])</div><div class="line"><span class="comment">// 程序奔溃需要调用标记未上传</span></div><div class="line"><span class="type">AnalyticsManager</span>.setNeedsRestoreItems()</div></pre></td></tr></table></figure>
+<p>写到这里，框架其实只有30%，只有结合业务才能做出与业务相匹配的框架，接下来就是Cache，我只给出代码框架：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//存储引擎</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IDPStorageType</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> disk</div><div class="line">  <span class="keyword">case</span> sql</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">//缓存策略</span></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">IDPCacheStoragePolicy</span> </span>&#123;</div><div class="line">  <span class="keyword">case</span> memory</div><div class="line">  <span class="keyword">case</span> disk</div><div class="line">  <span class="keyword">case</span> memoryAndDisk</div><div class="line">&#125;</div><div class="line"></div><div class="line">open <span class="class"><span class="keyword">class</span> <span class="title">INSCache</span> </span>&#123;</div><div class="line">  open <span class="keyword">static</span> <span class="keyword">let</span> `<span class="keyword">default</span>` = <span class="type">INSCache</span>()</div><div class="line">  </div><div class="line">  open <span class="keyword">var</span> _nameSpace: <span class="type">String</span> = <span class="string">"INSCache"</span></div><div class="line">  open <span class="keyword">var</span> _cacheStoragePolicy: <span class="type">IDPCacheStoragePolicy</span> = .memoryAndDisk</div><div class="line">  open <span class="keyword">var</span> _memoryCapacity: <span class="type">Float</span> = <span class="number">0</span></div><div class="line">  open <span class="keyword">var</span> _memoryTotalCost: <span class="type">Float</span> = <span class="number">0</span></div><div class="line">  open <span class="keyword">var</span> _diskExpiredTime: <span class="type">Int</span> = <span class="number">0</span></div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">existCacheForKey</span><span class="params">(<span class="number">_</span> key: String)</span></span> -&gt;<span class="type">Bool</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">clearMemory</span><span class="params">()</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">existCacheForKeyInMemory</span><span class="params">(<span class="number">_</span> key: String)</span></span> -&gt;<span class="type">Bool</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">existCacheForKeyOnDisk</span><span class="params">(<span class="number">_</span> key: String)</span></span> -&gt;<span class="type">Bool</span> &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">false</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">setObject</span><span class="params">(<span class="number">_</span> data: AnyObject, <span class="keyword">for</span> key: String)</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">getObject</span><span class="params">(<span class="keyword">for</span> key: String)</span></span> -&gt;<span class="type">AnyObject</span>? &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">objectForKeyOnlyInMemory</span><span class="params">(<span class="number">_</span> key: String)</span></span> -&gt;<span class="type">AnyObject</span>? &#123;</div><div class="line">    <span class="keyword">return</span> <span class="literal">nil</span></div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">asyncObject</span><span class="params">(forKey key: String, <span class="number">_</span> handler: <span class="params">(AnyObject)</span></span></span>-&gt;()) &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">removeObjcet</span><span class="params">(<span class="keyword">for</span> key: String)</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">removeObjcetForKeyOnlyInMemory</span><span class="params">(<span class="number">_</span> key: String)</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">removeAll</span> <span class="params">()</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">removeAllInMemory</span><span class="params">()</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">removeAllInDisk</span><span class="params">()</span></span> &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  open <span class="class"><span class="keyword">class</span> <span class="title">func</span> <span class="title">removeNameSpace</span>(<span class="title">_</span> <span class="title">spaceName</span>: <span class="title">String</span>) </span>&#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>包括模型的基类：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">open <span class="class"><span class="keyword">class</span> <span class="title">Model</span>: <span class="title">NSObject</span> </span>&#123;</div><div class="line">  open <span class="keyword">var</span> _ModelIdentifier: <span class="type">String</span>?</div><div class="line">  </div><div class="line">  open <span class="keyword">var</span> _ModelUpdatedAt: <span class="type">Date</span>?</div><div class="line">  open <span class="keyword">var</span> _ModelCreatedAt: <span class="type">Date</span>?</div><div class="line">  open <span class="keyword">var</span> _ModelExpiredAt: <span class="type">Date</span>?</div><div class="line">  open <span class="keyword">var</span> _ModelNeedsCache: <span class="type">Bool</span>?</div><div class="line">  </div><div class="line">  open <span class="keyword">var</span> _CurrentPage: <span class="type">Int</span> = <span class="number">0</span></div><div class="line">  open <span class="keyword">var</span> _PageSize: <span class="type">Int</span> = <span class="number">10</span></div><div class="line">  open <span class="keyword">var</span> _TotalCount: <span class="type">Int</span> = <span class="number">0</span></div><div class="line">  open <span class="keyword">var</span> _StartAt: <span class="type">Int</span> = <span class="number">0</span></div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">load</span><span class="params">()</span></span> &#123; &#125;</div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">refresh</span><span class="params">()</span></span> &#123; &#125;</div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">cancel</span><span class="params">()</span></span> &#123; &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">goNextPage</span><span class="params">()</span></span> &#123; &#125;</div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">goPrevPage</span><span class="params">()</span></span> &#123; &#125;</div><div class="line">  </div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">hasPrev</span><span class="params">()</span></span> -&gt;<span class="type">Bool</span>&#123; <span class="keyword">return</span> <span class="literal">false</span> &#125;</div><div class="line">  open <span class="function"><span class="keyword">func</span> <span class="title">hasNext</span><span class="params">()</span></span> -&gt;<span class="type">Bool</span>&#123; <span class="keyword">return</span> <span class="literal">false</span> &#125;</div><div class="line">  </div><div class="line">  <span class="keyword">public</span> <span class="keyword">override</span> <span class="keyword">init</span>() &#123;</div><div class="line">    </div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>框架到这里就不说了，接下来有时间就会实际的在使用中一步步的优化框架，让框架适应业务。最近有点忙，开了算法课程，所以框架上边大部分东西都是懒得写，但是使用到的第三方库都建议大家去阅读源码（除ASDK以外）。希望会有所提升。<a href="https://github.com/WildDylan/INSSwift.git" target="_blank" rel="external">代码地址</a>。仅供作为Swift的语言熟悉，不作为框架教学。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/13/Swift语法熟悉（四）/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/13/Swift语法熟悉（四）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/10/14/一些App动态化解决方案/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    一些App动态化解决方案
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/11/Swift语法熟悉（三）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">Swift语法熟悉（三）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/13/Swift语法熟悉（四）/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>

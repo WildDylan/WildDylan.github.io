@@ -1,0 +1,27 @@
+header nav {
+    padding: 0 5% 0 5%;
+}
+
+footer {
+    padding: 10px 0 10px 0;
+}
+
+#container {
+    padding: 30px 5% 30px 5%;
+}
+
+#container .menu {
+    
+}
+
+#container .content {
+    
+}
+
+pre {
+    border: 1px solid #49c8fb;
+}
+
+pre code {
+    background-color: #fff; !important;
+}

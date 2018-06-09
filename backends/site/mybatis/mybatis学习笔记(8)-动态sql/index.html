@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>Mybatis学习笔记(8) 动态sql - SpringMVC&MyBatis@Brian</title>
+        <link href="../../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../../css/highlight.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+	
+	<script src="../../js/jquery-1.10.2.min.js"></script>
+        <script src="../../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../../js/highlight.pack.js"></script> 
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="../..">SpringMVC&MyBatis@Brian</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                    <li >
+                        <a href="../..">Home</a>
+                    </li>
+                    <li class="dropdown active">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Mybatis <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../mybatis学习笔记(1)-对原生jdbc程序中的问题总结/">Mybatis学习笔记(1) 对原生jdbc程序中的问题总结</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(10)-一对一查询/">Mybatis学习笔记(10) 一对一查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(11)-一对多查询/">Mybatis学习笔记(11) 一对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(12)-多对多查询/">Mybatis学习笔记(12) 多对多查询</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(13)-延迟加载/">Mybatis学习笔记(13) 延迟加载</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(14)-查询缓存之一级缓存/">Mybatis学习笔记(14) 查询缓存之一级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(15)-查询缓存之二级缓存/">Mybatis学习笔记(15) 查询缓存之二级缓存</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(16)-mybatis整合ehcache/">Mybatis学习笔记(16) mybatis整合ehcache</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(17)-spring和mybatis整合/">Mybatis学习笔记(17) spring和mybatis整合</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(18)-mybatis逆向工程/">Mybatis学习笔记(18) mybatis逆向工程</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(2)-mybatis概述/">Mybatis学习笔记(2) mybatis概述</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序一/">Mybatis学习笔记(3) 入门程序一</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(3)-入门程序二/">Mybatis学习笔记(3) 入门程序二</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(4)-开发dao方法/">Mybatis学习笔记(4) 开发dao方法</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(5)-配置文件/">Mybatis学习笔记(5) 配置文件</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(6)-输入映射/">Mybatis学习笔记(6) 输入映射</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(7)-输出映射/">Mybatis学习笔记(7) 输出映射</a>
+</li>
+                            
+<li class="active">
+    <a href="./">Mybatis学习笔记(8) 动态sql</a>
+</li>
+                            
+<li >
+    <a href="../mybatis学习笔记(9)-订单商品数据模型分析/">Mybatis学习笔记(9) 订单商品数据模型分析</a>
+</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Springmvc <b class="caret"></b></a>
+                        <ul class="dropdown-menu">
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(1)-框架原理和入门配置/">Springmvc学习笔记(1) 框架原理和入门配置</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(10)-springmvc注解开发之商品修改功能/">Springmvc学习笔记(10) springmvc注解开发之商品修改功能</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(11)-springmvc注解开发之简单参数绑定/">Springmvc学习笔记(11) springmvc注解开发之简单参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(12)-springmvc注解开发之包装类型参数绑定/">Springmvc学习笔记(12) springmvc注解开发之包装类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(13)-springmvc注解开发之集合类型参数绑定/">Springmvc学习笔记(13) springmvc注解开发之集合类型参数绑定</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(14)-springmvc校验/">Springmvc学习笔记(14) springmvc校验</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(15)-数据回显/">Springmvc学习笔记(15) 数据回显</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(16)-异常处理器/">Springmvc学习笔记(16) 异常处理器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(17)-上传图片/">Springmvc学习笔记(17) 上传图片</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(18)-json数据交互/">Springmvc学习笔记(18) json数据交互</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(19)-RESTful支持/">springmvc学习笔记(19) RESTful支持</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(2)-非注解的处理器映射器和适配器/">Springmvc学习笔记(2) 非注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(20)-拦截器/">Springmvc学习笔记(20) 拦截器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(21)-springmvc整合mybatis遇到的问题及解决小结/">Springmvc学习笔记(21) springmvc整合mybatis遇到的问题及解决小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(22)-springmvc开发小结/">Springmvc学习笔记(22) springmvc开发小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(3)-注解的处理器映射器和适配器/">Springmvc学习笔记(3) 注解的处理器映射器和适配器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(4)-前端控制器/">Springmvc学习笔记(4) 前端控制器</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(5)-入门程序小结/">Springmvc学习笔记(5) 入门程序小结</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(6)-springmvc整合mybatis(IDEA中通过maven构建)/">springmvc学习笔记(6) springmvc整合mybatis(IDEA中通过maven构建)</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(7)-springmvc整合mybatis之mapper/">Springmvc学习笔记(7) springmvc整合mybatis之mapper</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(8)-springmvc整合mybatis之service/">Springmvc学习笔记(8) springmvc整合mybatis之service</a>
+</li>
+                            
+<li >
+    <a href="../../springmvc/springmvc学习笔记(9)-springmvc整合mybatis之controller/">Springmvc学习笔记(9) springmvc整合mybatis之controller</a>
+</li>
+                        </ul>
+                    </li>
+                </ul>
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                    <li >
+                        <a rel="next" href="../mybatis学习笔记(7)-输出映射/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li >
+                        <a rel="prev" href="../mybatis学习笔记(9)-订单商品数据模型分析/">
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#if">if判断</a></li>
+        <li class="main "><a href="#sql">sql片段(重点)</a></li>
+        <li class="main "><a href="#foreach">foreach标签</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<p>﻿# mybatis学习笔记(8)-动态sql</p>
+<p>标签： mybatis</p>
+<hr />
+<p><strong>Contents</strong></p>
+<ul>
+<li><a href="#if判断">if判断</a></li>
+<li><a href="#sql片段重点">sql片段(重点)</a></li>
+<li><a href="#foreach标签">foreach标签</a></li>
+</ul>
+<hr />
+<p>mybatis核心,对sql语句进行灵活操作，通过表达式进行判断，对sql进行灵活拼接、组装。</p>
+<h2 id="if">if判断</h2>
+<ul>
+<li>mapper.xml</li>
+</ul>
+<pre><code class="xml">&lt;!-- 用户信息综合查询
+    #{userCustom.sex}:取出pojo包装对象中性别值
+    ${userCustom.username}：取出pojo包装对象中用户名称
+ --&gt;
+&lt;select id=&quot;findUserList&quot; parameterType=&quot;com.iot.mybatis.po.UserQueryVo&quot;
+        resultType=&quot;com.iot.mybatis.po.UserCustom&quot;&gt;
+    SELECT * FROM user
+    &lt;!--  where 可以自动去掉条件中的第一个and --&gt;
+    &lt;where&gt;
+        &lt;if test=&quot;userCustom!=null&quot;&gt;
+            &lt;if test=&quot;userCustom.sex!=null and userCustom.sex != '' &quot;&gt;
+               AND user.sex=#{userCustom.sex}
+            &lt;/if&gt;
+            &lt;if test=&quot;userCustom.username!=null and userCustom.username != '' &quot;&gt;
+               AND user.username LIKE '%${userCustom.username}%'
+            &lt;/if&gt;
+        &lt;/if&gt;
+    &lt;/where&gt;
+
+
+&lt;/select&gt;
+
+&lt;!-- 用户信息综合查询总数
+    parameterType：指定输入类型和findUserList一样
+    resultType：输出结果类型
+--&gt;
+&lt;select id=&quot;findUserCount&quot; parameterType=&quot;com.iot.mybatis.po.UserQueryVo&quot; resultType=&quot;int&quot;&gt;
+    SELECT count(*) FROM user
+    &lt;where&gt;
+        &lt;if test=&quot;userCustom!=null&quot;&gt;
+            &lt;if test=&quot;userCustom.sex!=null and userCustom.sex != '' &quot;&gt;
+                AND user.sex=#{userCustom.sex}
+            &lt;/if&gt;
+            &lt;if test=&quot;userCustom.username!=null and userCustom.username != '' &quot;&gt;
+                AND user.username LIKE '%${userCustom.username}%'
+            &lt;/if&gt;
+        &lt;/if&gt;
+    &lt;/where&gt;
+&lt;/select&gt;
+
+</code></pre>
+
+<ul>
+<li>测试结果</li>
+</ul>
+<p>1.注释掉<code>testFindUserList()</code>方法中的<code>userCustom.setUsername("张三");</code></p>
+<pre><code class="java">//由于这里使用动态sql，如果不设置某个值，条件不会拼接在sql中
+userCustom.setSex(&quot;1&quot;);
+//userCustom.setUsername(&quot;张三&quot;);
+userQueryVo.setUserCustom(userCustom);
+</code></pre>
+
+<p>输出</p>
+<pre><code>DEBUG [main] - Checking to see if class com.iot.mybatis.mapper.UserMapper matches criteria [is assignable to Object]
+DEBUG [main] - Checking to see if class com.iot.mybatis.mapper.UserMapperTest matches criteria [is assignable to Object]
+DEBUG [main] - Opening JDBC Connection
+DEBUG [main] - Created connection 352359770.
+DEBUG [main] - Setting autocommit to false on JDBC Connection [com.mysql.jdbc.JDBC4Connection@1500955a]
+DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user WHERE user.sex=? 
+DEBUG [main] - ==&gt; Parameters: 1(String)
+DEBUG [main] - &lt;==      Total: 6
+[User [id=10, username=张三, sex=1, birthday=Thu Jul 10 00:00:00 CST 2014, address=北京市], User [id=16, username=张小明, sex=1, birthday=null, address=河南郑州], User [id=22, username=陈小明, sex=1, birthday=null, address=河南郑州], User [id=24, username=张三丰, sex=1, birthday=null, address=河南郑州], User [id=25, username=陈小明, sex=1, birthday=null, address=河南郑州], User [id=28, username=王小军, sex=1, birthday=Tue Feb 23 00:00:00 CST 2016, address=河南郑州]]
+</code></pre>
+
+<p>可以看到sql语句为<code>reparing: SELECT * FROM user WHERE user.sex=?</code>，没有username的部分</p>
+<p>2.<code>userQueryVo</code>设为null,则<code>userCustom</code>为null</p>
+<pre><code class="java">//List&lt;UserCustom&gt; list = userMapper.findUserList(userQueryVo);
+List&lt;UserCustom&gt; list = userMapper.findUserList(null);
+</code></pre>
+
+<p>输出</p>
+<pre><code>DEBUG [main] - ==&gt;  Preparing: SELECT * FROM user 
+DEBUG [main] - ==&gt; Parameters: 
+DEBUG [main] - &lt;==      Total: 9
+[User [id=1, username=王五, sex=2, birthday=null, address=null], User [id=10, username=张三, sex=1, birthday=Thu Jul 10 00:00:00 CST 2014, address=北京市], User [id=16, username=张小明, sex=1, birthday=null, address=河南郑州], User [id=22, username=陈小明, sex=1, birthday=null, address=河南郑州], User [id=24, username=张三丰, sex=1, birthday=null, address=河南郑州], User [id=25, username=陈小明, sex=1, birthday=null, address=河南郑州], User [id=26, username=王五, sex=null, birthday=null, address=null], User [id=27, username=王大军, sex=2, birthday=Tue Feb 23 00:00:00 CST 2016, address=河南郑州], User [id=28, username=王小军, sex=1, birthday=Tue Feb 23 00:00:00 CST 2016, address=河南郑州]]
+
+</code></pre>
+
+<p>可以看到sql语句变为了<code>SELECT * FROM user</code></p>
+<h2 id="sql">sql片段(重点)</h2>
+<p>将上边实现的动态sql判断代码块抽取出来，组成一个sql片段。其它的statement中就可以引用sql片段。</p>
+<ul>
+<li>定义sql片段</li>
+</ul>
+<pre><code class="xml">&lt;!-- 定义sql片段
+id：sql片段的唯 一标识
+
+经验：是基于单表来定义sql片段，这样话这个sql片段可重用性才高
+在sql片段中不要包括 where
+ --&gt;
+&lt;sql id=&quot;query_user_where&quot;&gt;
+    &lt;if test=&quot;userCustom!=null&quot;&gt;
+        &lt;if test=&quot;userCustom.sex!=null and userCustom.sex!=''&quot;&gt;
+            AND user.sex = #{userCustom.sex}
+        &lt;/if&gt;
+        &lt;if test=&quot;userCustom.username!=null and userCustom.username!=''&quot;&gt;
+            AND user.username LIKE '%${userCustom.username}%'
+        &lt;/if&gt;
+    &lt;/if&gt;
+&lt;/sql&gt;
+</code></pre>
+
+<ul>
+<li>引用sql片段</li>
+</ul>
+<pre><code class="xml">&lt;!-- 用户信息综合查询
+    #{userCustom.sex}:取出pojo包装对象中性别值
+    ${userCustom.username}：取出pojo包装对象中用户名称
+ --&gt;
+&lt;select id=&quot;findUserList&quot; parameterType=&quot;com.iot.mybatis.po.UserQueryVo&quot;
+        resultType=&quot;com.iot.mybatis.po.UserCustom&quot;&gt;
+    SELECT * FROM user
+    &lt;!--  where 可以自动去掉条件中的第一个and --&gt;
+    &lt;where&gt;
+        &lt;!-- 引用sql片段 的id，如果refid指定的id不在本mapper文件中，需要前边加namespace --&gt;
+        &lt;include refid=&quot;query_user_where&quot;&gt;&lt;/include&gt;
+        &lt;!-- 在这里还要引用其它的sql片段  --&gt;
+    &lt;/where&gt;
+&lt;/select&gt;
+</code></pre>
+
+<h2 id="foreach">foreach标签</h2>
+<p>向sql传递数组或List，mybatis使用foreach解析</p>
+<p>在用户查询列表和查询总数的statement中增加多个id输入查询。两种方法，sql语句如下：</p>
+<ul>
+<li><code>SELECT * FROM USER WHERE id=1 OR id=10 OR id=16</code></li>
+<li><code>SELECT * FROM USER WHERE id IN(1,10,16)</code></li>
+</ul>
+<p>一个使用OR,一个使用IN</p>
+<ul>
+<li>在输入参数类型中添加<code>List&lt;Integer&gt; ids</code>传入多个id</li>
+</ul>
+<pre><code class="java">public class UserQueryVo {
+
+    //传入多个id
+    private List&lt;Integer&gt; ids;
+
+    getter、setter方法
+    。。。
+}
+</code></pre>
+
+<ul>
+<li>修改mapper.xml</li>
+</ul>
+<pre><code class="xml">&lt;if test=&quot;ids!=null&quot;&gt;
+    &lt;!-- 使用 foreach遍历传入ids
+    collection：指定输入 对象中集合属性
+    item：每个遍历生成对象中
+    open：开始遍历时拼接的串
+    close：结束遍历时拼接的串
+    separator：遍历的两个对象中需要拼接的串
+     --&gt;
+    &lt;!-- 使用实现下边的sql拼接：
+     AND (id=1 OR id=10 OR id=16)
+     --&gt;
+    &lt;foreach collection=&quot;ids&quot; item=&quot;user_id&quot; open=&quot;AND (&quot; close=&quot;)&quot; separator=&quot;or&quot;&gt;
+        &lt;!-- 每个遍历需要拼接的串 --&gt;
+        id=#{user_id}
+    &lt;/foreach&gt;
+
+    &lt;!-- 实现  “ and id IN(1,10,16)”拼接 --&gt;
+    &lt;!-- &lt;foreach collection=&quot;ids&quot; item=&quot;user_id&quot; open=&quot;and id IN(&quot; close=&quot;)&quot; separator=&quot;,&quot;&gt;
+        每个遍历需要拼接的串
+        #{user_id}
+    &lt;/foreach&gt; --&gt;
+
+&lt;/if&gt;
+</code></pre>
+
+<ul>
+<li>测试代码</li>
+</ul>
+<p>在<code>testFindUserList</code>中加入</p>
+<pre><code class="java">//传入多个id
+List&lt;Integer&gt; ids = new ArrayList&lt;Integer&gt;();
+ids.add(1);
+ids.add(10);
+ids.add(16);
+//将ids通过userQueryVo传入statement中
+userQueryVo.setIds(ids);
+</code></pre>
+
+<hr />
+<blockquote>
+<p>作者<a href="http://brianway.github.io/">@brianway</a>更多文章：<a href="http://brianway.github.io/">个人网站</a> | <a href="http://blog.csdn.net/h3243212/">CSDN</a> | <a href="http://my.oschina.net/brianway">oschina</a></p>
+</blockquote></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>var base_url = '../..';</script>
+        <script data-main="../../mkdocs/js/search.js" src="../../mkdocs/js/require.js"></script>
+        <script src="../../js/base.js"></script><div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>

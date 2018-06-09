@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <meta charset="utf-8">
+    
+    <title>如何迈出第四步（数据展示） | dylan</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+    <meta name="description" content="数据的获取与展示是每个App必不可少的功能，最常见的就是列表（iOS的TableView，Android的ListView）。在RN中当然也有ListView，第四步将在第三步建立好衔接的基础下，完成2个列表视图的构建，并加入网络请求知识（也就有下拉刷新了）。首先，我们去寻找一个接口，用以获取数据。这里为了方便直接使用聚合，我这里是找了一个微信文章推荐的接口：
+1http://v.juhe.cn/">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何迈出第四步（数据展示）">
+<meta property="og:url" content="https://wilddylan.github.io/2016/10/24/如何迈出第四步（数据展示）/index.html">
+<meta property="og:site_name" content="dylan">
+<meta property="og:description" content="数据的获取与展示是每个App必不可少的功能，最常见的就是列表（iOS的TableView，Android的ListView）。在RN中当然也有ListView，第四步将在第三步建立好衔接的基础下，完成2个列表视图的构建，并加入网络请求知识（也就有下拉刷新了）。首先，我们去寻找一个接口，用以获取数据。这里为了方便直接使用聚合，我这里是找了一个微信文章推荐的接口：
+1http://v.juhe.cn/">
+<meta property="og:image" content="http://www.im.ac.cn/imnews/upload/20160919/1474265692393332.jpg">
+<meta property="og:updated_time" content="2017-02-04T09:02:45.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何迈出第四步（数据展示）">
+<meta name="twitter:description" content="数据的获取与展示是每个App必不可少的功能，最常见的就是列表（iOS的TableView，Android的ListView）。在RN中当然也有ListView，第四步将在第三步建立好衔接的基础下，完成2个列表视图的构建，并加入网络请求知识（也就有下拉刷新了）。首先，我们去寻找一个接口，用以获取数据。这里为了方便直接使用聚合，我这里是找了一个微信文章推荐的接口：
+1http://v.juhe.cn/">
+<meta name="twitter:image" content="http://www.im.ac.cn/imnews/upload/20160919/1474265692393332.jpg">
+    
+
+    
+
+    
+        <link rel="icon" href="/favicon.ico" />
+    
+
+    <link rel="stylesheet" href="/vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/vendor/open-sans/styles.css">
+    <link rel="stylesheet" href="/vendor/source-code-pro/styles.css">
+
+    <link rel="stylesheet" href="/css/style.css">
+
+    <script src="/vendor/jquery/2.1.3/jquery.min.js"></script>
+    
+    
+        <link rel="stylesheet" href="/vendor/lightgallery/css/lightgallery.min.css">
+    
+    
+    
+    
+    
+        <script>
+var _hmt = _hmt || [];
+(function() {
+    var hm = document.createElement("script");
+    hm.src = "//hm.baidu.com/hm.js?1418e4ec933d1e954b5d4d960d22edc0";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+    
+
+
+</head>
+
+<body>
+    <div id="container">
+        <header id="header">
+    <div id="header-main" class="header-inner">
+        <div class="outer">
+
+            <a href="/" id="logo">
+                <span class="site-title">DEV.DYLAN</span>
+            </a>
+
+            <nav id="main-nav">
+                
+                    <a class="main-nav-link" href="/.">HOME</a>
+                
+                    <a class="main-nav-link" href="/web">FRONT_END</a>
+                
+                    <a class="main-nav-link" href="/sdks">OPEN_SOURCES</a>
+                
+                    <a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a>
+                
+                    <a class="main-nav-link" href="/ml">MCHINE_LEARNING</a>
+                
+                    <a class="main-nav-link" href="/atom.xml">RSS</a>
+                
+            </nav>
+            
+                
+                <nav id="sub-nav">
+                    <div class="profile" id="profile-nav">
+                        <a id="profile-anchor" href="javascript:;">
+                            <img class="avatar" src="/css/images/avatar.jpg" />
+                            <i class="fa fa-caret-down"></i>
+                        </a>
+                    </div>
+                </nav>
+            
+            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="SEARCH..." />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="What do you like ?" />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: 'Articles',
+            TAGS: 'Tags',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+<script src="/js/insight.js"></script>
+
+</div>
+        </div>
+    </div>
+    <div id="main-nav-mobile" class="header-sub header-inner">
+        <table class="menu outer">
+            <tr>
+                
+                    <td><a class="main-nav-link" href="/.">HOME</a></td>
+                
+                    <td><a class="main-nav-link" href="/web">FRONT_END</a></td>
+                
+                    <td><a class="main-nav-link" href="/sdks">OPEN_SOURCES</a></td>
+                
+                    <td><a class="main-nav-link" href="/backends/site/">SPRINGMVC_MYBATIS</a></td>
+                
+                    <td><a class="main-nav-link" href="/ml">MCHINE_LEARNING</a></td>
+                
+                    <td><a class="main-nav-link" href="/atom.xml">RSS</a></td>
+                
+                <td>
+                    
+    <div class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+    </div>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</header>
+
+        <div class="outer">
+            
+                
+
+<aside id="profile">
+    <div class="inner profile-inner">
+        <div class="base-info profile-block">
+            <img id="avatar" src="/css/images/avatar.jpg" />
+            <h2 id="name">Dylan</h2>
+            <h3 id="title">App Developer</h3>
+            <span id="location"><i class="fa fa-map-marker"></i>Hang zhou, China</span>
+            <div id="c-buttons">
+                <a id="follow" target="_blank" href="https://github.com/WildDylan/">FOLLOW</a>
+                <a id="follow" target="_blank" href="/resume/">RESUME</a>
+            </div>
+        </div>
+        <div class="article-info profile-block">
+            <div class="article-info-block">
+                30
+                <span>Articles</span>
+            </div>
+            <div class="article-info-block">
+                17
+                <span>Tag</span>
+            </div>
+        </div>
+        
+        <div class="profile-block social-links">
+            <table>
+                <tr>
+                    
+                    
+                    <td>
+                        <a href="https://github.com/WildDylan" target="_blank" title="github" class=tooltip>
+                            <i class="fa fa-github"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://twitter.com/Dylanccccc" target="_blank" title="twitter" class=tooltip>
+                            <i class="fa fa-twitter"></i>
+                        </a>
+                    </td>
+                    
+                    <td>
+                        <a href="https://www.facebook.com/Dylanccccc" target="_blank" title="facebook" class=tooltip>
+                            <i class="fa fa-facebook"></i>
+                        </a>
+                    </td>
+                    
+                </tr>
+            </table>
+        </div>
+        
+    </div>
+</aside>
+
+            
+            <section id="main"><article id="post-如何迈出第四步（数据展示）" class="article article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+            如何迈出第四步（数据展示）
+        </h1>
+    
+
+                
+                    <div class="article-meta">
+                        
+    <div class="article-date">
+        <i class="fa fa-calendar"></i>
+        <a href="/2016/10/24/如何迈出第四步（数据展示）/">
+            <time datetime="2016-10-24T01:22:32.000Z" itemprop="datePublished">2016-10-24</time>
+        </a>
+    </div>
+
+
+                        
+                        
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link" href="/tags/ReactNative/">ReactNative</a>
+    </div>
+
+                    </div>
+                
+            </header>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+        
+            
+            <p>数据的获取与展示是每个App必不可少的功能，最常见的就是列表（iOS的TableView，Android的ListView）。在RN中当然也有ListView，第四步将在第三步建立好衔接的基础下，完成2个列表视图的构建，并加入网络请求知识（也就有下拉刷新了）。首先，我们去寻找一个接口，用以获取数据。这里为了方便直接使用聚合，我这里是找了一个微信文章推荐的接口：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://v.juhe.cn/weixin/query?pno=1&amp;ps=20&amp;key=1cb0962fb0fb73dae41d96e88733ac96</div></pre></td></tr></table></figure>
+<p>参数：</p>
+<ol>
+<li>pno：页码</li>
+<li>ps：每页内容个数</li>
+<li>key：我的key，上边的可以直接拿去使用</li>
+</ol>
+<p>接下来继续打开项目，进行编码，首先我们需要的是获取数据进行展示，在<code>News.js</code>中。</p>
+<a id="more"></a>
+<p>在使用<code>ListView</code>的时候，也需要数据源，并且我们还想加一个下拉刷新，我们的数据格式是这样的：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">						   <span class="attr">"firstImg"</span>:<span class="string">"http:\/\/zxpic.gtimg.com\/infonew\/0\/wechat_pics_-8774101.jpg\/640"</span>,</div><div class="line">  <span class="attr">"id"</span>:<span class="string">"wechat_20151202064749"</span>,</div><div class="line">  <span class="attr">"source"</span>:<span class="string">"果果帮"</span>,</div><div class="line">  <span class="attr">"title"</span>:<span class="string">"笑死了,哈哈小伙子你很有前途"</span>,</div><div class="line">  <span class="attr">"url"</span>:<span class="string">"http:\/\/v.juhe.cn\/weixin\/redirect?wid=wechat_20151202064749"</span>,</div><div class="line">  <span class="attr">"mark"</span>:<span class="string">""</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们先来尝试着获取数据，使用fetch：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fetch(<span class="string">'http://v.juhe.cn/weixin/query?pno=1&amp;ps=50&amp;key=1cb0962fb0fb73dae41d96e88733ac96'</span>)</div></pre></td></tr></table></figure>
+<p>然后我们尝试着把数据渲染上去（等下的解释我都写到代码注释里）：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/NewsSucceed.png" alt=""></p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component, &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123; View, Text, ListView, RefreshControl, TouchableOpacity, StyleSheet, Image, Dimensions &#125; <span class="keyword">from</span> <span class="string">'react-native'</span></div><div class="line"><span class="keyword">import</span> &#123; Router, Scene, Actions, ActionConst &#125; <span class="keyword">from</span> <span class="string">'react-native-router-flux'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">News</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  <span class="keyword">constructor</span>(props)&#123;</div><div class="line">    <span class="keyword">super</span>(props);</div><div class="line">    </div><div class="line">    <span class="comment">// 每一个ListView都需要一个数据源，称为`DataSource`。rowHasChanged用来比较前后的数据是否相同，相同则不重新渲染。</span></div><div class="line">    <span class="keyword">this</span>.ds = <span class="keyword">new</span> ListView.DataSource(&#123;<span class="attr">rowHasChanged</span>: <span class="function">(<span class="params">r1, r2</span>) =&gt;</span> r1.url !== r2.url &#125;);</div><div class="line">    <span class="comment">// 先初始化一个空的数组，供存放列表数据</span></div><div class="line">    <span class="keyword">this</span>._data = [];</div><div class="line">    <span class="comment">// 可变状态</span></div><div class="line">    <span class="keyword">this</span>.state = &#123;</div><div class="line">      <span class="comment">// dataSource是ListView显示的一个必须属性，cloneWithRows用于传入数据。</span></div><div class="line">      dataSource: <span class="keyword">this</span>.ds.cloneWithRows(<span class="keyword">this</span>._data),</div><div class="line">      <span class="comment">// 控制下拉刷新的状态</span></div><div class="line">      isRefreshing: <span class="literal">false</span></div><div class="line">    &#125;;</div><div class="line">    <span class="comment">// 加载第一次数据</span></div><div class="line">    <span class="keyword">this</span>._onRefresh();</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 触发下拉刷新</span></div><div class="line">  _onRefresh = <span class="function"><span class="params">()</span> =&gt;</span> &#123;</div><div class="line">    <span class="comment">// 首先更改状态为true</span></div><div class="line">    <span class="keyword">this</span>.setState(&#123;<span class="attr">isRefreshing</span>: <span class="literal">true</span>&#125;);</div><div class="line">    <span class="keyword">var</span> self = <span class="keyword">this</span>;</div><div class="line">    <span class="comment">// 开启网络请求</span></div><div class="line">    fetch(<span class="string">'http://v.juhe.cn/weixin/query?pno=1&amp;ps=20&amp;key=1cb0962fb0fb73dae41d96e88733ac96'</span>)</div><div class="line">    <span class="comment">// 对数据做处理，这里没有写catch，应该写的，捕获错误</span></div><div class="line">      .then(<span class="function">(<span class="params">response</span>) =&gt;</span> response.json())</div><div class="line">      .then(<span class="function">(<span class="params">responseJson</span>) =&gt;</span> &#123;</div><div class="line">        <span class="comment">// 看一下是否是成功，成功：先清空本地数据，然后将新的数据加入。因为是下拉刷新，上拉加载的功能自行研究。已经很简单了。</span></div><div class="line">        <span class="keyword">if</span> (responseJson.reason == <span class="string">'success'</span>) &#123;</div><div class="line">          <span class="keyword">let</span> data = responseJson.result.list;</div><div class="line">          <span class="keyword">if</span> (data) &#123;</div><div class="line">            <span class="keyword">this</span>._data = data;</div><div class="line">          &#125;</div><div class="line">        &#125;</div><div class="line">        self.setState(&#123;</div><div class="line">          <span class="attr">dataSource</span>: <span class="keyword">this</span>.ds.cloneWithRows(<span class="keyword">this</span>._data),</div><div class="line">          <span class="attr">isRefreshing</span>: <span class="literal">false</span></div><div class="line">        &#125;);</div><div class="line">      &#125;)</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  <span class="comment">// 用来渲染行的方法，将数据转为Cell进行展示。</span></div><div class="line">  _renderRow (rowData, sectionID, rowID) &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;TouchableOpacity</div><div class="line">        onPress=&#123;()=&gt;this._pressRow(rowData)&#125;&gt;</div><div class="line">        &lt;View style=&#123;styles.cell&#125;&gt;</div><div class="line">          &lt;Image</div><div class="line">            style=&#123;styles.cellImage&#125;</div><div class="line">            source=&#123;&#123; uri: rowData.firstImg &#125;&#125; /&gt;</div><div class="line">          &lt;View style=&#123;styles.cellColumn&#125;&gt;</div><div class="line">            &lt;Text style=&#123;styles.cellText&#125; numberOfLines=&#123;0&#125;&gt;&#123;rowData.title&#125;&lt;/Text&gt;</div><div class="line">            &lt;Text style=&#123;styles.cellExtra&#125;&gt;#&#123;rowData.source&#125;&lt;/Text&gt;</div><div class="line">          &lt;/View&gt;</div><div class="line">        &lt;/View&gt;</div><div class="line">      &lt;/TouchableOpacity&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  _pressRow = (rowData) =&gt; &#123;</div><div class="line">    // 在这里实现点击事件</div><div class="line">    console.log(rowData.url);</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;View style=&#123;&#123; flex: 1, marginTop: 44&#125;&#125;&gt;</div><div class="line">        &lt;ListView</div><div class="line">          dataSource=&#123;this.state.dataSource&#125;</div><div class="line">          renderRow=&#123;this._renderRow.bind(this)&#125;</div><div class="line">          refreshControl=&#123;</div><div class="line">            &lt;RefreshControl</div><div class="line">              refreshing=&#123;this.state.isRefreshing&#125;</div><div class="line">              onRefresh=&#123;this._onRefresh&#125;</div><div class="line">              tintColor="rgb(181, 181, 181)"</div><div class="line">              title="下拉刷新数据"</div><div class="line">              titleColor="rgb(181, 181, 181)"</div><div class="line">              colors=&#123;['rgb(181, 181, 181)', 'rgb(181, 181, 181)', 'rgb(181, 181, 181)']&#125;</div><div class="line">            /&gt;</div><div class="line">          &#125;</div><div class="line">        /&gt;</div><div class="line">      &lt;/View&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const contentWidth = Dimensions.get('window').width;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  cell: &#123;</div><div class="line">    padding: 10,</div><div class="line">    paddingTop: 10,</div><div class="line">    paddingBottom: 0,</div><div class="line">    flexDirection: 'row',</div><div class="line">    flex: 1,</div><div class="line">    alignItems: 'center'</div><div class="line">  &#125;,</div><div class="line">  cellImage: &#123;</div><div class="line">    width: 50,</div><div class="line">    height: 50,</div><div class="line">    backgroundColor: 'rgb(221, 221, 221)'</div><div class="line">  &#125;,</div><div class="line">  cellText: &#123;</div><div class="line">    textAlign: 'left',</div><div class="line">    marginLeft: 10,</div><div class="line">    width: contentWidth - 75,</div><div class="line">  &#125;,</div><div class="line">  cellExtra: &#123;</div><div class="line">    fontSize: 10,</div><div class="line">    color: 'rgb(181, 181, 181)',</div><div class="line">    marginLeft: 10</div><div class="line">  &#125;,</div><div class="line">  cellColumn: &#123;</div><div class="line">    flexDirection: 'column'</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">export default News</div></pre></td></tr></table></figure>
+<p>接着我们来实现点击事件的详情跳转（这里有个问题，就是TabBar的隐藏，因为我们是用Router来跳转的，而在实现的时候，TabBar我们是自己写的，然后react-router-flux有个问题就是不能在子路由中打开父路由的界面，暂时提了一个issue，还有一个暂时的解决方案，所有的外层都用router-flux提供。这里先做演示），在<code>NewsPage.js</code>中：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component, &#125; <span class="keyword">from</span> <span class="string">'react'</span></div><div class="line"><span class="keyword">import</span> &#123; Router, Scene &#125; <span class="keyword">from</span> <span class="string">'react-native-router-flux'</span>;</div><div class="line"><span class="keyword">import</span> News <span class="keyword">from</span> <span class="string">'./News'</span></div><div class="line"><span class="keyword">import</span> NewsDetail <span class="keyword">from</span> <span class="string">'./NewsDetail'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">NewsPage</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;Router&gt;</div><div class="line">        &lt;Scene key="_NewsRouter"&gt;</div><div class="line">          &lt;Scene </div><div class="line">            key="News" </div><div class="line">            component=&#123;News&#125; </div><div class="line">            title="News" </div><div class="line">            navigationBarStyle=&#123;&#123; backgroundColor: 'white' &#125;&#125;</div><div class="line">            titleStyle=&#123;&#123;color: '#525354', fontFamily: 'Helvetica', fontSize: 20&#125;&#125; </div><div class="line">            initial=&#123;true&#125; /&gt;</div><div class="line">          &lt;scene key="NewsDetail" component=&#123;NewsDetail&#125; title="NewsDetail" hideTabBar /&gt;</div><div class="line">        &lt;/Scene&gt;</div><div class="line">      &lt;/Router&gt;</div><div class="line">    )</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">export default NewsPage</div></pre></td></tr></table></figure>
+<p>然后在点击的时候打开详情：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">_pressRow = <span class="function">(<span class="params">rowData</span>) =&gt;</span> &#123;</div><div class="line">    Actions.NewsDetail(&#123;</div><div class="line">      <span class="attr">url</span>: rowData.url,</div><div class="line">      <span class="attr">type</span>: ActionConst.PUSH</div><div class="line">    &#125;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>个人中心里边就比较简单了，大家自己通过之前的学习去尝试着完成微信个人中心界面的布局。简单的实现几个点击事件。TabBar隐藏的问题需要我们修改视图的层级：把TabBar变为一个Navigation包涵的视图。首先去掉index.ios.js中：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;Scene key=<span class="string">"RootPage"</span> component=&#123;RootPage&#125; title=<span class="string">"News"</span> initial=&#123;<span class="keyword">this</span>.props.launched&#125;/&gt;</div></pre></td></tr></table></figure>
+<p>原来的<code>hideNavBar属性</code>，并直接改名为News。然后把News.js中的代码迁移到NewsPage中。最后的<code>index.ios.js</code>是这样的：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123; AppRegistry &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"><span class="keyword">import</span> &#123; Router, Scene &#125; <span class="keyword">from</span> <span class="string">'react-native-router-flux'</span>;</div><div class="line"><span class="keyword">import</span> GuidePage <span class="keyword">from</span> <span class="string">'./GuidePage'</span>;</div><div class="line"><span class="keyword">import</span> RootPage <span class="keyword">from</span> <span class="string">'./RootPage'</span>;</div><div class="line"><span class="keyword">import</span> NewsDetail <span class="keyword">from</span> <span class="string">'./News/NewsDetail'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Project</span> <span class="keyword">extends</span> <span class="title">Component</span> </span>&#123;</div><div class="line">  render() &#123;</div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;Router&gt;</div><div class="line">        &lt;Scene key="root"&gt;</div><div class="line">          &lt;Scene  key="GuidePage" component=&#123;GuidePage&#125; hideNavBar title="GuidePage" initial=&#123;this.props.launched&#125; /&gt;</div><div class="line">          &lt;Scene key="RootPage" component=&#123;RootPage&#125; title="News" initial=&#123;this.props.launched&#125;/&gt;</div><div class="line">          &lt;scene key="NewsDetail" component=&#123;NewsDetail&#125; title="NewsDetail"/&gt;</div><div class="line">        &lt;/Scene&gt;</div><div class="line">      &lt;/Router&gt;</div><div class="line">    );</div><div class="line">  &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">AppRegistry.registerComponent('Project', () =&gt; Project);</div></pre></td></tr></table></figure>
+<p>然后就可以解决跳转的问题。但是接着出现了下一个问题，在点击个人中心的之后，发现顶部导航还是News的名称，所以TabBar也要进行处理，由于<code>react-router-flux</code>目前的框架问题（子路由不可以操作父路由，并且想操作Tabbar只能使用router-flux的方式创建TabBar），所以我们直接在index中使用Scene创建我们的Tabbar：</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> React, &#123; Component &#125; <span class="keyword">from</span> <span class="string">'react'</span>;</div><div class="line"><span class="keyword">import</span> &#123; AppRegistry, Text, StyleSheet, View, Image &#125; <span class="keyword">from</span> <span class="string">'react-native'</span>;</div><div class="line"><span class="keyword">import</span> &#123; Router, Scene &#125; <span class="keyword">from</span> <span class="string">'react-native-router-flux'</span>;</div><div class="line"><span class="keyword">import</span> GuidePage <span class="keyword">from</span> <span class="string">'./GuidePage'</span>;</div><div class="line"><span class="keyword">import</span> NewsDetail <span class="keyword">from</span> <span class="string">'./News/NewsDetail'</span>;</div><div class="line"><span class="keyword">import</span> NewsPage <span class="keyword">from</span> <span class="string">'./News/NewsPage'</span>;</div><div class="line"><span class="keyword">import</span> AccountPage <span class="keyword">from</span> <span class="string">'./Account/AccountPage'</span>;</div><div class="line"></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TabIcon</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</div><div class="line">  render()&#123;</div><div class="line">    <span class="keyword">let</span> selectedColor = <span class="string">'#34A3FF'</span>;</div><div class="line">    <span class="keyword">let</span> deSelectedColor = <span class="string">'rgb(181, 181, 181)'</span>;</div><div class="line">    <span class="keyword">let</span> title = <span class="keyword">this</span>.props.title;</div><div class="line">    <span class="keyword">let</span> selected = <span class="keyword">this</span>.props.selected;</div><div class="line">    <span class="keyword">let</span> itemImage = &#123;</div><div class="line">      <span class="string">"新闻"</span>: &#123;</div><div class="line">        <span class="attr">selected</span>: <span class="string">'http://ocef2grmj.bkt.clouddn.com/first_selected.png'</span>,</div><div class="line">        <span class="attr">deSelected</span>: <span class="string">'http://ocef2grmj.bkt.clouddn.com/first_normal.png'</span></div><div class="line">      &#125;,</div><div class="line">      <span class="string">"我的"</span>: &#123;</div><div class="line">        <span class="attr">selected</span>: <span class="string">'http://ocef2grmj.bkt.clouddn.com/fourth_selected.png'</span>,</div><div class="line">        <span class="attr">deSelected</span>: <span class="string">'http://ocef2grmj.bkt.clouddn.com/fourth_normal.png'</span></div><div class="line">      &#125;</div><div class="line">    &#125;;</div><div class="line">    </div><div class="line">    <span class="keyword">return</span> (</div><div class="line">      &lt;View style=&#123;styles.tabBarItem&#125;&gt;</div><div class="line">        &lt;Image source=&#123;&#123; uri: selected? itemImage[title].selected : itemImage[title].deSelected&#125;&#125; style=&#123;styles.tabBarImage&#125;/&gt;</div><div class="line">        &lt;Text style=&#123;[&#123;color: selected ? selectedColor :deSelectedColor&#125;, styles.tabBatText]&#125;&gt;&#123;title&#125;&lt;/Text&gt;</div><div class="line">      &lt;/View&gt;</div><div class="line">    );</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">class Project extends Component &#123;</div><div class="line">  render() &#123;</div><div class="line">    return (</div><div class="line">      &lt;Router&gt;</div><div class="line">          &lt;Scene  key="GuidePage" component=&#123;GuidePage&#125; hideNavBar title="GuidePage" initial=&#123;this.props.launched&#125; /&gt;</div><div class="line">          &lt;Scene key="main" tabs=&#123;true&#125; style=&#123;styles.tabBarStyle&#125; initial=&#123;true&#125;&gt;</div><div class="line">            &lt;Scene key="NewsModule"  title="新闻" icon=&#123;TabIcon&#125; initial=&#123;true&#125;&gt;</div><div class="line">              &lt;Scene key="News" component=&#123;NewsPage&#125; title="News" /&gt;</div><div class="line">              &lt;Scene key="NewsDetail" component=&#123;NewsDetail&#125; hideTabBar title="NewsDetail"/&gt;</div><div class="line">            &lt;/Scene&gt;</div><div class="line">            &lt;Scene key="AccountModule" title="我的" icon=&#123;TabIcon&#125;&gt;</div><div class="line">              &lt;Scene key="Mine" component=&#123;AccountPage&#125; title="个人中心" /&gt;</div><div class="line">            &lt;/Scene&gt;</div><div class="line">          &lt;/Scene&gt;</div><div class="line">      &lt;/Router&gt;</div><div class="line">    );</div><div class="line">  &#125;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">const styles = StyleSheet.create(&#123;</div><div class="line">  tabBarStyle: &#123;</div><div class="line">    borderTopWidth : .5,</div><div class="line">    borderColor    : '#b7b7b7',</div><div class="line">    backgroundColor: 'white',</div><div class="line">    opacity        : 1</div><div class="line">  &#125;,</div><div class="line">  tabBarItem: &#123;</div><div class="line">    alignItems: 'center'</div><div class="line">  &#125;,</div><div class="line">  tabBatText: &#123;</div><div class="line">    fontSize: 10,</div><div class="line">    marginTop: 4</div><div class="line">  &#125;,</div><div class="line">  tabBarImage: &#123;</div><div class="line">    width: 26,</div><div class="line">    height: 26</div><div class="line">  &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line">AppRegistry.registerComponent('Project', () =&gt; Project);</div></pre></td></tr></table></figure>
+<p>最终的效果是：</p>
+<p><img src="http://ocef2grmj.bkt.clouddn.com/finishedNews.png" alt=""></p>
+<p>跳转到详情的时候会自动的隐藏TabBar，这里还需要一个工作就是把TabBarItem作为我们自己的一个控件，交给大家啦！到此为止，React-Native的上手教程就结束了，希望大家有所收获，进阶的内容一起讨论，我会在一个自己的私有项目中使用React-Native来做一个核心的模块，之后会发布出来。</p>
+<p>代码地址依旧不变，以后还会更新呦。</p>
+
+        
+        </div>
+        <footer class="article-footer">
+            <div class="share-container">
+
+
+
+    <div class="a2a_kit a2a_default_style">
+    <a class="a2a_dd" href="https://www.addtoany.com/share">Share</a>
+    <span class="a2a_divider"></span>
+    <a class="a2a_button_facebook"></a>
+    <a class="a2a_button_twitter"></a>
+    <a class="a2a_button_google_plus"></a>
+    <a class="a2a_button_pinterest"></a>
+    <a class="a2a_button_tumblr"></a>
+</div>
+<script type="text/javascript" src="//static.addtoany.com/menu/page.js"></script>
+<style>
+    .a2a_menu {
+        border-radius: 4px;
+    }
+    .a2a_menu a {
+        margin: 2px 0;
+        font-size: 14px;
+        line-height: 16px;
+        border-radius: 4px;
+        color: inherit !important;
+        font-family: 'Microsoft Yahei';
+    }
+    #a2apage_dropdown {
+        margin: 10px 0;
+    }
+    .a2a_mini_services {
+        padding: 10px;
+    }
+    a.a2a_i,
+    i.a2a_i {
+        width: 122px;
+        line-height: 16px;
+    }
+    a.a2a_i .a2a_svg,
+    a.a2a_more .a2a_svg {
+        width: 16px;
+        height: 16px;
+        line-height: 16px;
+        vertical-align: top;
+        background-size: 16px;
+    }
+    a.a2a_i {
+        border: none !important;
+    }
+    a.a2a_menu_show_more_less {
+        margin: 0;
+        padding: 10px 0;
+        line-height: 16px;
+    }
+    .a2a_mini_services:after{content:".";display:block;height:0;clear:both;visibility:hidden}
+    .a2a_mini_services{*+height:1%;}
+</style>
+
+</div>
+
+            
+    
+        <a href="https://wilddylan.github.io/2016/10/24/如何迈出第四步（数据展示）/#comments" class="article-comment-link ds-thread-count" data-thread-key="https://wilddylan.github.io/2016/10/24/如何迈出第四步（数据展示）/">评论</a>
+    
+
+        </footer>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2016/11/11/移动H5前端性能优化注意点/" id="article-nav-newer" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">上一篇</strong>
+            <div class="article-nav-title">
+                
+                    移动H5前端性能优化注意点
+                
+            </div>
+        </a>
+    
+    
+        <a href="/2016/10/21/如何迈出第三步（衔接）/" id="article-nav-older" class="article-nav-link-wrap">
+            <strong class="article-nav-caption">下一篇</strong>
+            <div class="article-nav-title">如何迈出第三步（衔接）</div>
+        </a>
+    
+</nav>
+
+
+    
+</article>
+
+
+    
+    <section id="comments">
+    
+        
+    <div id="SOHUCS" sid="2016/10/24/如何迈出第四步（数据展示）/" ></div>
+
+    
+    </section>
+
+</section>
+            
+                <aside id="sidebar">
+   
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Latest articles</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2017/03/16/New Year's 2017/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://ocef2grmj.bkt.clouddn.com/58PIC9v58PICNmY_1024.jpg)" alt="New Year&#39;s 2017" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2017/03/16/New Year's 2017/" class="title">New Year&#39;s 2017</a></p>
+                            <p class="item-date"><time datetime="2017-03-16T11:06:06.000Z" itemprop="datePublished">2017-03-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/31/2016总结/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://pic01.taopic.com/151116/234758-1511160ZQ797-lp.jpg)" alt="2016总结" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/31/2016总结/" class="title">2016总结</a></p>
+                            <p class="item-date"><time datetime="2016-12-31T10:31:11.000Z" itemprop="datePublished">2016-12-31</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://img.25pp.com/uploadfile/soft/images/2015/0724/20150724031211421.jpg)" alt="快速搭建属于自己的斗鱼TV" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/12/30/快速搭建属于自己的斗鱼TV/" class="title">快速搭建属于自己的斗鱼TV</a></p>
+                            <p class="item-date"><time datetime="2016-12-30T05:31:45.000Z" itemprop="datePublished">2016-12-30</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/22/WebApp问题整理/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://images.17173.com/2015/news/2015/05/28/hxz0528html01.jpg)" alt="WebApp问题整理" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/22/WebApp问题整理/" class="title">WebApp问题整理</a></p>
+                            <p class="item-date"><time datetime="2016-11-22T10:29:12.000Z" itemprop="datePublished">2016-11-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2016/11/21/SwiftTips（一）/" class="thumbnail">
+    
+    
+        <span style="background-image:url(http://cms.csdnimg.cn/article/201407/01/53b21ca1c9e37.jpg)" alt="SwiftTips（一）" class="thumbnail-image"></span>
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2016/11/21/SwiftTips（一）/" class="title">SwiftTips（一）</a></p>
+                            <p class="item-date"><time datetime="2016-11-21T09:22:15.000Z" itemprop="datePublished">2016-11-21</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+    
+        
+    
+        
+    <div class="widget-wrap">
+        <h3 class="widget-title">Tags</h3>
+        <div class="widget">
+            <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/2017/">2017</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidLib/">AndroidLib</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CoreFoundation/">CoreFoundation</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Frameworks/">Frameworks</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HTML5/">HTML5</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hybrid/">Hybrid</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Node/">Node</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ReactNative/">ReactNative</a><span class="tag-list-count">4</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swift/">Swift</a><span class="tag-list-count">6</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UIKit/">UIKit</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS新特性/">iOS新特性</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/动态化/">动态化</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/崩溃日志/">崩溃日志</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/支付与IAP/">支付与IAP</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/直播/">直播</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a><span class="tag-list-count">5</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/领悟/">领悟</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+    
+        
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">Links</h3>
+        <div class="widget">
+            <ul>
+                
+            </ul>
+        </div>
+    </div>
+
+
+    
+    <div id="toTop" class="fa fa-angle-up"></div>
+</aside>
+            
+        </div>
+        <footer id="footer">
+    <div class="outer">
+        <div id="footer-info" class="inner">
+            &copy; 2012-2017 dylan <a href="http://www.beianbeian.com/beianxinxi/832d6f3f-8765-4c81-9058-6c95185a394a.html">豫ICP备16034098号-1</a>
+        </div>
+    </div>
+</footer>
+        
+    
+<script type="text/javascript">
+    (function(){
+        var appid = 'cysV6aPi1';
+        var conf = 'prod_489c61adffed69ee626ced6d812518ac';
+        var width = window.innerWidth || document.documentElement.clientWidth;
+        if (width < 960) {
+            window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="http://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("http://changyan.sohu.com/upload/changyan.js",function(){window.changyan.api.config({appid:appid,conf:conf})}); } })();
+</script>
+
+
+
+    
+        <script src="/vendor/lightgallery/js/lightgallery.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-thumbnail.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-pager.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-autoplay.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-fullscreen.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-zoom.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-hash.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-share.min.js"></script>
+        <script src="/vendor/lightgallery/js/lg-video.min.js"></script>
+    
+    
+
+
+
+<!-- Custom Scripts -->
+<script src="/js/main.js"></script>
+
+    </div>
+</body>
+</html>
