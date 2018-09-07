@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="32e41e66-e117-4a3e-bd61-e124ff6c5524" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/css/main.css" beforeDir="false" afterPath="$PROJECT_DIR$/resume/css/main.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resume/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/resume/index.html" afterDir="false" />
-    </list>
+    <list default="true" id="32e41e66-e117-4a3e-bd61-e124ff6c5524" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -19,7 +15,7 @@
     <session id="-1005960319">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="1" />
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.2" value="1" />
           <entry key="project.opened" value="2" />
@@ -168,12 +164,12 @@
       <option name="presentableId" value="Default" />
       <updated>1536283075702</updated>
       <workItem from="1536283077861" duration="8700000" />
-      <workItem from="1536292311977" duration="43000" />
+      <workItem from="1536292311977" duration="139000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8743000" />
+    <option name="totallyTimeSpent" value="8839000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
